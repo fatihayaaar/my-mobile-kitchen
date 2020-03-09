@@ -1,0 +1,21 @@
+<resources>
+    <string name="app_name">Mobil Mutfağım</string>
+    <string name="FoodsOptionLayoutName">Yemekler</string>
+    <string name="WizardFoodOptionLayoutName">Sihirbaz</string>
+    <string name="ProfileOptionLayoutName">Profilim</string>
+    <string name="StockOptionLayoutName">Envanter</string>
+    <string name="RecipeBookOptionLayoutName">Tariflerim</string>
+    <string name="AboutOptionLayoutName">Hakkımızda</string>
+
+    <string name="tabFoodsText">Yemekler</string>
+    <string name="tabFoodsAdd">Yemek Ekle</string>
+
+    <string name="foodNameTitle">Ne yemeği yaptığını bir kaç kelime ile tarif et</string>
+    <string name="PreparationTextTitle">Yemeği nasıl yaptığını kelimelere dök</string>
+    <string name="CookingTimeTitle">Pişme süresini dakika cinsinden belirt</string>
+    <string name="PreparationTimeTitle">Hazırlama süresini dakika cinsinden belirt</string>
+    <string name="HowManyPersonTitle">Yemeğinin kaç kişilik olduğunu belirt</string>
+    <string name="CategoryTitle">Yemeğiniz hangi kategoriden</string>
+    <string name="MaterialAddFoodTitle">İsterseniz Malzemeleri Ekleyebilirsiniz</string>
+    <string name="SaveButtonText">PAYLAŞ</string>
+</resources>

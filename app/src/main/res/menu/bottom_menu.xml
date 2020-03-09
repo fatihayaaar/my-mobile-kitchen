@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/nav_view_foods"
+        android:icon="@drawable/foods"
+        android:title="Yemekler" />
+
+    <item
+        android:id="@+id/nav_add_food"
+        android:icon="@drawable/ice_cream"
+        android:title="Yemek Ekle" />
+
+    <item
+        android:id="@+id/nav_natfocition"
+        android:icon="@android:drawable/ic_popup_reminder"
+        android:title="Bildirimler" />
+
+    <item
+        android:id="@+id/nav_profile"
+        android:icon="@drawable/profile"
+        android:title="Hesabım" />
+</menu>
