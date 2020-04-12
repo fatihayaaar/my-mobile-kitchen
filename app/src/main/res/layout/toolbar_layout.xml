@@ -3,6 +3,7 @@
     android:id="@+id/toolbar"
     android:layout_width="match_parent"
     android:layout_height="50dp"
+    android:theme="@style/ToolBarStyle"
     android:background="@color/colorPrimary"
     android:minHeight="?attr/actionBarSize">
 
