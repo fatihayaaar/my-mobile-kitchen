@@ -27,6 +27,8 @@ public class DialogBoxContainer {
                 return new ErrorDialogBox(context, fragmentManager);
             case INTERNET_CONNECTION_ERROR_DIALOG_BOX:
                 return new InternetConnectionErrorDialogBox(context, fragmentManager);
+            case PHOTO_ADD_OPTIONS_DIALOG_BOX:
+                return new PhotoAddOptionsDialogBox(context, fragmentManager);
             default:
                 return null;
         }

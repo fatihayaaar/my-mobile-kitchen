@@ -6,9 +6,11 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
+import androidx.annotation.LayoutRes;
 import androidx.fragment.app.FragmentManager;
 
 import com.fayarretype.mymobilekitchen.R;
+import com.fayarretype.mymobilekitchen.fragments.AddFoodFragment;
 import com.fayarretype.mymobilekitchen.fragments.AlertDialogBoxFragment;
 
 public abstract class DialogBox {
@@ -19,23 +21,32 @@ public abstract class DialogBox {
     private String preparation;
     private Context context;
     private View view;
+    private @LayoutRes int resId;
+    private TextView textViewTitle;
+    private TextView textViewPreparation;
+    private Button closeButton;
+    private Button takeCameraButton;
+    private Button pickFromGalleryButton;
 
     protected DialogBox(Context context, FragmentManager fragmentManager, String title,
-                        String preparation) {
+                        String preparation, @LayoutRes int resId) {
         this.context = context;
         this.fragmentManager = fragmentManager;
         this.title = title;
         this.preparation = preparation;
+        this.resId = resId;
     }
 
-    private void componentLoadValues() {
+    private void componentLoadValues(@LayoutRes int resId) {
         LayoutInflater inflater = (LayoutInflater) context
                 .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        view = inflater.inflate(R.layout.dialog_box, null, true);
+        view = inflater.inflate(resId, null, true);
 
-        TextView textViewTitle = view.findViewById(R.id.dialogBoxTitleTextView);
-        TextView textViewPreparation = view.findViewById(R.id.dialogBoxPreparationTextView);
-        Button closeButton = view.findViewById(R.id.closeButton);
+        textViewTitle = view.findViewById(R.id.dialogBoxTitleTextView);
+        textViewPreparation = view.findViewById(R.id.dialogBoxPreparationTextView);
+        closeButton = view.findViewById(R.id.closeButton);
+        takeCameraButton = view.findViewById(R.id.takeCameraButton);
+        pickFromGalleryButton = view.findViewById(R.id.pickFromGalleryButton);
 
         textViewTitle.setText(title);
         textViewPreparation.setText(preparation);
@@ -46,10 +57,24 @@ public abstract class DialogBox {
                 alertDialogBoxFragment.destroyed();
             }
         });
+
+        takeCameraButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                AddFoodFragment.ADD_FOOD_FRAGMENT.get().takePicture();
+            }
+        });
+
+        pickFromGalleryButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                AddFoodFragment.ADD_FOOD_FRAGMENT.get().pickFromGallery();
+            }
+        });
     }
 
     public void show() {
-        componentLoadValues();
+        componentLoadValues(resId);
         alertDialogBoxFragment = new AlertDialogBoxFragment(view);
         alertDialogBoxFragment.show(fragmentManager, "Message");
     }

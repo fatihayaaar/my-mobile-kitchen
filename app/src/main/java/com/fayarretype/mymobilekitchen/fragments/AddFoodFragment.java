@@ -18,6 +18,7 @@ import android.widget.MultiAutoCompleteTextView;
 import android.widget.ScrollView;
 import android.widget.Spinner;
 
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentActivity;
 
@@ -35,94 +36,102 @@ import com.fayarretype.mymobilekitchen.tools.validations.NumberValidate;
 import com.fayarretype.mymobilekitchen.tools.validations.TextValidate;
 
 public class AddFoodFragment extends Fragment {
-    private final int CAMERA_REQUEST_CODE = 1000;
-    private final int GALLERY_REQUEST_CODE = 1001;
-    ImageView imageViewFirst;
-    private FragmentActivity fragmentActivity;
+
+    public static final ThreadLocal<AddFoodFragment> ADD_FOOD_FRAGMENT = new ThreadLocal<>();
+    private final static int IMAGE_VIEWS_COUNT = 5;
+    private final static int CAMERA_REQUEST_CODE = 1000;
+    private final static int GALLERY_REQUEST_CODE = 1001;
     private Context context;
     private View view;
+    private FragmentActivity fragmentActivity;
+    private DialogBox photoOptionsAddBox;
+    private ImageView[] imageView;
     private EditText foodNameEditText;
     private EditText foodPreparationEditText;
     private EditText foodCookingTimeEditText;
     private EditText foodPreparationTimeEditText;
     private EditText foodHowManyPersonEditText;
+    private Button saveButton;
     private Spinner categoryAddSpinner;
     private String foodName;
     private String foodPreparation;
+    private int selectedImageViewElement;
     private int foodCookingTime;
     private int foodPreparationTime;
     private int foodHowManyPerson;
 
-
     public AddFoodFragment(Context context) {
         super();
+        ADD_FOOD_FRAGMENT.set(this);
         this.context = context;
         this.fragmentActivity = (FragmentActivity) context;
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.fragment_add_food, container, false);
 
+        init();
+        loadValues();
+
+        return view;
+    }
+
+    private void init() {
+        initComponents();
+        initPhotoOptionsBox();
+        initComponentsEvents(); }
+
+    private void initComponents() {
         foodNameEditText = view.findViewById(R.id.foodNameEditText);
         foodPreparationEditText = view.findViewById(R.id.foodPreparationTextEditText);
         foodCookingTimeEditText = view.findViewById(R.id.cookingTimeEditText);
         foodPreparationTimeEditText = view.findViewById(R.id.preparationTimeEditText);
         foodHowManyPersonEditText = view.findViewById(R.id.howManyPersonEditText);
         categoryAddSpinner = view.findViewById(R.id.category_add_spinner);
+        saveButton = view.findViewById(R.id.saveButton);
 
-        imageViewFirst = view.findViewById(R.id.first_imageView);
-        imageViewFirst.setOnClickListener(new View.OnClickListener() {
+        initImageViewList();
+    }
+
+    private void initImageViewList() {
+        imageView = new ImageView[IMAGE_VIEWS_COUNT];
+        imageView[0] = view.findViewById(R.id.first_imageView);
+        imageView[1] = view.findViewById(R.id.second_imageView);
+        imageView[2] = view.findViewById(R.id.third_imageView);
+        imageView[3] = view.findViewById(R.id.fourth_imageView);
+        imageView[4] = view.findViewById(R.id.fifth_imageView);
+
+        setSelectedImageViewElement(0);
+    }
+
+    private void initComponentsEvents() {
+        initEventsImageView();
+        initEventsButtons();
+    }
+
+    private void initEventsImageView() {
+        imageView[getSelectedImageViewElement()].setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                takePicture();
+                photoOptionsAddBox.show();
             }
         });
+    }
 
-        ImageView imageViewSecond = view.findViewById(R.id.second_imageView);
-        imageViewSecond.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                pickFromGallery();
-            }
-        });
-
-        final ImageView imageViewThird = view.findViewById(R.id.third_imageView);
-        imageViewThird.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                takePicture();
-            }
-        });
-
-        ImageView imageViewFourth = view.findViewById(R.id.fourth_imageView);
-        imageViewFourth.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                takePicture();
-            }
-        });
-
-        ImageView imageViewFifth = view.findViewById(R.id.fifth_imageView);
-        imageViewFifth.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                takePicture();
-            }
-        });
-
-        Button saveButton = view.findViewById(R.id.saveButton);
+    private void initEventsButtons() {
         saveButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 saveButtonOnClick();
             }
         });
+    }
 
-        loadValues();
-
-        return view;
+    private void initPhotoOptionsBox() {
+        photoOptionsAddBox = DialogBoxContainer.getInstance(context, fragmentActivity
+                .getSupportFragmentManager())
+                .getDialogBox(DialogBoxName.PHOTO_ADD_OPTIONS_DIALOG_BOX);
     }
 
     private void loadValues() {
@@ -150,19 +159,17 @@ public class AddFoodFragment extends Fragment {
         multiAutoCompleteTextView.setTokenizer(new MultiAutoCompleteTextView.CommaTokenizer());
     }
 
-    private void takePicture() {
+    public void takePicture() {
         Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
         if (takePictureIntent.resolveActivity(context.getPackageManager()) != null) {
             startActivityForResult(takePictureIntent, CAMERA_REQUEST_CODE);
         }
     }
 
-    private void pickFromGallery() {
+    public void pickFromGallery() {
         Intent intent = new Intent(Intent.ACTION_PICK);
         intent.setType("image/*");
-
         String[] mimeTypes = {"image/jpeg", "image/png"};
-
         intent.putExtra(Intent.EXTRA_MIME_TYPES, mimeTypes);
 
         startActivityForResult(intent, GALLERY_REQUEST_CODE);
@@ -173,15 +180,28 @@ public class AddFoodFragment extends Fragment {
             switch (requestCode) {
                 case GALLERY_REQUEST_CODE:
                     Uri selectedImage = data.getData();
-                    imageViewFirst.setImageURI(selectedImage);
+                    imageView[getSelectedImageViewElement()].setImageURI(selectedImage);
                     break;
                 case CAMERA_REQUEST_CODE:
                     Bundle extras = data.getExtras();
                     Bitmap imageBitmap = (Bitmap) extras.get("data");
-                    imageViewFirst.setImageBitmap(imageBitmap);
+                    imageView[getSelectedImageViewElement()].setImageBitmap(imageBitmap);
                     break;
             }
+
+            photoOptionsAddBox.destroyed();
+            setSelectedImageViewElement(getSelectedImageViewElement() + 1);
+            loadAddImageIcon();
+            initEventsImageView();
         }
+    }
+
+    private void loadAddImageIcon() {
+        if (getSelectedImageViewElement() == IMAGE_VIEWS_COUNT - 1) {
+            return;
+        }
+        imageView[selectedImageViewElement].setImageDrawable(ContextCompat
+                .getDrawable(context, R.drawable.photo_add_image_view));
     }
 
     private boolean validateControl() {
@@ -258,6 +278,16 @@ public class AddFoodFragment extends Fragment {
 
         ScrollView foodAddScrollView = this.view.findViewById(R.id.foodAddScrollView);
         foodAddScrollView.pageScroll(View.FOCUS_UP);
+    }
+
+    public int getSelectedImageViewElement() {
+        return selectedImageViewElement;
+    }
+
+    public void setSelectedImageViewElement(int selectedImageViewElement) {
+        if (selectedImageViewElement < IMAGE_VIEWS_COUNT) {
+            this.selectedImageViewElement = selectedImageViewElement;
+        }
     }
 
     private class LoadValuesCategory implements Runnable {
