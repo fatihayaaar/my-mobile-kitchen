@@ -1,15 +1,131 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Categories>
     <Category>
-        <CategoryName>DENEME1</CategoryName>
+        <CategoryName>meze</CategoryName>
+        <CategoryImageNo>1</CategoryImageNo>
     </Category>
     <Category>
-        <CategoryName>DENEME2</CategoryName>
+        <CategoryName>bebek maması</CategoryName>
+        <CategoryImageNo>2</CategoryImageNo>
     </Category>
     <Category>
-        <CategoryName>DENEME3</CategoryName>
+        <CategoryName>hamur işi</CategoryName>
+        <CategoryImageNo>3</CategoryImageNo>
     </Category>
     <Category>
-        <CategoryName>DENEME4</CategoryName>
+        <CategoryName>içecek</CategoryName>
+        <CategoryImageNo>4</CategoryImageNo>
+    </Category>
+    <Category>
+        <CategoryName>kahvaltı</CategoryName>
+        <CategoryImageNo>5</CategoryImageNo>
+    </Category>
+    <Category>
+        <CategoryName>kek</CategoryName>
+        <CategoryImageNo>6</CategoryImageNo>
+    </Category>
+    <Category>
+        <CategoryName>pasta</CategoryName>
+        <CategoryImageNo>7</CategoryImageNo>
+    </Category>
+    <Category>
+        <CategoryName>tavuk</CategoryName>
+        <CategoryImageNo>8</CategoryImageNo>
+    </Category>
+    <Category>
+        <CategoryName>kurabiye</CategoryName>
+        <CategoryImageNo>9</CategoryImageNo>
+    </Category>
+    <Category>
+        <CategoryName>diyet</CategoryName>
+        <CategoryImageNo>10</CategoryImageNo>
+    </Category>
+    <Category>
+        <CategoryName>şekerlemeler</CategoryName>
+        <CategoryImageNo>11</CategoryImageNo>
+    </Category>
+    <Category>
+        <CategoryName>balık</CategoryName>
+        <CategoryImageNo>12</CategoryImageNo>
+    </Category>
+    <Category>
+        <CategoryName>hamburger</CategoryName>
+        <CategoryImageNo>13</CategoryImageNo>
+    </Category>
+    <Category>
+        <CategoryName>dondurma</CategoryName>
+        <CategoryImageNo>14</CategoryImageNo>
+    </Category>
+    <Category>
+        <CategoryName>reçel</CategoryName>
+        <CategoryImageNo>15</CategoryImageNo>
+    </Category>
+    <Category>
+        <CategoryName>köfte</CategoryName>
+        <CategoryImageNo>16</CategoryImageNo>
+    </Category>
+    <Category>
+        <CategoryName>zeytin yağı</CategoryName>
+        <CategoryImageNo>17</CategoryImageNo>
+    </Category>
+    <Category>
+        <CategoryName>turşu</CategoryName>
+        <CategoryImageNo>18</CategoryImageNo>
+    </Category>
+    <Category>
+        <CategoryName>turta</CategoryName>
+        <CategoryImageNo>19</CategoryImageNo>
+    </Category>
+    <Category>
+        <CategoryName>pizza</CategoryName>
+        <CategoryImageNo>20</CategoryImageNo>
+    </Category>
+    <Category>
+        <CategoryName>pilav</CategoryName>
+        <CategoryImageNo>21</CategoryImageNo>
+    </Category>
+    <Category>
+        <CategoryName>salata</CategoryName>
+        <CategoryImageNo>22</CategoryImageNo>
+    </Category>
+    <Category>
+        <CategoryName>sandviç</CategoryName>
+        <CategoryImageNo>23</CategoryImageNo>
+    </Category>
+    <Category>
+        <CategoryName>abur cubur</CategoryName>
+        <CategoryImageNo>24</CategoryImageNo>
+    </Category>
+    <Category>
+        <CategoryName>çorba</CategoryName>
+        <CategoryImageNo>25</CategoryImageNo>
+    </Category>
+    <Category>
+        <CategoryName>spagetti</CategoryName>
+        <CategoryImageNo>26</CategoryImageNo>
+    </Category>
+    <Category>
+        <CategoryName>biftek</CategoryName>
+        <CategoryImageNo>27</CategoryImageNo>
+    </Category>
+    <Category>
+        <CategoryName>yöresel</CategoryName>
+        <CategoryImageNo>28</CategoryImageNo>
+    </Category>
+    <Category>
+        <CategoryName>vegan</CategoryName>
+        <CategoryImageNo>29</CategoryImageNo>
+    </Category>
+    <Category>
+        <CategoryName>sebzeler</CategoryName>
+        <CategoryImageNo>30</CategoryImageNo>
+    </Category>
+    <Category>
+        <CategoryName>vejeteryan</CategoryName>
+        <CategoryImageNo>31</CategoryImageNo>
+    </Category>
+    <Category>
+        <CategoryName>dünya sofrası</CategoryName>
+        <CategoryImageNo>32</CategoryImageNo>
     </Category>
 </Categories>
