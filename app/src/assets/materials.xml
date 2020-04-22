@@ -1,0 +1,849 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Materials>
+    <Material>
+        <MaterialName>tavuk butu</MaterialName>
+    </Material>
+    <Material>
+        <MaterialName>arpa şehriye</MaterialName>
+    </Material>
+    <Material>
+        <MaterialName>sıvı yağ</MaterialName>
+    </Material>
+    <Material>
+        <MaterialName>karabiber</MaterialName>
+    </Material>
+    <Material>
+        <MaterialName>tuz</MaterialName>
+    </Material>
+    <Material>
+        <MaterialName>su</MaterialName>
+    </Material>
+    <Material>
+        <MaterialName>pul biber</MaterialName>
+    </Material>
+    <Material>
+        <MaterialName>sivri biber</MaterialName>
+    </Material>
+    <Material>
+        <MaterialName>kuru nane</MaterialName>
+    </Material>
+    <Material>
+        <MaterialName>limon</MaterialName>
+    </Material>
+    <Material>
+        <MaterialName>salça</MaterialName>
+    </Material>
+    <Material>
+        <MaterialName>roka</MaterialName>
+    </Material>
+    <Material>
+        <MaterialName>maydanoz</MaterialName>
+    </Material>
+    <Material>
+        <MaterialName>patates</MaterialName>
+    </Material>
+    <Material>
+        <MaterialName>kaşar peyniri</MaterialName>
+    </Material>
+    <Material>
+        <MaterialName>tereyağı</MaterialName>
+    </Material>
+    <Material>
+        <MaterialName>domates</MaterialName>
+    </Material>
+    <Material>
+        <MaterialName>bezelye</MaterialName>
+    </Material>
+    <Material>
+        <MaterialName>havuç</MaterialName>
+    </Material>
+    <Material>
+        <MaterialName>mısır</MaterialName>
+    </Material>
+    <Material>
+        <MaterialName>kornişon turşu</MaterialName>
+    </Material>
+    <Material>
+        <MaterialName>yeşil zeytin</MaterialName>
+    </Material>
+    <Material>
+        <MaterialName>siyah zeytin</MaterialName>
+    </Material>
+    <Material>
+        <MaterialName>ketçap</MaterialName>
+    </Material>
+    <Material>
+        <MaterialName>mayonez</MaterialName>
+    </Material>
+    <Material>
+        <MaterialName>fesleğen</MaterialName>
+    </Material>
+    <Material>
+        <MaterialName>sarımsak</MaterialName>
+    </Material>
+    <Material>
+        <MaterialName>süt</MaterialName>
+    </Material>
+    <Material>
+        <MaterialName>mantar</MaterialName>
+    </Material>
+    <Material>
+        <MaterialName>kuru soğan</MaterialName>
+    </Material>
+    <Material>
+        <MaterialName>yoğurt</MaterialName>
+    </Material>
+    <Material>
+        <MaterialName>yumurta</MaterialName>
+    </Material>
+    <Material>
+        <MaterialName>şeker</MaterialName>
+    </Material>
+    <Material>
+        <MaterialName>kabartma tozu</MaterialName>
+    </Material>
+    <Material>
+        <MaterialName>mısır unu</MaterialName>
+    </Material>
+    <Material>
+        <MaterialName>buğday unu</MaterialName>
+    </Material>
+    <Material>
+        <MaterialName>bulgur</MaterialName>
+    </Material>
+    <Material>
+        <MaterialName>mercimek</MaterialName>
+    </Material>
+    <Material>
+        <MaterialName>kuru maya</MaterialName>
+    </Material>
+    <Material>
+        <MaterialName>yufka</MaterialName>
+    </Material>
+    <Material>
+        <MaterialName>kuru fasulye</MaterialName>
+    </Material>
+    <Material>
+        <MaterialName>kimyon</MaterialName>
+    </Material>
+    <Material>
+        <MaterialName>kekik</MaterialName>
+    </Material>
+    <Material>
+        <MaterialName>erişte</MaterialName>
+    </Material>
+    <Material>
+        <MaterialName>makarna</MaterialName>
+    </Material>
+    <Material>
+        <MaterialName>krema</MaterialName>
+    </Material>
+    <Material>
+        <MaterialName>kıyma</MaterialName>
+    </Material>
+    <Material>
+        <MaterialName>bisküvi</MaterialName>
+    </Material>
+    <Material>
+        <MaterialName>nişasta</MaterialName>
+    </Material>
+    <Material>
+        <MaterialName>hindistan cevizi</MaterialName>
+    </Material>
+    <Material>
+        <MaterialName>buğday</MaterialName>
+    </Material>
+    <Material>
+        <MaterialName>pirinç</MaterialName>
+    </Material>
+    <Material>
+        <MaterialName>portakal kabuğu</MaterialName>
+    </Material>
+    <Material>
+        <MaterialName>limon kabuğu</MaterialName>
+    </Material>
+    <Material>
+        <MaterialName>elma</MaterialName>
+    </Material>
+    <Material>
+        <MaterialName>kuru üzüm</MaterialName>
+    </Material>
+    <Material>
+        <MaterialName>kuru incir</MaterialName>
+    </Material>
+    <Material>
+        <MaterialName>kuru kayısı</MaterialName>
+    </Material>
+    <Material>
+        <MaterialName>tarçın</MaterialName>
+    </Material>
+    <Material>
+        <MaterialName>nar</MaterialName>
+    </Material>
+    <Material>
+        <MaterialName>kuşbaşı et</MaterialName>
+    </Material>
+    <Material>
+        <MaterialName>patlıcan</MaterialName>
+    </Material>
+    <Material>
+        <MaterialName>kabak</MaterialName>
+    </Material>
+    <Material>
+        <MaterialName>pırasa</MaterialName>
+    </Material>
+    <Material>
+        <MaterialName>haşhaş</MaterialName>
+    </Material>
+    <Material>
+        <MaterialName>çörek otu</MaterialName>
+    </Material>
+    <Material>
+        <MaterialName>susam</MaterialName>
+    </Material>
+    <Material>
+        <MaterialName>vanilya</MaterialName>
+    </Material>
+    <Material>
+        <MaterialName>krem şanti</MaterialName>
+    </Material>
+    <Material>
+        <MaterialName>sirke</MaterialName>
+    </Material>
+    <Material>
+        <MaterialName>sosis</MaterialName>
+    </Material>
+    <Material>
+        <MaterialName>sucuk</MaterialName>
+    </Material>
+    <Material>
+        <MaterialName>tarhana</MaterialName>
+    </Material>
+    <Material>
+        <MaterialName>nar ekşisi</MaterialName>
+    </Material>
+    <Material>
+        <MaterialName>sumak</MaterialName>
+    </Material>
+    <Material>
+        <MaterialName>ceviz içi</MaterialName>
+    </Material>
+    <Material>
+        <MaterialName>fındık içi</MaterialName>
+    </Material>
+    <Material>
+        <MaterialName>reyhan</MaterialName>
+    </Material>
+    <Material>
+        <MaterialName>nohut</MaterialName>
+    </Material>
+    <Material>
+        <MaterialName>kaymak</MaterialName>
+    </Material>
+    <Material>
+        <MaterialName>biberiye</MaterialName>
+    </Material>
+    <Material>
+        <MaterialName>defne yaprağı</MaterialName>
+    </Material>
+    <Material>
+        <MaterialName>dere otu</MaterialName>
+    </Material>
+    <Material>
+        <MaterialName>mercan köşk otu</MaterialName>
+    </Material>
+    <Material>
+        <MaterialName>kişniş</MaterialName>
+    </Material>
+    <Material>
+        <MaterialName>misk otu</MaterialName>
+    </Material>
+    <Material>
+        <MaterialName>rezene</MaterialName>
+    </Material>
+    <Material>
+        <MaterialName>köri</MaterialName>
+    </Material>
+    <Material>
+        <MaterialName>anason</MaterialName>
+    </Material>
+    <Material>
+        <MaterialName>hardal</MaterialName>
+    </Material>
+    <Material>
+        <MaterialName>karanfil</MaterialName>
+    </Material>
+    <Material>
+        <MaterialName>kereviz tohumu</MaterialName>
+    </Material>
+    <Material>
+        <MaterialName>safran</MaterialName>
+    </Material>
+    <Material>
+        <MaterialName>zerdeçal</MaterialName>
+    </Material>
+    <Material>
+        <MaterialName>fıstık</MaterialName>
+    </Material>
+    <Material>
+        <MaterialName>yeni bahar</MaterialName>
+    </Material>
+    <Material>
+        <MaterialName>bakla</MaterialName>
+    </Material>
+    <Material>
+        <MaterialName>börülce</MaterialName>
+    </Material>
+    <Material>
+        <MaterialName>barbunya</MaterialName>
+    </Material>
+    <Material>
+        <MaterialName>soya fasulyesi</MaterialName>
+    </Material>
+    <Material>
+        <MaterialName>kaju</MaterialName>
+    </Material>
+    <Material>
+        <MaterialName>leblebi</MaterialName>
+    </Material>
+    <Material>
+        <MaterialName>ay çekirdeği</MaterialName>
+    </Material>
+    <Material>
+        <MaterialName>yer fıstığı</MaterialName>
+    </Material>
+    <Material>
+        <MaterialName>pazı</MaterialName>
+    </Material>
+    <Material>
+        <MaterialName>mürdüm eriği</MaterialName>
+    </Material>
+    <Material>
+        <MaterialName>ıspanak</MaterialName>
+    </Material>
+    <Material>
+        <MaterialName>turp</MaterialName>
+    </Material>
+    <Material>
+        <MaterialName>karnabahar</MaterialName>
+    </Material>
+    <Material>
+        <MaterialName>bal kabağı</MaterialName>
+    </Material>
+    <Material>
+        <MaterialName>kestane</MaterialName>
+    </Material>
+    <Material>
+        <MaterialName>brüksel lahanası</MaterialName>
+    </Material>
+    <Material>
+        <MaterialName>kereviz</MaterialName>
+    </Material>
+    <Material>
+        <MaterialName>pancar</MaterialName>
+    </Material>
+    <Material>
+        <MaterialName>ada çayı</MaterialName>
+    </Material>
+    <Material>
+        <MaterialName>melisa çayı</MaterialName>
+    </Material>
+    <Material>
+        <MaterialName>keraviye</MaterialName>
+    </Material>
+    <Material>
+        <MaterialName>muskat</MaterialName>
+    </Material>
+    <Material>
+        <MaterialName>tarhun otu</MaterialName>
+    </Material>
+    <Material>
+        <MaterialName>kuzukulağı</MaterialName>
+    </Material>
+    <Material>
+        <MaterialName>frenk soğanı</MaterialName>
+    </Material>
+    <Material>
+        <MaterialName>kuşkonmaz</MaterialName>
+    </Material>
+    <Material>
+        <MaterialName>marul</MaterialName>
+    </Material>
+    <Material>
+        <MaterialName>mozzarella peyniri</MaterialName>
+    </Material>
+    <Material>
+        <MaterialName>parmesan peyniri</MaterialName>
+    </Material>
+    <Material>
+        <MaterialName>milföy</MaterialName>
+    </Material>
+    <Material>
+        <MaterialName>çilek</MaterialName>
+    </Material>
+    <Material>
+        <MaterialName>labne</MaterialName>
+    </Material>
+    <Material>
+        <MaterialName>tahin</MaterialName>
+    </Material>
+    <Material>
+        <MaterialName>pekmez</MaterialName>
+    </Material>
+    <Material>
+        <MaterialName>kestane balı</MaterialName>
+    </Material>
+    <Material>
+        <MaterialName>anzer balı</MaterialName>
+    </Material>
+    <Material>
+        <MaterialName>çiçek balı</MaterialName>
+    </Material>
+    <Material>
+        <MaterialName>üzüm pekmezi</MaterialName>
+    </Material>
+    <Material>
+        <MaterialName>elma pekmezi</MaterialName>
+    </Material>
+    <Material>
+        <MaterialName>dut pekmezi</MaterialName>
+    </Material>
+    <Material>
+        <MaterialName>bamya</MaterialName>
+    </Material>
+    <Material>
+        <MaterialName>yer elması</MaterialName>
+    </Material>
+    <Material>
+        <MaterialName>nektari</MaterialName>
+    </Material>
+    <Material>
+        <MaterialName>elma arjantin</MaterialName>
+    </Material>
+    <Material>
+        <MaterialName>deveci armut</MaterialName>
+    </Material>
+    <Material>
+        <MaterialName>malta eriği</MaterialName>
+    </Material>
+    <Material>
+        <MaterialName>kavun</MaterialName>
+    </Material>
+    <Material>
+        <MaterialName>kivi</MaterialName>
+    </Material>
+    <Material>
+        <MaterialName>ayva</MaterialName>
+    </Material>
+    <Material>
+        <MaterialName>şeftali</MaterialName>
+    </Material>
+    <Material>
+        <MaterialName>susam yağı</MaterialName>
+    </Material>
+    <Material>
+        <MaterialName>soya sosu</MaterialName>
+    </Material>
+    <Material>
+        <MaterialName>pirinç sirkesi</MaterialName>
+    </Material>
+    <Material>
+        <MaterialName>karbonat</MaterialName>
+    </Material>
+    <Material>
+        <MaterialName>soda</MaterialName>
+    </Material>
+    <Material>
+        <MaterialName>istiridye sos</MaterialName>
+    </Material>
+    <Material>
+        <MaterialName>arnavut biberi</MaterialName>
+    </Material>
+    <Material>
+        <MaterialName>pirinç yufkası</MaterialName>
+    </Material>
+    <Material>
+        <MaterialName>kırmızı dolmalık biber</MaterialName>
+    </Material>
+    <Material>
+        <MaterialName>yeşil dolmalık biber</MaterialName>
+    </Material>
+    <Material>
+        <MaterialName>fındık yağı</MaterialName>
+    </Material>
+    <Material>
+        <MaterialName>ceviz yağı</MaterialName>
+    </Material>
+    <Material>
+        <MaterialName>kinzi</MaterialName>
+    </Material>
+    <Material>
+        <MaterialName>mezgit fileto</MaterialName>
+    </Material>
+    <Material>
+        <MaterialName>pudra şekeri</MaterialName>
+    </Material>
+    <Material>
+        <MaterialName>siyah çay</MaterialName>
+    </Material>
+    <Material>
+        <MaterialName>yeşil çay</MaterialName>
+    </Material>
+    <Material>
+        <MaterialName>bitki çayı</MaterialName>
+    </Material>
+    <Material>
+        <MaterialName>kombucha mantarı</MaterialName>
+    </Material>
+    <Material>
+        <MaterialName>pekin ördeği</MaterialName>
+    </Material>
+    <Material>
+        <MaterialName>lavaş</MaterialName>
+    </Material>
+    <Material>
+        <MaterialName>tofu</MaterialName>
+    </Material>
+    <Material>
+        <MaterialName>çili biberi</MaterialName>
+    </Material>
+    <Material>
+        <MaterialName>jasmine pirinç</MaterialName>
+    </Material>
+    <Material>
+        <MaterialName>dolmalık fıstık</MaterialName>
+    </Material>
+    <Material>
+        <MaterialName>garnitür</MaterialName>
+    </Material>
+    <Material>
+        <MaterialName>dil peyniri</MaterialName>
+    </Material>
+    <Material>
+        <MaterialName>galeta unu</MaterialName>
+    </Material>
+    <Material>
+        <MaterialName>kapya biberi</MaterialName>
+    </Material>
+    <Material>
+        <MaterialName>ince bulgur</MaterialName>
+    </Material>
+    <Material>
+        <MaterialName>kuş üzümü</MaterialName>
+    </Material>
+    <Material>
+        <MaterialName>tavuk fileto</MaterialName>
+    </Material>
+    <Material>
+        <MaterialName>sığır kaymağı</MaterialName>
+    </Material>
+    <Material>
+        <MaterialName>bambu filizi</MaterialName>
+    </Material>
+    <Material>
+        <MaterialName>sek sherry</MaterialName>
+    </Material>
+    <Material>
+        <MaterialName>karides krakeri</MaterialName>
+    </Material>
+    <Material>
+        <MaterialName>sushi pirinci</MaterialName>
+    </Material>
+    <Material>
+        <MaterialName>yengeç eti</MaterialName>
+    </Material>
+    <Material>
+        <MaterialName>kurutulmuş yosun</MaterialName>
+    </Material>
+    <Material>
+        <MaterialName>sushi sarma hasırı</MaterialName>
+    </Material>
+    <Material>
+        <MaterialName>avokado</MaterialName>
+    </Material>
+    <Material>
+        <MaterialName>balık yumurtası</MaterialName>
+    </Material>
+    <Material>
+        <MaterialName>soya filizi</MaterialName>
+    </Material>
+    <Material>
+        <MaterialName>garam masala</MaterialName>
+    </Material>
+    <Material>
+        <MaterialName>vadouvan</MaterialName>
+    </Material>
+    <Material>
+        <MaterialName>asafoetida</MaterialName>
+    </Material>
+    <Material>
+        <MaterialName>hardal tohumu</MaterialName>
+    </Material>
+    <Material>
+        <MaterialName>hardal yağı</MaterialName>
+    </Material>
+    <Material>
+        <MaterialName>istavrit</MaterialName>
+    </Material>
+    <Material>
+        <MaterialName>hamsi</MaterialName>
+    </Material>
+    <Material>
+        <MaterialName>asma yaprağı</MaterialName>
+    </Material>
+    <Material>
+        <MaterialName>palamut balığı</MaterialName>
+    </Material>
+    <Material>
+        <MaterialName>uskumru</MaterialName>
+    </Material>
+    <Material>
+        <MaterialName>çipura</MaterialName>
+    </Material>
+    <Material>
+        <MaterialName>renkli tane karabiber</MaterialName>
+    </Material>
+    <Material>
+        <MaterialName>barbun balığı</MaterialName>
+    </Material>
+    <Material>
+        <MaterialName>deniz tuzu</MaterialName>
+    </Material>
+    <Material>
+        <MaterialName>toz sebze çeşni</MaterialName>
+    </Material>
+    <Material>
+        <MaterialName>baldo pirinç</MaterialName>
+    </Material>
+    <Material>
+        <MaterialName>kabuklu midye</MaterialName>
+    </Material>
+    <Material>
+        <MaterialName>beyaz biber</MaterialName>
+    </Material>
+    <Material>
+        <MaterialName>levrek fileto</MaterialName>
+    </Material>
+    <Material>
+        <MaterialName>brokoli minik çiçek</MaterialName>
+    </Material>
+    <Material>
+        <MaterialName>karnabahar minik çiçek</MaterialName>
+    </Material>
+    <Material>
+        <MaterialName>cherry domates</MaterialName>
+    </Material>
+    <Material>
+        <MaterialName>beyaz sirke</MaterialName>
+    </Material>
+    <Material>
+        <MaterialName>pezene tohumu</MaterialName>
+    </Material>
+    <Material>
+        <MaterialName>somon fileto</MaterialName>
+    </Material>
+    <Material>
+        <MaterialName>sarı biber</MaterialName>
+    </Material>
+    <Material>
+        <MaterialName>beyaz karabiber</MaterialName>
+    </Material>
+    <Material>
+        <MaterialName>levrek</MaterialName>
+    </Material>
+    <Material>
+        <MaterialName>çinekop</MaterialName>
+    </Material>
+    <Material>
+        <MaterialName>sardalya balığı</MaterialName>
+    </Material>
+    <Material>
+        <MaterialName>dil balığı</MaterialName>
+    </Material>
+    <Material>
+        <MaterialName>beyaz şeker</MaterialName>
+    </Material>
+    <Material>
+        <MaterialName>esmer şeker</MaterialName>
+    </Material>
+    <Material>
+        <MaterialName>dijon hardalı</MaterialName>
+    </Material>
+    <Material>
+        <MaterialName>ton balığı</MaterialName>
+    </Material>
+    <Material>
+        <MaterialName>deniz levreği</MaterialName>
+    </Material>
+    <Material>
+        <MaterialName>kapari</MaterialName>
+    </Material>
+    <Material>
+        <MaterialName>kalamar</MaterialName>
+    </Material>
+    <Material>
+        <MaterialName>maden suyu</MaterialName>
+    </Material>
+    <Material>
+        <MaterialName>süzme yoğurt</MaterialName>
+    </Material>
+    <Material>
+        <MaterialName>kereviz sapı</MaterialName>
+    </Material>
+    <Material>
+        <MaterialName>mısır özü yağı</MaterialName>
+    </Material>
+    <Material>
+        <MaterialName>kırmızı soğan</MaterialName>
+    </Material>
+    <Material>
+        <MaterialName>kinoa</MaterialName>
+    </Material>
+    <Material>
+        <MaterialName>alabalık</MaterialName>
+    </Material>
+    <Material>
+        <MaterialName>kapari çiçeği</MaterialName>
+    </Material>
+    <Material>
+        <MaterialName>tam tahıllı ekmek</MaterialName>
+    </Material>
+    <Material>
+        <MaterialName>olgun avokado</MaterialName>
+    </Material>
+    <Material>
+        <MaterialName>maydanoz sapı</MaterialName>
+    </Material>
+    <Material>
+        <MaterialName>hardal tohumu</MaterialName>
+    </Material>
+    <Material>
+        <MaterialName>ayıklanmış karides</MaterialName>
+    </Material>
+    <Material>
+        <MaterialName>kültür mantarı</MaterialName>
+    </Material>
+    <Material>
+        <MaterialName>sakız kabağı</MaterialName>
+    </Material>
+    <Material>
+        <MaterialName>krem peynir</MaterialName>
+    </Material>
+    <Material>
+        <MaterialName>taze kuşkonmaz</MaterialName>
+    </Material>
+    <Material>
+        <MaterialName>jalapeno biberi</MaterialName>
+    </Material>
+    <Material>
+        <MaterialName>lemongrass</MaterialName>
+    </Material>
+    <Material>
+        <MaterialName>basmati</MaterialName>
+    </Material>
+    <Material>
+        <MaterialName>kakule</MaterialName>
+    </Material>
+    <Material>
+        <MaterialName>ahtapot</MaterialName>
+    </Material>
+    <Material>
+        <MaterialName>cajun baharatı</MaterialName>
+    </Material>
+    <Material>
+        <MaterialName>mini kokteyl kornet</MaterialName>
+    </Material>
+    <Material>
+        <MaterialName>lagos balığı</MaterialName>
+    </Material>
+    <Material>
+        <MaterialName>kuskus</MaterialName>
+    </Material>
+    <Material>
+        <MaterialName>mercanköşk</MaterialName>
+    </Material>
+    <Material>
+        <MaterialName>paccheri makarna</MaterialName>
+    </Material>
+    <Material>
+        <MaterialName>spagetti makarna</MaterialName>
+    </Material>
+    <Material>
+        <MaterialName>linguine makarna</MaterialName>
+    </Material>
+    <Material>
+        <MaterialName>kaya tuzu</MaterialName>
+    </Material>
+    <Material>
+        <MaterialName>extravergine zeytinyağı</MaterialName>
+    </Material>
+    <Material>
+        <MaterialName>çam fıstığı</MaterialName>
+    </Material>
+    <Material>
+        <MaterialName>fettucini makarna</MaterialName>
+    </Material>
+    <Material>
+        <MaterialName>fırın makarna</MaterialName>
+    </Material>
+    <Material>
+        <MaterialName>muskat cevizi</MaterialName>
+    </Material>
+    <Material>
+        <MaterialName>lazanya</MaterialName>
+    </Material>
+    <Material>
+        <MaterialName>yaprak hamur</MaterialName>
+    </Material>
+    <Material>
+        <MaterialName>burgu makarna</MaterialName>
+    </Material>
+    <Material>
+        <MaterialName>penne makarna</MaterialName>
+    </Material>
+    <Material>
+        <MaterialName>kelebek makarna</MaterialName>
+    </Material>
+    <Material>
+        <MaterialName>lumaconi rigati makarna</MaterialName>
+    </Material>
+    <Material>
+        <MaterialName>buket garnie</MaterialName>
+    </Material>
+    <Material>
+        <MaterialName>jumbo karides</MaterialName>
+    </Material>
+    <Material>
+        <MaterialName>rokfor</MaterialName>
+    </Material>
+    <Material>
+        <MaterialName>yassı erişte</MaterialName>
+    </Material>
+    <Material>
+        <MaterialName>şekersiz çiğ krema</MaterialName>
+    </Material>
+    <Material>
+        <MaterialName>tel şehriye</MaterialName>
+    </Material>
+    <Material>
+        <MaterialName>karadeniz hamsi</MaterialName>
+    </Material>
+    <Material>
+        <MaterialName>ahtapot kolu</MaterialName>
+    </Material>
+    <Material>
+        <MaterialName>etli kırmızı biber</MaterialName>
+    </Material>
+    <Material>
+        <MaterialName>toz çeşni</MaterialName>
+    </Material>
+    <Material>
+        <MaterialName>fileto lagos balığı</MaterialName>
+    </Material>
+    <Material>
+        <MaterialName>balık suyu</MaterialName>
+    </Material>
+    <Material>
+        <MaterialName>sebze suyu</MaterialName>
+    </Material>
+</Materials>
