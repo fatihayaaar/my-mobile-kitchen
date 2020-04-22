@@ -25,14 +25,6 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
-
-        foodsCardView.setOnHoverListener(new View.OnHoverListener() {
-
-            @Override
-            public boolean onHover(View view, MotionEvent motionEvent) {
-                return false;
-            }
-        });
 /*
         LinearLayout wizardFoodOptionsLayout = findViewById(R.id.wizardFoodOptionsLayout);
         wizardFoodOptionsLayout.setOnClickListener(new View.OnClickListener() {

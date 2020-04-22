@@ -8,6 +8,7 @@ public class FoodEntity extends BaseEntity {
     private String preparationTime;
     private String howManyPerson;
     private int categoryID;
+    private String imagesID;
 
     public FoodEntity() {
 
@@ -19,18 +20,19 @@ public class FoodEntity extends BaseEntity {
 
     public FoodEntity(int id, String foodName) {
         super(id);
-        this.foodName = foodName;
+        this.setFoodName(foodName);
     }
 
     public FoodEntity(int id, String foodName, String preparationText, String cookingTime,
-                      String preparationTime, String howManyPerson, int categoryID) {
+                      String preparationTime, String howManyPerson, int categoryID, String imagesID) {
         super(id);
-        this.foodName = foodName;
-        this.preparationText = preparationText;
-        this.cookingTime = cookingTime;
-        this.preparationTime = preparationTime;
-        this.howManyPerson = howManyPerson;
-        this.categoryID = categoryID;
+        this.setFoodName(foodName);
+        this.setPreparationText(preparationText);
+        this.setCookingTime(cookingTime);
+        this.setPreparationTime(preparationTime);
+        this.setHowManyPerson(howManyPerson);
+        this.setCategoryID(categoryID);
+        this.setImage(imagesID);
     }
 
     public FoodEntity(String foodName) {
@@ -85,4 +87,11 @@ public class FoodEntity extends BaseEntity {
         this.categoryID = categoryID;
     }
 
+    public String getImage() {
+        return imagesID;
+    }
+
+    public void setImage(String imagesID) {
+        this.imagesID = imagesID;
+    }
 }

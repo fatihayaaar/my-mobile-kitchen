@@ -24,6 +24,7 @@ public class SQLiteDatabaseHelper extends SQLiteOpenHelper implements IDatabaseH
     private static final String FOOD_TABLE_NAME = "Food";
     private static final String CATEGORY_TABLE_NAME = "Category";
     private static final String MATERIAL_TABLE_NAME = "Material";
+    private static final String IMAGES_TABLE_NAME = "FoodImages";
     private static final String FOOD_AREA_NAME = "foodName";
     private static final String FOOD_AREA_PREPARATION = "preparationText";
     private static final String FOOD_AREA_COOKING_TIME = "cookingTime";
@@ -31,6 +32,7 @@ public class SQLiteDatabaseHelper extends SQLiteOpenHelper implements IDatabaseH
     private static final String FOOD_AREA_HOW_MANY_PERSON = "howManyPerson";
     private static final String CATEGORY_AREA_NAME = "categoryName";
     private static final String MATERIAL_AREA_NAME = "materialName";
+    private static final String IMAGES_ID = "imagesID";
     private static SQLiteDatabaseHelper databaseHelper;
     private final int CONTENT_VALUES_INSERT = 0;
     private final int CONTENT_VALUES_UPDATE = 1;
@@ -95,6 +97,9 @@ public class SQLiteDatabaseHelper extends SQLiteOpenHelper implements IDatabaseH
                 FOOD_AREA_PREPARATION_TIME + " TEXT," +
                 FOOD_AREA_HOW_MANY_PERSON + " TEXT," +
                 FOOD_AREA_CATEGORY_ID + " INTEGER );");
+
+       // db.execSQL("CREATE TABLE " + IMAGES_TABLE_NAME + " (" +
+         //       );
     }
 
     @Override
@@ -119,6 +124,7 @@ public class SQLiteDatabaseHelper extends SQLiteOpenHelper implements IDatabaseH
             contentValues.put(FOOD_AREA_PREPARATION_TIME, ((FoodEntity) entity).getPreparationTime());
             contentValues.put(FOOD_AREA_HOW_MANY_PERSON, ((FoodEntity) entity).getHowManyPerson());
             contentValues.put(FOOD_AREA_CATEGORY_ID, entity.getID());
+            contentValues.put(IMAGES_ID, ((FoodEntity) entity).getImage());
             this.contentValues.get(CONTENT_VALUES_INSERT).get(CONTENT_VALUES_FOOD).add(contentValues);
         }
     }
@@ -152,6 +158,7 @@ public class SQLiteDatabaseHelper extends SQLiteOpenHelper implements IDatabaseH
             contentValues.put(FOOD_AREA_PREPARATION_TIME, ((FoodEntity) entity).getPreparationTime());
             contentValues.put(FOOD_AREA_HOW_MANY_PERSON, ((FoodEntity) entity).getHowManyPerson());
             contentValues.put(FOOD_AREA_CATEGORY_ID, entity.getID());
+            contentValues.put(IMAGES_ID, ((FoodEntity) entity).getImage());
             this.contentValues.get(CONTENT_VALUES_UPDATE).get(CONTENT_VALUES_FOOD).add(contentValues);
             updateIDList.get(CONTENT_VALUES_FOOD).add(id);
         }
@@ -193,7 +200,8 @@ public class SQLiteDatabaseHelper extends SQLiteOpenHelper implements IDatabaseH
                                 cursor.getString(cursor.getColumnIndex(FOOD_AREA_COOKING_TIME)),
                                 cursor.getString(cursor.getColumnIndex(FOOD_AREA_PREPARATION_TIME)),
                                 cursor.getString(cursor.getColumnIndex(FOOD_AREA_HOW_MANY_PERSON)),
-                                cursor.getColumnIndex(FOOD_AREA_CATEGORY_ID)));
+                                cursor.getColumnIndex(FOOD_AREA_CATEGORY_ID),
+                                cursor.getString(cursor.getColumnIndex(IMAGES_ID))));
             }
 
         } else if (entity == EntityName.CATEGORY_ENTITY_CLASS) {

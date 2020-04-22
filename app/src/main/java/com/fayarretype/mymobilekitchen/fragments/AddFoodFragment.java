@@ -81,7 +81,8 @@ public class AddFoodFragment extends Fragment {
     private void init() {
         initComponents();
         initPhotoOptionsBox();
-        initComponentsEvents(); }
+        initComponentsEvents();
+    }
 
     private void initComponents() {
         foodNameEditText = view.findViewById(R.id.foodNameEditText);
@@ -264,12 +265,12 @@ public class AddFoodFragment extends Fragment {
 
         if (validateControl()) {
             if (!ServiceControl.networkConnection(context)) {
-                DialogBoxContainer.
-                        getInstance(context, fragmentActivity.getSupportFragmentManager())
+                DialogBoxContainer
+                        .getInstance(context, fragmentActivity.getSupportFragmentManager())
                         .getDialogBox(DialogBoxName.INTERNET_CONNECTION_ERROR_DIALOG_BOX)
                         .show();
             } else {
-                //addTheFood();
+                saveFood();
             }
         } else {
             dialogBox.setTitle("Uyarı");
@@ -281,19 +282,25 @@ public class AddFoodFragment extends Fragment {
         foodAddScrollView.pageScroll(View.FOCUS_UP);
     }
 
-    private void addTheFood() {
+    private void saveFood() {
         FoodEntity food = new FoodEntity();
-
         food.setFoodName(foodName);
         food.setPreparationText(foodPreparation);
         food.setCookingTime(String.valueOf(foodCookingTime));
         food.setPreparationTime(String.valueOf(foodPreparationTime));
         food.setHowManyPerson(String.valueOf(foodHowManyPerson));
         food.setCategoryID(categoryAddSpinner.getSelectedItemPosition());
+        food.setImage(null);
+
+        saveImage();
 
         DataProcessingFactory dataProcessingFactory = DataProcessingFactory.getInstance(context);
         dataProcessingFactory.getManager(ManagerName.FOOD_MANAGER).add(food);
         dataProcessingFactory.saveChanges();
+    }
+
+    private void saveImage() {
+
     }
 
     public int getSelectedImageViewElement() {
