@@ -8,7 +8,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.fayarretype.mymobilekitchen.R;
 import com.fayarretype.mymobilekitchen.layers.bl.ManagerName;
-import com.fayarretype.mymobilekitchen.layers.bl.Managers;
+import com.fayarretype.mymobilekitchen.layers.bl.DataProcessingFactory;
 import com.fayarretype.mymobilekitchen.layers.bl.MaterialManager;
 import com.fayarretype.mymobilekitchen.tools.Convert;
 
@@ -33,7 +33,7 @@ public class WizardFoodActivity extends AppCompatActivity {
 
     public void bindToMaterialsMultiAutoCompleteTextView() {
         ArrayAdapter<String> adapter = new ArrayAdapter<>(this, R.layout.materials_row, R.id.materialTextView,
-                Convert.getStringArray(((MaterialManager) Managers.getInstance(this)
+                Convert.getStringArray(((MaterialManager) DataProcessingFactory.getInstance(this)
                         .getManager(ManagerName.MATERIAL_MANAGER)).getNames()));
 
         MultiAutoCompleteTextView multiAutoCompleteTextView = findViewById(R.id.materialsAddMultiAutoCompleteTextView);

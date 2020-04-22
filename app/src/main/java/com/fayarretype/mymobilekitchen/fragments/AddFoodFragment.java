@@ -24,8 +24,9 @@ import androidx.fragment.app.FragmentActivity;
 
 import com.fayarretype.mymobilekitchen.R;
 import com.fayarretype.mymobilekitchen.layers.bl.ManagerName;
-import com.fayarretype.mymobilekitchen.layers.bl.Managers;
+import com.fayarretype.mymobilekitchen.layers.bl.DataProcessingFactory;
 import com.fayarretype.mymobilekitchen.layers.bl.MaterialManager;
+import com.fayarretype.mymobilekitchen.layers.entitites.FoodEntity;
 import com.fayarretype.mymobilekitchen.layers.pl.CategoryAdapter;
 import com.fayarretype.mymobilekitchen.tools.Convert;
 import com.fayarretype.mymobilekitchen.tools.ServiceControl;
@@ -148,7 +149,7 @@ public class AddFoodFragment extends Fragment {
     private void bindToMaterialsMultiAutoCompleteTextView() {
         ArrayAdapter<String> adapter = new ArrayAdapter<>(context,
                 R.layout.materials_row, R.id.materialTextView,
-                Convert.getStringArray(((MaterialManager) Managers.getInstance(context)
+                Convert.getStringArray(((MaterialManager) DataProcessingFactory.getInstance(context)
                         .getManager(ManagerName.MATERIAL_MANAGER)).getNames()));
 
         MultiAutoCompleteTextView multiAutoCompleteTextView = view
@@ -268,7 +269,7 @@ public class AddFoodFragment extends Fragment {
                         .getDialogBox(DialogBoxName.INTERNET_CONNECTION_ERROR_DIALOG_BOX)
                         .show();
             } else {
-                dialogBox.show();
+                //addTheFood();
             }
         } else {
             dialogBox.setTitle("Uyarı");
@@ -278,6 +279,21 @@ public class AddFoodFragment extends Fragment {
 
         ScrollView foodAddScrollView = this.view.findViewById(R.id.foodAddScrollView);
         foodAddScrollView.pageScroll(View.FOCUS_UP);
+    }
+
+    private void addTheFood() {
+        FoodEntity food = new FoodEntity();
+
+        food.setFoodName(foodName);
+        food.setPreparationText(foodPreparation);
+        food.setCookingTime(String.valueOf(foodCookingTime));
+        food.setPreparationTime(String.valueOf(foodPreparationTime));
+        food.setHowManyPerson(String.valueOf(foodHowManyPerson));
+        food.setCategoryID(categoryAddSpinner.getSelectedItemPosition());
+
+        DataProcessingFactory dataProcessingFactory = DataProcessingFactory.getInstance(context);
+        dataProcessingFactory.getManager(ManagerName.FOOD_MANAGER).add(food);
+        dataProcessingFactory.saveChanges();
     }
 
     public int getSelectedImageViewElement() {

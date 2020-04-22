@@ -4,14 +4,14 @@ import android.content.Context;
 
 import com.fayarretype.mymobilekitchen.layers.bl.abstracts.IManagers;
 
-public class Managers implements IManagers<BaseManager> {
+public class DataProcessingFactory implements IManagers<BaseManager> {
 
-    private static Managers managers;
+    private static DataProcessingFactory dataProcessingFactory;
     private CategoryManager categoryManager;
     private MaterialManager materialManager;
     private FoodManager foodManager;
 
-    private Managers(Context context) {
+    private DataProcessingFactory(Context context) {
         ManagerContainer managerContainer = ManagerContainer.getInstance(context);
 
         categoryManager = (CategoryManager) managerContainer.getManager(ManagerName.CATEGORY_MANAGER);
@@ -19,10 +19,10 @@ public class Managers implements IManagers<BaseManager> {
         foodManager = (FoodManager) managerContainer.getManager(ManagerName.FOOD_MANAGER);
     }
 
-    public static Managers getInstance(Context context) {
-        if (managers == null)
-            managers = new Managers(context);
-        return managers;
+    public static DataProcessingFactory getInstance(Context context) {
+        if (dataProcessingFactory == null)
+            dataProcessingFactory = new DataProcessingFactory(context);
+        return dataProcessingFactory;
     }
 
     @Override
