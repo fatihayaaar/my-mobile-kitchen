@@ -32,7 +32,7 @@ public class FoodEntity extends BaseEntity {
         this.setPreparationTime(preparationTime);
         this.setHowManyPerson(howManyPerson);
         this.setCategoryID(categoryID);
-        this.setImage(imagesID);
+        this.setImageID(imagesID);
     }
 
     public FoodEntity(String foodName) {
@@ -91,7 +91,7 @@ public class FoodEntity extends BaseEntity {
         return imagesID;
     }
 
-    public void setImage(String imagesID) {
+    public void setImageID(String imagesID) {
         this.imagesID = imagesID;
     }
 }

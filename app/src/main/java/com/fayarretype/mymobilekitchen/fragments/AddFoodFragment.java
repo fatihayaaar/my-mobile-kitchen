@@ -290,7 +290,7 @@ public class AddFoodFragment extends Fragment {
         food.setPreparationTime(String.valueOf(foodPreparationTime));
         food.setHowManyPerson(String.valueOf(foodHowManyPerson));
         food.setCategoryID(categoryAddSpinner.getSelectedItemPosition());
-        food.setImage(null);
+        food.setImageID(null);
 
         saveImage();
 
