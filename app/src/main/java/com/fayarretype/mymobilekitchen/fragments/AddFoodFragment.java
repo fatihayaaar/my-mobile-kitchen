@@ -23,8 +23,9 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentActivity;
 
 import com.fayarretype.mymobilekitchen.R;
-import com.fayarretype.mymobilekitchen.layers.bl.ManagerName;
 import com.fayarretype.mymobilekitchen.layers.bl.DataProcessingFactory;
+import com.fayarretype.mymobilekitchen.layers.bl.FoodManager;
+import com.fayarretype.mymobilekitchen.layers.bl.ManagerName;
 import com.fayarretype.mymobilekitchen.layers.bl.MaterialManager;
 import com.fayarretype.mymobilekitchen.layers.entitites.FoodEntity;
 import com.fayarretype.mymobilekitchen.layers.pl.CategoryAdapter;
@@ -54,6 +55,7 @@ public class AddFoodFragment extends Fragment {
     private EditText foodHowManyPersonEditText;
     private Button saveButton;
     private Spinner categoryAddSpinner;
+    private FoodEntity food;
     private String foodName;
     private String foodPreparation;
     private int selectedImageViewElement;
@@ -282,25 +284,24 @@ public class AddFoodFragment extends Fragment {
         foodAddScrollView.pageScroll(View.FOCUS_UP);
     }
 
-    private void saveFood() {
-        FoodEntity food = new FoodEntity();
+    private void createFood() {
+        food = new FoodEntity();
         food.setFoodName(foodName);
         food.setPreparationText(foodPreparation);
         food.setCookingTime(String.valueOf(foodCookingTime));
         food.setPreparationTime(String.valueOf(foodPreparationTime));
         food.setHowManyPerson(String.valueOf(foodHowManyPerson));
-        food.setCategoryID(categoryAddSpinner.getSelectedItemPosition());
+        food.setCategoryID(categoryAddSpinner.getSelectedItemPosition() + 1);
         food.setImageID(null);
+    }
 
-        saveImage();
+    private void saveFood() {
+        createFood();
 
         DataProcessingFactory dataProcessingFactory = DataProcessingFactory.getInstance(context);
         dataProcessingFactory.getManager(ManagerName.FOOD_MANAGER).add(food);
+        ((FoodManager) dataProcessingFactory.getManager(ManagerName.FOOD_MANAGER)).uploadImages();
         dataProcessingFactory.saveChanges();
-    }
-
-    private void saveImage() {
-
     }
 
     public int getSelectedImageViewElement() {

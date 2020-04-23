@@ -39,4 +39,9 @@ public class FoodManager extends BaseManager<FoodEntity> implements IFoodManager
             return foodEntity;
         return new FoodEntity(-1);
     }
+
+    @Override
+    public void uploadImages() {
+
+    }
 }
