@@ -10,6 +10,7 @@ import com.fayarretype.mymobilekitchen.layers.dal.repositories.EntityName;
 import com.fayarretype.mymobilekitchen.layers.entitites.BaseEntity;
 import com.fayarretype.mymobilekitchen.layers.entitites.CategoryEntity;
 import com.fayarretype.mymobilekitchen.layers.entitites.FoodEntity;
+import com.fayarretype.mymobilekitchen.layers.entitites.ImageEntity;
 import com.fayarretype.mymobilekitchen.layers.entitites.MaterialEntity;
 import com.fayarretype.mymobilekitchen.tools.Convert;
 
@@ -34,13 +35,14 @@ public class SQLiteDatabaseHelper extends SQLiteOpenHelper implements IDatabaseH
     private static final String MATERIAL_AREA_NAME = "materialName";
     private static final String IMAGES_AREA_IMAGES_ID = "imagesID";
     private static final String IMAGES_AREA_FOOD_ID = "foodID";
-    private static final String IMAGES_AREA_IMAGE_URL = "imageURL";
+    private static final String IMAGES_AREA_IMAGE_ID = "imageID";
     private static SQLiteDatabaseHelper databaseHelper;
     private final int CONTENT_VALUES_INSERT = 0;
     private final int CONTENT_VALUES_UPDATE = 1;
     private final int CONTENT_VALUES_CATEGORY = 0;
     private final int CONTENT_VALUES_MATERIAL = 1;
     private final int CONTENT_VALUES_FOOD = 2;
+    private final int CONTENT_VALUES_IMAGE = 3;
     private ArrayList<ArrayList<ArrayList<ContentValues>>> contentValues;
     private ArrayList<ArrayList<Integer>> deleteIDList;
     private ArrayList<ArrayList<Integer>> updateIDList;
@@ -64,17 +66,22 @@ public class SQLiteDatabaseHelper extends SQLiteOpenHelper implements IDatabaseH
         contentValues.get(CONTENT_VALUES_INSERT).add(CONTENT_VALUES_CATEGORY, new ArrayList<ContentValues>());
         contentValues.get(CONTENT_VALUES_INSERT).add(CONTENT_VALUES_MATERIAL, new ArrayList<ContentValues>());
         contentValues.get(CONTENT_VALUES_INSERT).add(CONTENT_VALUES_FOOD, new ArrayList<ContentValues>());
+        contentValues.get(CONTENT_VALUES_INSERT).add(CONTENT_VALUES_IMAGE, new ArrayList<ContentValues>());
         contentValues.get(CONTENT_VALUES_UPDATE).add(CONTENT_VALUES_CATEGORY, new ArrayList<ContentValues>());
         contentValues.get(CONTENT_VALUES_UPDATE).add(CONTENT_VALUES_MATERIAL, new ArrayList<ContentValues>());
         contentValues.get(CONTENT_VALUES_UPDATE).add(CONTENT_VALUES_FOOD, new ArrayList<ContentValues>());
+        contentValues.get(CONTENT_VALUES_UPDATE).add(CONTENT_VALUES_IMAGE, new ArrayList<ContentValues>());
+
         deleteIDList = new ArrayList<>();
         deleteIDList.add(CONTENT_VALUES_CATEGORY, new ArrayList<Integer>());
         deleteIDList.add(CONTENT_VALUES_MATERIAL, new ArrayList<Integer>());
         deleteIDList.add(CONTENT_VALUES_FOOD, new ArrayList<Integer>());
+        deleteIDList.add(CONTENT_VALUES_IMAGE, new ArrayList<Integer>());
         updateIDList = new ArrayList<>();
         updateIDList.add(CONTENT_VALUES_CATEGORY, new ArrayList<Integer>());
         updateIDList.add(CONTENT_VALUES_MATERIAL, new ArrayList<Integer>());
         updateIDList.add(CONTENT_VALUES_FOOD, new ArrayList<Integer>());
+        updateIDList.add(CONTENT_VALUES_IMAGE, new ArrayList<Integer>());
     }
 
     public void finish() {
@@ -100,8 +107,10 @@ public class SQLiteDatabaseHelper extends SQLiteOpenHelper implements IDatabaseH
                 FOOD_AREA_HOW_MANY_PERSON + " TEXT," +
                 FOOD_AREA_CATEGORY_ID + " INTEGER );");
 
-       // db.execSQL("CREATE TABLE " + IMAGES_TABLE_NAME + " (" +
-         //       );
+        db.execSQL("CREATE TABLE " + IMAGES_TABLE_NAME + " (" +
+                IMAGES_AREA_IMAGES_ID + " INTEGER PRIMARY KEY AUTOINCREMENT," +
+                IMAGES_AREA_FOOD_ID + " INTEGER NOT NULL," +
+                IMAGES_AREA_IMAGE_ID + " INTEGER NOT NULL);");
     }
 
     @Override
@@ -127,6 +136,10 @@ public class SQLiteDatabaseHelper extends SQLiteOpenHelper implements IDatabaseH
             contentValues.put(FOOD_AREA_HOW_MANY_PERSON, ((FoodEntity) entity).getHowManyPerson());
             contentValues.put(FOOD_AREA_CATEGORY_ID, entity.getID());
             this.contentValues.get(CONTENT_VALUES_INSERT).get(CONTENT_VALUES_FOOD).add(contentValues);
+        } else if (entity.getClass() == EntityName.IMAGE_ENTITY_CLASS) {
+            contentValues.put(IMAGES_AREA_FOOD_ID, ((ImageEntity) entity).getFoodID());
+            contentValues.put(IMAGES_AREA_IMAGE_ID, ((ImageEntity) entity).getImageID());
+            this.contentValues.get(CONTENT_VALUES_INSERT).get(CONTENT_VALUES_IMAGE).add(contentValues);
         }
     }
 
@@ -138,6 +151,8 @@ public class SQLiteDatabaseHelper extends SQLiteOpenHelper implements IDatabaseH
             deleteIDList.get(CONTENT_VALUES_MATERIAL).add(id);
         else if (entity.getName().equals(EntityName.FOOD_ENTITY_CLASS.getName()))
             deleteIDList.get(CONTENT_VALUES_FOOD).add(id);
+        else if (entity.getName().equals(EntityName.IMAGE_ENTITY_CLASS.getName()))
+            deleteIDList.get(CONTENT_VALUES_IMAGE).add(id);
     }
 
     @Override
@@ -161,6 +176,11 @@ public class SQLiteDatabaseHelper extends SQLiteOpenHelper implements IDatabaseH
             contentValues.put(FOOD_AREA_CATEGORY_ID, entity.getID());
             this.contentValues.get(CONTENT_VALUES_UPDATE).get(CONTENT_VALUES_FOOD).add(contentValues);
             updateIDList.get(CONTENT_VALUES_FOOD).add(id);
+        } else if (entity.getClass() == EntityName.IMAGE_ENTITY_CLASS) {
+            contentValues.put(IMAGES_AREA_FOOD_ID, ((ImageEntity) entity).getFoodID());
+            contentValues.put(IMAGES_AREA_IMAGE_ID, ((ImageEntity) entity).getImageID());
+            this.contentValues.get(CONTENT_VALUES_UPDATE).get(CONTENT_VALUES_IMAGE).add(contentValues);
+            updateIDList.get(CONTENT_VALUES_IMAGE).add(id);
         }
     }
 
@@ -227,6 +247,21 @@ public class SQLiteDatabaseHelper extends SQLiteOpenHelper implements IDatabaseH
                 records.add(cursor.getColumnIndex(MATERIAL_AREA_ID),
                         new MaterialEntity(cursor.getColumnIndex(MATERIAL_AREA_ID),
                                 cursor.getString(cursor.getColumnIndex(MATERIAL_AREA_NAME))));
+            }
+
+        } else if (entity == EntityName.IMAGE_ENTITY_CLASS) {
+            columns.add(IMAGES_AREA_IMAGES_ID);
+            columns.add(IMAGES_AREA_FOOD_ID);
+            columns.add(IMAGES_AREA_IMAGE_ID);
+
+            Cursor cursor = database.query(IMAGES_TABLE_NAME, Convert.getStringArray(columns),
+                    selection, new String[]{}, groupBy, having, orderBy);
+
+            while (cursor.moveToNext()) {
+                records.add(cursor.getColumnIndex(IMAGES_AREA_IMAGES_ID),
+                        new ImageEntity(cursor.getColumnIndex(IMAGES_AREA_IMAGES_ID),
+                                cursor.getColumnIndex(IMAGES_AREA_FOOD_ID),
+                                cursor.getColumnIndex(IMAGES_AREA_IMAGE_ID)));
             }
 
         } else records.add(-1, new CategoryEntity(-1));
@@ -303,6 +338,27 @@ public class SQLiteDatabaseHelper extends SQLiteOpenHelper implements IDatabaseH
             for (int i = 0; i < deleteIDList.get(CONTENT_VALUES_FOOD).size(); i++) {
                 database.delete(FOOD_TABLE_NAME,
                         FOOD_AREA_ID + " = " + deleteIDList.get(CONTENT_VALUES_FOOD).get(i), null);
+            }
+        } finally {
+            disconnect();
+        }
+    }
+
+    @Override
+    public void imageSave() {
+        connect();
+        try {
+            for (int i = 0; i < contentValues.get(CONTENT_VALUES_INSERT).get(CONTENT_VALUES_IMAGE).size(); i++) {
+                database.insert(FOOD_TABLE_NAME, null,
+                        contentValues.get(CONTENT_VALUES_INSERT).get(CONTENT_VALUES_IMAGE).get(i));
+            }
+            for (int i = 0; i < contentValues.get(CONTENT_VALUES_UPDATE).get(CONTENT_VALUES_IMAGE).size(); i++) {
+                database.update(IMAGES_TABLE_NAME, contentValues.get(CONTENT_VALUES_UPDATE).get(CONTENT_VALUES_IMAGE).get(i),
+                        IMAGES_AREA_IMAGES_ID + " = " + updateIDList.get(CONTENT_VALUES_IMAGE).get(i), null);
+            }
+            for (int i = 0; i < deleteIDList.get(CONTENT_VALUES_IMAGE).size(); i++) {
+                database.delete(IMAGES_TABLE_NAME,
+                        IMAGES_AREA_IMAGES_ID + " = " + deleteIDList.get(CONTENT_VALUES_IMAGE).get(i), null);
             }
         } finally {
             disconnect();

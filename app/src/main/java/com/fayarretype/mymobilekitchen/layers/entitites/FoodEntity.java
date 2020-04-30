@@ -24,7 +24,7 @@ public class FoodEntity extends BaseEntity {
 
     public FoodEntity(int id, String foodName, String preparationText, String cookingTime,
                       String preparationTime, String howManyPerson, int categoryID) {
-        super(id);
+        this(id);
         this.setFoodName(foodName);
         this.setPreparationText(preparationText);
         this.setCookingTime(cookingTime);
