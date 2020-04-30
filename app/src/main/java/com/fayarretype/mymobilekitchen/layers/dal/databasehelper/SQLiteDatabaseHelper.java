@@ -32,7 +32,9 @@ public class SQLiteDatabaseHelper extends SQLiteOpenHelper implements IDatabaseH
     private static final String FOOD_AREA_HOW_MANY_PERSON = "howManyPerson";
     private static final String CATEGORY_AREA_NAME = "categoryName";
     private static final String MATERIAL_AREA_NAME = "materialName";
-    private static final String IMAGES_ID = "imagesID";
+    private static final String IMAGES_AREA_IMAGES_ID = "imagesID";
+    private static final String IMAGES_AREA_FOOD_ID = "foodID";
+    private static final String IMAGES_AREA_IMAGE_URL = "imageURL";
     private static SQLiteDatabaseHelper databaseHelper;
     private final int CONTENT_VALUES_INSERT = 0;
     private final int CONTENT_VALUES_UPDATE = 1;
@@ -124,7 +126,6 @@ public class SQLiteDatabaseHelper extends SQLiteOpenHelper implements IDatabaseH
             contentValues.put(FOOD_AREA_PREPARATION_TIME, ((FoodEntity) entity).getPreparationTime());
             contentValues.put(FOOD_AREA_HOW_MANY_PERSON, ((FoodEntity) entity).getHowManyPerson());
             contentValues.put(FOOD_AREA_CATEGORY_ID, entity.getID());
-            contentValues.put(IMAGES_ID, ((FoodEntity) entity).getImage());
             this.contentValues.get(CONTENT_VALUES_INSERT).get(CONTENT_VALUES_FOOD).add(contentValues);
         }
     }
@@ -158,7 +159,6 @@ public class SQLiteDatabaseHelper extends SQLiteOpenHelper implements IDatabaseH
             contentValues.put(FOOD_AREA_PREPARATION_TIME, ((FoodEntity) entity).getPreparationTime());
             contentValues.put(FOOD_AREA_HOW_MANY_PERSON, ((FoodEntity) entity).getHowManyPerson());
             contentValues.put(FOOD_AREA_CATEGORY_ID, entity.getID());
-            contentValues.put(IMAGES_ID, ((FoodEntity) entity).getImage());
             this.contentValues.get(CONTENT_VALUES_UPDATE).get(CONTENT_VALUES_FOOD).add(contentValues);
             updateIDList.get(CONTENT_VALUES_FOOD).add(id);
         }
@@ -200,8 +200,7 @@ public class SQLiteDatabaseHelper extends SQLiteOpenHelper implements IDatabaseH
                                 cursor.getString(cursor.getColumnIndex(FOOD_AREA_COOKING_TIME)),
                                 cursor.getString(cursor.getColumnIndex(FOOD_AREA_PREPARATION_TIME)),
                                 cursor.getString(cursor.getColumnIndex(FOOD_AREA_HOW_MANY_PERSON)),
-                                cursor.getColumnIndex(FOOD_AREA_CATEGORY_ID),
-                                cursor.getString(cursor.getColumnIndex(IMAGES_ID))));
+                                cursor.getColumnIndex(FOOD_AREA_CATEGORY_ID)));
             }
 
         } else if (entity == EntityName.CATEGORY_ENTITY_CLASS) {

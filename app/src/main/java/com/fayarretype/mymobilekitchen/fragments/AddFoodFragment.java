@@ -37,6 +37,8 @@ import com.fayarretype.mymobilekitchen.tools.dialogbox.DialogBoxName;
 import com.fayarretype.mymobilekitchen.tools.validations.NumberValidate;
 import com.fayarretype.mymobilekitchen.tools.validations.TextValidate;
 
+import java.io.IOException;
+
 public class AddFoodFragment extends Fragment {
 
     public static final ThreadLocal<AddFoodFragment> ADD_FOOD_FRAGMENT = new ThreadLocal<>();
@@ -62,6 +64,7 @@ public class AddFoodFragment extends Fragment {
     private int foodCookingTime;
     private int foodPreparationTime;
     private int foodHowManyPerson;
+    private Bitmap[] images;
 
     public AddFoodFragment(Context context) {
         super();
@@ -73,17 +76,18 @@ public class AddFoodFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.fragment_add_food, container, false);
-
         init();
-        loadValues();
 
         return view;
     }
 
     private void init() {
+        images = new Bitmap[IMAGE_VIEWS_COUNT];
+
         initComponents();
         initPhotoOptionsBox();
         initComponentsEvents();
+        loadValues();
     }
 
     private void initComponents() {
@@ -152,8 +156,10 @@ public class AddFoodFragment extends Fragment {
     private void bindToMaterialsMultiAutoCompleteTextView() {
         ArrayAdapter<String> adapter = new ArrayAdapter<>(context,
                 R.layout.materials_row, R.id.materialTextView,
-                Convert.getStringArray(((MaterialManager) DataProcessingFactory.getInstance(context)
-                        .getManager(ManagerName.MATERIAL_MANAGER)).getNames()));
+                Convert.getStringArray(((MaterialManager) DataProcessingFactory
+                        .getInstance(context)
+                        .getManager(ManagerName.MATERIAL_MANAGER))
+                        .getNames()));
 
         MultiAutoCompleteTextView multiAutoCompleteTextView = view
                 .findViewById(R.id.materialsFoodAddMultiAutoCompleteTextView);
@@ -184,15 +190,20 @@ public class AddFoodFragment extends Fragment {
             switch (requestCode) {
                 case GALLERY_REQUEST_CODE:
                     Uri selectedImage = data.getData();
+                    try {
+                        images[getSelectedImageViewElement()] = MediaStore.Images.Media
+                                .getBitmap(context.getContentResolver(), selectedImage);
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
                     imageView[getSelectedImageViewElement()].setImageURI(selectedImage);
                     break;
                 case CAMERA_REQUEST_CODE:
-                    Bundle extras = data.getExtras();
-                    Bitmap imageBitmap = (Bitmap) extras.get("data");
+                    Bitmap imageBitmap = (Bitmap) data.getExtras().get("data");
+                    images[getSelectedImageViewElement()] = imageBitmap;
                     imageView[getSelectedImageViewElement()].setImageBitmap(imageBitmap);
                     break;
             }
-
             photoOptionsAddBox.destroyed();
             setSelectedImageViewElement(getSelectedImageViewElement() + 1);
             loadAddImageIcon();
@@ -292,7 +303,6 @@ public class AddFoodFragment extends Fragment {
         food.setPreparationTime(String.valueOf(foodPreparationTime));
         food.setHowManyPerson(String.valueOf(foodHowManyPerson));
         food.setCategoryID(categoryAddSpinner.getSelectedItemPosition() + 1);
-        food.setImageID(null);
     }
 
     private void saveFood() {
