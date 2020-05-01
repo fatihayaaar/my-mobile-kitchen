@@ -1,9 +1,12 @@
 package com.fayarretype.mymobilekitchen.layers.entitites;
 
+import android.graphics.Bitmap;
+
 public class ImageEntity extends BaseEntity {
 
     private int foodID;
     private int ImageID;
+    private Bitmap image;
 
     public ImageEntity() {
 
@@ -33,5 +36,13 @@ public class ImageEntity extends BaseEntity {
 
     public void setImageID(int imageID) {
         ImageID = imageID;
+    }
+
+    public Bitmap getImage() {
+        return image;
+    }
+
+    public void setImage(Bitmap image) {
+        this.image = image;
     }
 }

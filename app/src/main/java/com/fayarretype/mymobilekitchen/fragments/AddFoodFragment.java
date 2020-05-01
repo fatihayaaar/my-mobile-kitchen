@@ -24,10 +24,10 @@ import androidx.fragment.app.FragmentActivity;
 
 import com.fayarretype.mymobilekitchen.R;
 import com.fayarretype.mymobilekitchen.layers.bl.DataProcessingFactory;
-import com.fayarretype.mymobilekitchen.layers.bl.FoodManager;
 import com.fayarretype.mymobilekitchen.layers.bl.ManagerName;
 import com.fayarretype.mymobilekitchen.layers.bl.MaterialManager;
 import com.fayarretype.mymobilekitchen.layers.entitites.FoodEntity;
+import com.fayarretype.mymobilekitchen.layers.entitites.ImageEntity;
 import com.fayarretype.mymobilekitchen.layers.pl.CategoryAdapter;
 import com.fayarretype.mymobilekitchen.tools.Convert;
 import com.fayarretype.mymobilekitchen.tools.ServiceControl;
@@ -65,6 +65,7 @@ public class AddFoodFragment extends Fragment {
     private int foodPreparationTime;
     private int foodHowManyPerson;
     private Bitmap[] images;
+    private int imagesCount;
 
     public AddFoodFragment(Context context) {
         super();
@@ -82,6 +83,7 @@ public class AddFoodFragment extends Fragment {
     }
 
     private void init() {
+        imagesCount = 0;
         images = new Bitmap[IMAGE_VIEWS_COUNT];
 
         initComponents();
@@ -197,11 +199,13 @@ public class AddFoodFragment extends Fragment {
                         e.printStackTrace();
                     }
                     imageView[getSelectedImageViewElement()].setImageURI(selectedImage);
+                    imagesCount++;
                     break;
                 case CAMERA_REQUEST_CODE:
                     Bitmap imageBitmap = (Bitmap) data.getExtras().get("data");
                     images[getSelectedImageViewElement()] = imageBitmap;
                     imageView[getSelectedImageViewElement()].setImageBitmap(imageBitmap);
+                    imagesCount++;
                     break;
             }
             photoOptionsAddBox.destroyed();
@@ -303,6 +307,17 @@ public class AddFoodFragment extends Fragment {
         food.setPreparationTime(String.valueOf(foodPreparationTime));
         food.setHowManyPerson(String.valueOf(foodHowManyPerson));
         food.setCategoryID(categoryAddSpinner.getSelectedItemPosition() + 1);
+
+        Bitmap[] images = new Bitmap[imagesCount];
+        for (int i = 0; i < imagesCount; i++) {
+            images[i] = this.images[i];
+        }
+
+        ImageEntity[] imagesEntity = new ImageEntity[imagesCount];
+        for (int i = 0; i < imagesEntity.length; i++)
+            imagesEntity[i].setImage(images[i]);
+
+        food.setImage(imagesEntity);
     }
 
     private void saveFood() {
@@ -310,7 +325,6 @@ public class AddFoodFragment extends Fragment {
 
         DataProcessingFactory dataProcessingFactory = DataProcessingFactory.getInstance(context);
         dataProcessingFactory.getManager(ManagerName.FOOD_MANAGER).add(food);
-        ((FoodManager) dataProcessingFactory.getManager(ManagerName.FOOD_MANAGER)).uploadImages();
         dataProcessingFactory.saveChanges();
     }
 

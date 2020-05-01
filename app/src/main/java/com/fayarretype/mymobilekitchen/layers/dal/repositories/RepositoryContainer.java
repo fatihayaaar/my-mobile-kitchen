@@ -27,6 +27,8 @@ public class RepositoryContainer {
                 return new MaterialRepository(context);
             case FOOD:
                 return new FoodRepository(context);
+            case IMAGE:
+                return new ImageRepository(context);
             default:
                 return null;
         }

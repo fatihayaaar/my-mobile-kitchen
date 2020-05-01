@@ -8,6 +8,7 @@ public class FoodEntity extends BaseEntity {
     private String preparationTime;
     private String howManyPerson;
     private int categoryID;
+    private ImageEntity[] image;
 
     public FoodEntity() {
 
@@ -83,5 +84,13 @@ public class FoodEntity extends BaseEntity {
 
     public void setCategoryID(int categoryID) {
         this.categoryID = categoryID;
+    }
+
+    public ImageEntity[] getImage() {
+        return image;
+    }
+
+    public void setImage(ImageEntity[] image) {
+        this.image = image;
     }
 }

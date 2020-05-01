@@ -33,7 +33,7 @@ public class SQLiteDatabaseHelper extends SQLiteOpenHelper implements IDatabaseH
     private static final String FOOD_AREA_HOW_MANY_PERSON = "howManyPerson";
     private static final String CATEGORY_AREA_NAME = "categoryName";
     private static final String MATERIAL_AREA_NAME = "materialName";
-    private static final String IMAGES_AREA_IMAGES_ID = "imagesID";
+    public static final String IMAGES_AREA_ID = "imagesID";
     private static final String IMAGES_AREA_FOOD_ID = "foodID";
     private static final String IMAGES_AREA_IMAGE_ID = "imageID";
     private static SQLiteDatabaseHelper databaseHelper;
@@ -108,7 +108,7 @@ public class SQLiteDatabaseHelper extends SQLiteOpenHelper implements IDatabaseH
                 FOOD_AREA_CATEGORY_ID + " INTEGER );");
 
         db.execSQL("CREATE TABLE " + IMAGES_TABLE_NAME + " (" +
-                IMAGES_AREA_IMAGES_ID + " INTEGER PRIMARY KEY AUTOINCREMENT," +
+                IMAGES_AREA_ID + " INTEGER PRIMARY KEY AUTOINCREMENT," +
                 IMAGES_AREA_FOOD_ID + " INTEGER NOT NULL," +
                 IMAGES_AREA_IMAGE_ID + " INTEGER NOT NULL);");
     }
@@ -250,7 +250,7 @@ public class SQLiteDatabaseHelper extends SQLiteOpenHelper implements IDatabaseH
             }
 
         } else if (entity == EntityName.IMAGE_ENTITY_CLASS) {
-            columns.add(IMAGES_AREA_IMAGES_ID);
+            columns.add(IMAGES_AREA_ID);
             columns.add(IMAGES_AREA_FOOD_ID);
             columns.add(IMAGES_AREA_IMAGE_ID);
 
@@ -258,8 +258,8 @@ public class SQLiteDatabaseHelper extends SQLiteOpenHelper implements IDatabaseH
                     selection, new String[]{}, groupBy, having, orderBy);
 
             while (cursor.moveToNext()) {
-                records.add(cursor.getColumnIndex(IMAGES_AREA_IMAGES_ID),
-                        new ImageEntity(cursor.getColumnIndex(IMAGES_AREA_IMAGES_ID),
+                records.add(cursor.getColumnIndex(IMAGES_AREA_ID),
+                        new ImageEntity(cursor.getColumnIndex(IMAGES_AREA_ID),
                                 cursor.getColumnIndex(IMAGES_AREA_FOOD_ID),
                                 cursor.getColumnIndex(IMAGES_AREA_IMAGE_ID)));
             }
@@ -354,11 +354,11 @@ public class SQLiteDatabaseHelper extends SQLiteOpenHelper implements IDatabaseH
             }
             for (int i = 0; i < contentValues.get(CONTENT_VALUES_UPDATE).get(CONTENT_VALUES_IMAGE).size(); i++) {
                 database.update(IMAGES_TABLE_NAME, contentValues.get(CONTENT_VALUES_UPDATE).get(CONTENT_VALUES_IMAGE).get(i),
-                        IMAGES_AREA_IMAGES_ID + " = " + updateIDList.get(CONTENT_VALUES_IMAGE).get(i), null);
+                        IMAGES_AREA_ID + " = " + updateIDList.get(CONTENT_VALUES_IMAGE).get(i), null);
             }
             for (int i = 0; i < deleteIDList.get(CONTENT_VALUES_IMAGE).size(); i++) {
                 database.delete(IMAGES_TABLE_NAME,
-                        IMAGES_AREA_IMAGES_ID + " = " + deleteIDList.get(CONTENT_VALUES_IMAGE).get(i), null);
+                        IMAGES_AREA_ID + " = " + deleteIDList.get(CONTENT_VALUES_IMAGE).get(i), null);
             }
         } finally {
             disconnect();

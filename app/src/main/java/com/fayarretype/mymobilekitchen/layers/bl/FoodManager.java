@@ -4,11 +4,15 @@ import android.content.Context;
 
 import com.fayarretype.mymobilekitchen.layers.bl.abstracts.IFoodManager;
 import com.fayarretype.mymobilekitchen.layers.dal.repositories.FoodRepository;
+import com.fayarretype.mymobilekitchen.layers.dal.repositories.ImageRepository;
 import com.fayarretype.mymobilekitchen.layers.entitites.FoodEntity;
+import com.fayarretype.mymobilekitchen.layers.entitites.ImageEntity;
 
 import java.util.ArrayList;
 
 public class FoodManager extends BaseManager<FoodEntity> implements IFoodManager<FoodEntity> {
+
+    private int foodID;
 
     public FoodManager(Context context) {
         super(context);
@@ -34,14 +38,29 @@ public class FoodManager extends BaseManager<FoodEntity> implements IFoodManager
 
     @Override
     public FoodEntity getFoodByCategoryID(int categoryID) {
-        FoodEntity foodEntity = ((FoodRepository) unitOfWork.getRepository(FoodEntity.class)).getFoodByCategoryID(categoryID);
+        FoodEntity foodEntity = ((FoodRepository) unitOfWork.getRepository(FoodEntity.class))
+                .getFoodByCategoryID(categoryID);
         if (foodEntity != null)
             return foodEntity;
         return new FoodEntity(-1);
     }
 
-    @Override
-    public void uploadImages() {
 
+    @Override
+    public boolean add(FoodEntity entity) {
+        foodID = entity.getID();
+        unitOfWork.getRepository(entity.getClass()).add(entity);
+        uploadImages(entity.getImage());
+        return true;
+    }
+
+    private void uploadImages(ImageEntity[] entity) {
+        for (int i = 0; i < entity.length; i++) {
+            entity[i] = new ImageEntity();
+            entity[i].setFoodID(foodID);
+            entity[i].setImageID(2);
+            unitOfWork.getRepository(ImageRepository.class).add(entity[i]);
+        }
     }
 }
+
