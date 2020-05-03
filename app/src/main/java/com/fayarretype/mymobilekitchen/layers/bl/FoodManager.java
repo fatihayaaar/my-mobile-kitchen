@@ -7,15 +7,18 @@ import com.fayarretype.mymobilekitchen.layers.dal.repositories.FoodRepository;
 import com.fayarretype.mymobilekitchen.layers.dal.repositories.ImageRepository;
 import com.fayarretype.mymobilekitchen.layers.entitites.FoodEntity;
 import com.fayarretype.mymobilekitchen.layers.entitites.ImageEntity;
+import com.fayarretype.mymobilekitchen.tools.utils.ImageStream;
 
 import java.util.ArrayList;
 
 public class FoodManager extends BaseManager<FoodEntity> implements IFoodManager<FoodEntity> {
 
     private int foodID;
+    private Context context;
 
     public FoodManager(Context context) {
         super(context);
+        this.context = context;
     }
 
     @Override
@@ -45,7 +48,6 @@ public class FoodManager extends BaseManager<FoodEntity> implements IFoodManager
         return new FoodEntity(-1);
     }
 
-
     @Override
     public boolean add(FoodEntity entity) {
         foodID = entity.getID();
@@ -55,11 +57,14 @@ public class FoodManager extends BaseManager<FoodEntity> implements IFoodManager
     }
 
     private void uploadImages(ImageEntity[] entity) {
+        ImageStream imageStream = new ImageStream(context);
         for (int i = 0; i < entity.length; i++) {
             entity[i] = new ImageEntity();
+            imageStream.setPictureBitmap(entity[i].getImage());
+            imageStream.saveImage();
             entity[i].setFoodID(foodID);
-            entity[i].setImageID(2);
-            unitOfWork.getRepository(ImageRepository.class).add(entity[i]);
+            entity[i].setImageID(imageStream.getKey());
+            ((ImageRepository) unitOfWork.getRepository(ImageEntity.class)).adds(entity[i]);
         }
     }
 }

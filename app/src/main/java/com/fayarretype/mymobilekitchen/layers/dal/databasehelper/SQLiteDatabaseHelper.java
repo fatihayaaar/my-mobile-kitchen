@@ -49,7 +49,7 @@ public class SQLiteDatabaseHelper extends SQLiteOpenHelper implements IDatabaseH
     private SQLiteDatabase database;
 
     private SQLiteDatabaseHelper(Context context) {
-        super(context, "my_mobile_kitchen.db", null, 1);
+        super(context, "my_mobile_kitchen.db", null, 2);
         init();
     }
 
@@ -349,7 +349,7 @@ public class SQLiteDatabaseHelper extends SQLiteOpenHelper implements IDatabaseH
         connect();
         try {
             for (int i = 0; i < contentValues.get(CONTENT_VALUES_INSERT).get(CONTENT_VALUES_IMAGE).size(); i++) {
-                database.insert(FOOD_TABLE_NAME, null,
+                database.insert(IMAGES_TABLE_NAME, null,
                         contentValues.get(CONTENT_VALUES_INSERT).get(CONTENT_VALUES_IMAGE).get(i));
             }
             for (int i = 0; i < contentValues.get(CONTENT_VALUES_UPDATE).get(CONTENT_VALUES_IMAGE).size(); i++) {

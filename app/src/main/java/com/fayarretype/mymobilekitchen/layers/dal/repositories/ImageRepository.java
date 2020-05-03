@@ -39,8 +39,7 @@ public class ImageRepository extends BaseRepository<ImageEntity> implements IIma
         return imagesEntities;
     }
 
-    @Override
-    public void add(ImageEntity entity) {
+    public void adds(ImageEntity entity) {
         databaseHelper.add(entity);
     }
 

@@ -45,8 +45,11 @@ public abstract class DialogBox {
         textViewTitle = view.findViewById(R.id.dialogBoxTitleTextView);
         textViewPreparation = view.findViewById(R.id.dialogBoxPreparationTextView);
         closeButton = view.findViewById(R.id.closeButton);
-        takeCameraButton = view.findViewById(R.id.takeCameraButton);
-        pickFromGalleryButton = view.findViewById(R.id.pickFromGalleryButton);
+
+        if (resId == R.layout.photo_add_options_dialog_box_layout) {
+            takeCameraButton = view.findViewById(R.id.takeCameraButton);
+            pickFromGalleryButton = view.findViewById(R.id.pickFromGalleryButton);
+        }
 
         textViewTitle.setText(title);
         textViewPreparation.setText(preparation);
@@ -58,19 +61,21 @@ public abstract class DialogBox {
             }
         });
 
-        takeCameraButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                AddFoodFragment.ADD_FOOD_FRAGMENT.get().takePicture();
-            }
-        });
+        if (resId == R.layout.photo_add_options_dialog_box_layout) {
+            takeCameraButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    AddFoodFragment.ADD_FOOD_FRAGMENT.get().takePicture();
+                }
+            });
 
-        pickFromGalleryButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                AddFoodFragment.ADD_FOOD_FRAGMENT.get().pickFromGallery();
-            }
-        });
+            pickFromGalleryButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    AddFoodFragment.ADD_FOOD_FRAGMENT.get().pickFromGallery();
+                }
+            });
+        }
     }
 
     public void show() {

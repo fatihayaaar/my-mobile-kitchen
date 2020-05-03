@@ -7,6 +7,7 @@ import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -193,17 +194,17 @@ public class AddFoodFragment extends Fragment {
                 case GALLERY_REQUEST_CODE:
                     Uri selectedImage = data.getData();
                     try {
-                        images[getSelectedImageViewElement()] = MediaStore.Images.Media
+                        images[imagesCount] = MediaStore.Images.Media
                                 .getBitmap(context.getContentResolver(), selectedImage);
                     } catch (IOException e) {
                         e.printStackTrace();
                     }
-                    imageView[getSelectedImageViewElement()].setImageURI(selectedImage);
+                    imageView[imagesCount].setImageURI(selectedImage);
                     imagesCount++;
                     break;
                 case CAMERA_REQUEST_CODE:
                     Bitmap imageBitmap = (Bitmap) data.getExtras().get("data");
-                    images[getSelectedImageViewElement()] = imageBitmap;
+                    images[imagesCount] = imageBitmap;
                     imageView[getSelectedImageViewElement()].setImageBitmap(imageBitmap);
                     imagesCount++;
                     break;
@@ -308,14 +309,11 @@ public class AddFoodFragment extends Fragment {
         food.setHowManyPerson(String.valueOf(foodHowManyPerson));
         food.setCategoryID(categoryAddSpinner.getSelectedItemPosition() + 1);
 
-        Bitmap[] images = new Bitmap[imagesCount];
-        for (int i = 0; i < imagesCount; i++) {
-            images[i] = this.images[i];
-        }
-
         ImageEntity[] imagesEntity = new ImageEntity[imagesCount];
-        for (int i = 0; i < imagesEntity.length; i++)
+        for (int i = 0; i < imagesEntity.length; i++) {
+            imagesEntity[i] = new ImageEntity();
             imagesEntity[i].setImage(images[i]);
+        }
 
         food.setImage(imagesEntity);
     }

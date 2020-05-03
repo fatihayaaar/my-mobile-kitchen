@@ -22,6 +22,18 @@ public class FoodRepository extends BaseRepository<FoodEntity> implements IFoodR
     }
 
     @Override
+    public void add(FoodEntity entity) {
+        entity.setType(FoodEntity.USER_FOOD);
+        databaseHelper.add(entity);
+    }
+
+    @Override
+    public void addWithWeb(FoodEntity entity) {
+        entity.setType(FoodEntity.INTERNET_FOOD);
+        databaseHelper.add(entity);
+    }
+
+    @Override
     public ArrayList<FoodEntity> getEntities() {
         ArrayList<BaseEntity> entities = databaseHelper.list(FoodEntity.class);
 
