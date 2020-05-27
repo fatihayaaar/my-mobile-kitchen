@@ -10,7 +10,7 @@ import com.fayarretype.mymobilekitchen.R;
 import com.fayarretype.mymobilekitchen.layers.bl.ManagerName;
 import com.fayarretype.mymobilekitchen.layers.bl.DataProcessingFactory;
 import com.fayarretype.mymobilekitchen.layers.bl.MaterialManager;
-import com.fayarretype.mymobilekitchen.tools.Convert;
+import com.fayarretype.mymobilekitchen.tools.utils.Convert;
 
 public class WizardFoodActivity extends AppCompatActivity {
 

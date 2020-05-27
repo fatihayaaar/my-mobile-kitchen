@@ -2,20 +2,23 @@ package com.fayarretype.mymobilekitchen.tools.utils;
 
 import android.content.Context;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.os.Environment;
 import android.provider.MediaStore;
+import android.util.Log;
 
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.OutputStream;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 public class ImageStream {
 
     private final String PATH = Environment.getExternalStorageDirectory().toString();
     private Context context;
     private Bitmap pictureBitmap;
     private OutputStream fOut;
-    private Integer key;
+    private String key;
     private File file;
 
     public ImageStream(Context context) {
@@ -25,23 +28,28 @@ public class ImageStream {
     }
 
     public void saveImage() {
-        key = (int)(Math.random() * ((999999999 - 1) + 1)) + 1;
+        key = new SimpleDateFormat("yyddHHmmss").format(new Date());
         file = new File(PATH, "food_image" + key + ".jpg");
         try {
             setfOut(new FileOutputStream(getFile()));
             getPictureBitmap().compress(Bitmap.CompressFormat.JPEG, 85, getfOut());
-            getfOut().flush();
-            getfOut().close();
 
             MediaStore.Images.Media.insertImage(getContext().getContentResolver(),
                     getFile().getAbsolutePath(), getFile().getName(), getFile().getName());
+
+            getfOut().flush();
+            getfOut().close();
+            Log.i("Başarılı", "Başarılı");
+
         } catch (Exception e) {
+            Log.i("hata oluştu", "bir hata meydana geldi -" + e.getMessage());
             e.getStackTrace();
         }
+
     }
 
-    public Bitmap getBitmap(int key) {
-        return BitmapFactory.decodeFile(PATH + "/food_image" + key + ".jpg");
+    public Bitmap getBitmap(String key) {
+        return pictureBitmap;
     }
 
     public Context getContext() {
@@ -68,11 +76,11 @@ public class ImageStream {
         this.fOut = fOut;
     }
 
-    public Integer getKey() {
+    public String getKey() {
         return key;
     }
 
-    public void setKey(Integer key) {
+    public void setKey(String key) {
         this.key = key;
     }
 

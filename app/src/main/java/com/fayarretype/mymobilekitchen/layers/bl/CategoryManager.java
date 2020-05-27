@@ -23,7 +23,7 @@ public class CategoryManager extends BaseManager<CategoryEntity> implements ICat
         CategoryEntity entity = (CategoryEntity) unitOfWork.getRepository(CategoryEntity.class).getEntity(ID);
         if (entity != null)
             return entity;
-        return new CategoryEntity(-1);
+        return new CategoryEntity("-1");
     }
 
     @Override

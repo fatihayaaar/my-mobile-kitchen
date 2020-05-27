@@ -1,12 +1,15 @@
 package com.fayarretype.mymobilekitchen.layers.dal.repositories;
 
 import android.content.Context;
+import android.util.Log;
 
 import com.fayarretype.mymobilekitchen.layers.dal.databasehelper.SQLiteDatabaseHelper;
 import com.fayarretype.mymobilekitchen.layers.dal.repositories.abstracts.IImageRepository;
 
 import com.fayarretype.mymobilekitchen.layers.entitites.BaseEntity;
+import com.fayarretype.mymobilekitchen.layers.entitites.FoodEntity;
 import com.fayarretype.mymobilekitchen.layers.entitites.ImageEntity;
+import com.fayarretype.mymobilekitchen.tools.utils.ImageStream;
 
 import java.util.ArrayList;
 
@@ -17,14 +20,25 @@ public class ImageRepository extends BaseRepository<ImageEntity> implements IIma
     }
 
     @Override
-    public ArrayList<String> getFoodByImageIDs(int foodID) {
+    public ImageEntity getEntity(int id) {
         return null;
     }
 
     @Override
-    public ImageEntity getEntity(int id) {
-        return (ImageEntity) (databaseHelper.list(EntityName.IMAGE_ENTITY_CLASS,
-                SQLiteDatabaseHelper.IMAGES_AREA_ID, String.valueOf(id)).get(0));
+    public ArrayList<String> getFoodByImageIDs(int foodID) {
+        return null;
+    }
+
+    public ImageEntity[] getEntity(String id) {
+        ArrayList<BaseEntity> entities = databaseHelper.list(EntityName.IMAGE_ENTITY_CLASS,
+                SQLiteDatabaseHelper.IMAGES_AREA_FOOD_ID, id);
+        ImageEntity[] imageEntity = new ImageEntity[entities.size()];
+        for (int i = 0; i < entities.size(); i++) {
+            imageEntity[i] = (ImageEntity) entities.get(i);
+            ImageStream imgStream = new ImageStream(context);
+            imageEntity[i].setImage(imgStream.getBitmap(((ImageEntity) entities.get(i)).getImageID()));
+        }
+        return imageEntity;
     }
 
     @Override
@@ -34,7 +48,7 @@ public class ImageRepository extends BaseRepository<ImageEntity> implements IIma
         ArrayList<ImageEntity> imagesEntities = new ArrayList<>(entities.size());
 
         for (int i = 0; i < entities.size(); i++)
-            imagesEntities.add(entities.get(i).getID(), (ImageEntity) entities.get(i));
+            imagesEntities.add((ImageEntity) entities.get(i));
 
         return imagesEntities;
     }

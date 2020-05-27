@@ -28,7 +28,7 @@ public class MaterialRepository extends BaseRepository<MaterialEntity> implement
 
         ArrayList<MaterialEntity> materialEntities = new ArrayList<>(entities.size());
         for (int i = 0; i < entities.size(); i++)
-            materialEntities.add(entities.get(i).getID(), (MaterialEntity) entities.get(i));
+            materialEntities.add((MaterialEntity) entities.get(i));
 
         return materialEntities;
     }

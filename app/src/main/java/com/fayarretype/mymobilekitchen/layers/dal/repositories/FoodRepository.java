@@ -39,15 +39,15 @@ public class FoodRepository extends BaseRepository<FoodEntity> implements IFoodR
 
         ArrayList<FoodEntity> foodEntities = new ArrayList<>(entities.size());
         for (int i = 0; i < entities.size(); i++)
-            foodEntities.add(entities.get(i).getID(), (FoodEntity) entities.get(i));
+            foodEntities.add((FoodEntity) entities.get(i));
 
         return foodEntities;
     }
 
     @Override
-    public FoodEntity getFoodByCategoryID(int categoryID) {
-        return (FoodEntity) (databaseHelper.list(FoodEntity.class,
-                SQLiteDatabaseHelper.FOOD_AREA_CATEGORY_ID, String.valueOf(categoryID)).get(0));
+    public ArrayList<BaseEntity> getFoodByCategoryID(int categoryID) {
+        return (databaseHelper.list(FoodEntity.class,
+                SQLiteDatabaseHelper.FOOD_AREA_CATEGORY_ID, String.valueOf(categoryID)));
     }
 
     @Override

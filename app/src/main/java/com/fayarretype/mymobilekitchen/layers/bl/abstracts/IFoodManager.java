@@ -1,8 +1,10 @@
 package com.fayarretype.mymobilekitchen.layers.bl.abstracts;
 
-import com.fayarretype.mymobilekitchen.layers.entitites.ImageEntity;
+import com.fayarretype.mymobilekitchen.layers.entitites.BaseEntity;
+
+import java.util.ArrayList;
 
 public interface IFoodManager<TEntity> extends IManager<TEntity> {
 
-    TEntity getFoodByCategoryID(int categoryID);
+    ArrayList<BaseEntity> getFoodByCategoryID(int categoryID);
 }

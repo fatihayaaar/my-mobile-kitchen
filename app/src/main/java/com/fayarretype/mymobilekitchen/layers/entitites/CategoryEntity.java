@@ -9,16 +9,12 @@ public class CategoryEntity extends BaseEntity {
 
     }
 
-    public CategoryEntity(int id) {
+    public CategoryEntity(String id) {
         super(id);
     }
 
-    public CategoryEntity(int id, String categoryName) {
+    public CategoryEntity(String id, String categoryName) {
         super(id);
-        this.categoryName = categoryName;
-    }
-
-    public CategoryEntity(String categoryName) {
         this.categoryName = categoryName;
     }
 

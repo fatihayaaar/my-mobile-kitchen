@@ -2,21 +2,21 @@ package com.fayarretype.mymobilekitchen.layers.entitites;
 
 public abstract class BaseEntity {
     
-    protected int id;
+    protected String id;
     
     public BaseEntity() {
         
     }
     
-    public BaseEntity(int id) {
+    public BaseEntity(String id) {
         this.id = id;
     }
     
-    public void setID(int id) {
+    public void setID(String id) {
         this.id = id;
     }
     
-    public int getID() {
+    public String getID() {
         return id;
     }
 }

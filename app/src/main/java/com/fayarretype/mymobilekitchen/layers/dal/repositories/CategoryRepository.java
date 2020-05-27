@@ -27,7 +27,7 @@ public class CategoryRepository extends BaseRepository<CategoryEntity> implement
 
         ArrayList<CategoryEntity> categoryEntities = new ArrayList<>(entities.size());
         for (int i = 0; i < entities.size(); i++)
-            categoryEntities.add(entities.get(i).getID(), (CategoryEntity) entities.get(i));
+            categoryEntities.add((CategoryEntity) entities.get(i));
 
         return categoryEntities;
     }

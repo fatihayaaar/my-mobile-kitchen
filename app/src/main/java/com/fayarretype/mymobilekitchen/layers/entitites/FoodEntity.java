@@ -17,16 +17,16 @@ public class FoodEntity extends BaseEntity {
 
     }
 
-    public FoodEntity(int id) {
+    public FoodEntity(String id) {
         super(id);
     }
 
-    public FoodEntity(int id, String foodName) {
+    public FoodEntity(String id, String foodName) {
         super(id);
         this.setFoodName(foodName);
     }
 
-    public FoodEntity(int id, String foodName, String preparationText, String cookingTime,
+    public FoodEntity(String id, String foodName, String preparationText, String cookingTime,
                       String preparationTime, String howManyPerson, int categoryID) {
         this(id);
         this.setFoodName(foodName);
@@ -35,10 +35,6 @@ public class FoodEntity extends BaseEntity {
         this.setPreparationTime(preparationTime);
         this.setHowManyPerson(howManyPerson);
         this.setCategoryID(categoryID);
-    }
-
-    public FoodEntity(String foodName) {
-        this.foodName = foodName;
     }
 
     public String getFoodName() {

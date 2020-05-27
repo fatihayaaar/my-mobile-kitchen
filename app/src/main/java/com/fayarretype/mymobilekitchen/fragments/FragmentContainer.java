@@ -11,7 +11,7 @@ public class FragmentContainer {
 
     private FragmentContainer(Context context) {
         addFoodFragment = new AddFoodFragment(context);
-        viewFoodsFragment = new ViewFoodsFragment();
+        viewFoodsFragment = new ViewFoodsFragment(context);
     }
 
     public static FragmentContainer getInstance(Context context) {

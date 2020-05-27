@@ -5,6 +5,7 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.util.Log;
 
 import com.fayarretype.mymobilekitchen.layers.dal.repositories.EntityName;
 import com.fayarretype.mymobilekitchen.layers.entitites.BaseEntity;
@@ -12,7 +13,7 @@ import com.fayarretype.mymobilekitchen.layers.entitites.CategoryEntity;
 import com.fayarretype.mymobilekitchen.layers.entitites.FoodEntity;
 import com.fayarretype.mymobilekitchen.layers.entitites.ImageEntity;
 import com.fayarretype.mymobilekitchen.layers.entitites.MaterialEntity;
-import com.fayarretype.mymobilekitchen.tools.Convert;
+import com.fayarretype.mymobilekitchen.tools.utils.Convert;
 
 import java.util.ArrayList;
 
@@ -34,7 +35,7 @@ public class SQLiteDatabaseHelper extends SQLiteOpenHelper implements IDatabaseH
     private static final String CATEGORY_AREA_NAME = "categoryName";
     private static final String MATERIAL_AREA_NAME = "materialName";
     public static final String IMAGES_AREA_ID = "imagesID";
-    private static final String IMAGES_AREA_FOOD_ID = "foodID";
+    public static final String IMAGES_AREA_FOOD_ID = "foodID";
     private static final String IMAGES_AREA_IMAGE_ID = "imageID";
     private static SQLiteDatabaseHelper databaseHelper;
     private final int CONTENT_VALUES_INSERT = 0;
@@ -49,7 +50,7 @@ public class SQLiteDatabaseHelper extends SQLiteOpenHelper implements IDatabaseH
     private SQLiteDatabase database;
 
     private SQLiteDatabaseHelper(Context context) {
-        super(context, "my_mobile_kitchen.db", null, 2);
+        super(context, "my_mobile_kitchen.db", null, 14);
         init();
     }
 
@@ -91,15 +92,18 @@ public class SQLiteDatabaseHelper extends SQLiteOpenHelper implements IDatabaseH
     @Override
     public void onCreate(SQLiteDatabase db) {
         db.execSQL("CREATE TABLE " + CATEGORY_TABLE_NAME + " (" +
-                CATEGORY_AREA_ID + " INTEGER PRIMARY KEY AUTOINCREMENT," +
+                "id INTEGER PRIMARY KEY AUTOINCREMENT," +
+                CATEGORY_AREA_ID + " TEXT," +
                 CATEGORY_AREA_NAME + " TEXT NOT NULL );");
 
         db.execSQL("CREATE TABLE " + MATERIAL_TABLE_NAME + " (" +
-                MATERIAL_AREA_ID + " INTEGER PRIMARY KEY AUTOINCREMENT," +
+                "id INTEGER PRIMARY KEY AUTOINCREMENT," +
+                MATERIAL_AREA_ID + " TEXT," +
                 MATERIAL_AREA_NAME + " TEXT NOT NULL );");
 
         db.execSQL("CREATE TABLE " + FOOD_TABLE_NAME + " ( " +
-                FOOD_AREA_ID + " INTEGER PRIMARY KEY AUTOINCREMENT," +
+                "id INTEGER PRIMARY KEY AUTOINCREMENT," +
+                FOOD_AREA_ID + " TEXT," +
                 FOOD_AREA_NAME + " TEXT NOT NULL," +
                 FOOD_AREA_PREPARATION + " TEXT," +
                 FOOD_AREA_COOKING_TIME + " TEXT," +
@@ -108,9 +112,43 @@ public class SQLiteDatabaseHelper extends SQLiteOpenHelper implements IDatabaseH
                 FOOD_AREA_CATEGORY_ID + " INTEGER );");
 
         db.execSQL("CREATE TABLE " + IMAGES_TABLE_NAME + " (" +
-                IMAGES_AREA_ID + " INTEGER PRIMARY KEY AUTOINCREMENT," +
+                "id INTEGER PRIMARY KEY AUTOINCREMENT," +
+                IMAGES_AREA_ID + " TEXT," +
                 IMAGES_AREA_FOOD_ID + " INTEGER NOT NULL," +
                 IMAGES_AREA_IMAGE_ID + " INTEGER NOT NULL);");
+
+        db.execSQL("INSERT INTO " + CATEGORY_TABLE_NAME + " VALUES(0, '1', 'meze')");
+        db.execSQL("INSERT INTO " + CATEGORY_TABLE_NAME + " VALUES(1, '2', 'bebek maması')");
+        db.execSQL("INSERT INTO " + CATEGORY_TABLE_NAME + " VALUES(2, '3', 'hamur işi')");
+        db.execSQL("INSERT INTO " + CATEGORY_TABLE_NAME + " VALUES(3, '4', 'içecek')");
+        db.execSQL("INSERT INTO " + CATEGORY_TABLE_NAME + " VALUES(4, '5', 'kahvaltı')");
+        db.execSQL("INSERT INTO " + CATEGORY_TABLE_NAME + " VALUES(5, '6', 'kek')");
+        db.execSQL("INSERT INTO " + CATEGORY_TABLE_NAME + " VALUES(6, '7', 'pasta')");
+        db.execSQL("INSERT INTO " + CATEGORY_TABLE_NAME + " VALUES(7, '8', 'tavuk')");
+        db.execSQL("INSERT INTO " + CATEGORY_TABLE_NAME + " VALUES(8, '9', 'kurabiye')");
+        db.execSQL("INSERT INTO " + CATEGORY_TABLE_NAME + " VALUES(9, '10', 'diyet')");
+        db.execSQL("INSERT INTO " + CATEGORY_TABLE_NAME + " VALUES(10, '11', 'şekerlemeler')");
+        db.execSQL("INSERT INTO " + CATEGORY_TABLE_NAME + " VALUES(11, '12', 'balık')");
+        db.execSQL("INSERT INTO " + CATEGORY_TABLE_NAME + " VALUES(12, '13', 'hamburger')");
+        db.execSQL("INSERT INTO " + CATEGORY_TABLE_NAME + " VALUES(13, '14', 'dondurma')");
+        db.execSQL("INSERT INTO " + CATEGORY_TABLE_NAME + " VALUES(14, '15', 'reçel')");
+        db.execSQL("INSERT INTO " + CATEGORY_TABLE_NAME + " VALUES(15, '16', 'köfte')");
+        db.execSQL("INSERT INTO " + CATEGORY_TABLE_NAME + " VALUES(16, '17', 'zeytin yağı')");
+        db.execSQL("INSERT INTO " + CATEGORY_TABLE_NAME + " VALUES(17, '18', 'turşu')");
+        db.execSQL("INSERT INTO " + CATEGORY_TABLE_NAME + " VALUES(18, '19', 'turta')");
+        db.execSQL("INSERT INTO " + CATEGORY_TABLE_NAME + " VALUES(19, '20', 'pizza')");
+        db.execSQL("INSERT INTO " + CATEGORY_TABLE_NAME + " VALUES(20, '21', 'pilav')");
+        db.execSQL("INSERT INTO " + CATEGORY_TABLE_NAME + " VALUES(21, '22', 'salata')");
+        db.execSQL("INSERT INTO " + CATEGORY_TABLE_NAME + " VALUES(22, '23', 'sandviç')");
+        db.execSQL("INSERT INTO " + CATEGORY_TABLE_NAME + " VALUES(23, '24', 'abur cubur')");
+        db.execSQL("INSERT INTO " + CATEGORY_TABLE_NAME + " VALUES(24, '25', 'çorba')");
+        db.execSQL("INSERT INTO " + CATEGORY_TABLE_NAME + " VALUES(25, '26', 'spagetti')");
+        db.execSQL("INSERT INTO " + CATEGORY_TABLE_NAME + " VALUES(26, '27', 'biftek')");
+        db.execSQL("INSERT INTO " + CATEGORY_TABLE_NAME + " VALUES(27, '28', 'yöresel')");
+        db.execSQL("INSERT INTO " + CATEGORY_TABLE_NAME + " VALUES(28, '29', 'vegan')");
+        db.execSQL("INSERT INTO " + CATEGORY_TABLE_NAME + " VALUES(29, '30', 'sebzeler')");
+        db.execSQL("INSERT INTO " + CATEGORY_TABLE_NAME + " VALUES(30, '31', 'vejeteryan')");
+        db.execSQL("INSERT INTO " + CATEGORY_TABLE_NAME + " VALUES(31, '32', 'dünya sofrası')");
     }
 
     @Override
@@ -123,20 +161,24 @@ public class SQLiteDatabaseHelper extends SQLiteOpenHelper implements IDatabaseH
         ContentValues contentValues = new ContentValues();
 
         if (entity.getClass() == CategoryEntity.class) {
+            contentValues.put(CATEGORY_AREA_ID, entity.getID());
             contentValues.put(CATEGORY_AREA_NAME, ((CategoryEntity) entity).getCategoryName());
             this.contentValues.get(CONTENT_VALUES_INSERT).get(CONTENT_VALUES_CATEGORY).add(contentValues);
         } else if (entity.getClass() == MaterialEntity.class) {
+            contentValues.put(MATERIAL_AREA_ID, entity.getID());
             contentValues.put(MATERIAL_AREA_NAME, ((MaterialEntity) entity).getMaterialName());
             this.contentValues.get(CONTENT_VALUES_INSERT).get(CONTENT_VALUES_MATERIAL).add(contentValues);
         } else if (entity.getClass() == FoodEntity.class) {
+            contentValues.put(FOOD_AREA_ID, entity.getID());
             contentValues.put(FOOD_AREA_NAME, ((FoodEntity) entity).getFoodName());
             contentValues.put(FOOD_AREA_PREPARATION, ((FoodEntity) entity).getPreparationText());
             contentValues.put(FOOD_AREA_COOKING_TIME, ((FoodEntity) entity).getCookingTime());
             contentValues.put(FOOD_AREA_PREPARATION_TIME, ((FoodEntity) entity).getPreparationTime());
             contentValues.put(FOOD_AREA_HOW_MANY_PERSON, ((FoodEntity) entity).getHowManyPerson());
-            contentValues.put(FOOD_AREA_CATEGORY_ID, entity.getID());
+            contentValues.put(FOOD_AREA_CATEGORY_ID, ((FoodEntity) entity).getCategoryID());
             this.contentValues.get(CONTENT_VALUES_INSERT).get(CONTENT_VALUES_FOOD).add(contentValues);
         } else if (entity.getClass() == EntityName.IMAGE_ENTITY_CLASS) {
+            contentValues.put(IMAGES_AREA_ID, entity.getID());
             contentValues.put(IMAGES_AREA_FOOD_ID, ((ImageEntity) entity).getFoodID());
             contentValues.put(IMAGES_AREA_IMAGE_ID, ((ImageEntity) entity).getImageID());
             this.contentValues.get(CONTENT_VALUES_INSERT).get(CONTENT_VALUES_IMAGE).add(contentValues);
@@ -160,23 +202,27 @@ public class SQLiteDatabaseHelper extends SQLiteOpenHelper implements IDatabaseH
         ContentValues contentValues = new ContentValues();
 
         if (entity.getClass() == CategoryEntity.class) {
+            contentValues.put(CATEGORY_AREA_ID, entity.getID());
             contentValues.put(CATEGORY_AREA_NAME, ((CategoryEntity) entity).getCategoryName());
             this.contentValues.get(CONTENT_VALUES_UPDATE).get(CONTENT_VALUES_CATEGORY).add(contentValues);
             updateIDList.get(CONTENT_VALUES_CATEGORY).add(id);
         } else if (entity.getClass() == MaterialEntity.class) {
+            contentValues.put(MATERIAL_AREA_ID, entity.getID());
             contentValues.put(MATERIAL_AREA_NAME, ((MaterialEntity) entity).getMaterialName());
             this.contentValues.get(CONTENT_VALUES_UPDATE).get(CONTENT_VALUES_MATERIAL).add(contentValues);
             updateIDList.get(CONTENT_VALUES_MATERIAL).add(id);
         } else if (entity.getClass() == FoodEntity.class) {
+            contentValues.put(FOOD_AREA_ID, entity.getID());
             contentValues.put(FOOD_AREA_NAME, ((FoodEntity) entity).getFoodName());
             contentValues.put(FOOD_AREA_PREPARATION, ((FoodEntity) entity).getPreparationText());
             contentValues.put(FOOD_AREA_COOKING_TIME, ((FoodEntity) entity).getCookingTime());
             contentValues.put(FOOD_AREA_PREPARATION_TIME, ((FoodEntity) entity).getPreparationTime());
             contentValues.put(FOOD_AREA_HOW_MANY_PERSON, ((FoodEntity) entity).getHowManyPerson());
-            contentValues.put(FOOD_AREA_CATEGORY_ID, entity.getID());
+            contentValues.put(FOOD_AREA_CATEGORY_ID, ((FoodEntity) entity).getCategoryID());
             this.contentValues.get(CONTENT_VALUES_UPDATE).get(CONTENT_VALUES_FOOD).add(contentValues);
             updateIDList.get(CONTENT_VALUES_FOOD).add(id);
         } else if (entity.getClass() == EntityName.IMAGE_ENTITY_CLASS) {
+            contentValues.put(IMAGES_AREA_ID, entity.getID());
             contentValues.put(IMAGES_AREA_FOOD_ID, ((ImageEntity) entity).getFoodID());
             contentValues.put(IMAGES_AREA_IMAGE_ID, ((ImageEntity) entity).getImageID());
             this.contentValues.get(CONTENT_VALUES_UPDATE).get(CONTENT_VALUES_IMAGE).add(contentValues);
@@ -208,19 +254,24 @@ public class SQLiteDatabaseHelper extends SQLiteOpenHelper implements IDatabaseH
         if (entity == EntityName.FOOD_ENTITY_CLASS) {
             columns.add(FOOD_AREA_ID);
             columns.add(FOOD_AREA_NAME);
+            columns.add(FOOD_AREA_PREPARATION);
+            columns.add(FOOD_AREA_COOKING_TIME);
+            columns.add(FOOD_AREA_PREPARATION_TIME);
+            columns.add(FOOD_AREA_HOW_MANY_PERSON);
+            columns.add(FOOD_AREA_CATEGORY_ID);
 
             Cursor cursor = database.query(FOOD_TABLE_NAME, Convert.getStringArray(columns),
                     selection, new String[]{}, groupBy, having, orderBy);
 
             while (cursor.moveToNext()) {
-                records.add(cursor.getColumnIndex(FOOD_AREA_ID),
-                        new FoodEntity(cursor.getColumnIndex(FOOD_AREA_ID),
+                records.add(cursor.getColumnIndex((FOOD_AREA_ID)),
+                        new FoodEntity(cursor.getString(cursor.getColumnIndex(FOOD_AREA_ID)),
                                 cursor.getString(cursor.getColumnIndex(FOOD_AREA_NAME)),
                                 cursor.getString(cursor.getColumnIndex(FOOD_AREA_PREPARATION)),
                                 cursor.getString(cursor.getColumnIndex(FOOD_AREA_COOKING_TIME)),
                                 cursor.getString(cursor.getColumnIndex(FOOD_AREA_PREPARATION_TIME)),
                                 cursor.getString(cursor.getColumnIndex(FOOD_AREA_HOW_MANY_PERSON)),
-                                cursor.getColumnIndex(FOOD_AREA_CATEGORY_ID)));
+                                cursor.getInt(cursor.getColumnIndex(FOOD_AREA_CATEGORY_ID))));
             }
 
         } else if (entity == EntityName.CATEGORY_ENTITY_CLASS) {
@@ -232,7 +283,7 @@ public class SQLiteDatabaseHelper extends SQLiteOpenHelper implements IDatabaseH
 
             while (cursor.moveToNext()) {
                 records.add(cursor.getColumnIndex(CATEGORY_AREA_ID),
-                        new CategoryEntity(cursor.getColumnIndex(CATEGORY_AREA_ID),
+                        new CategoryEntity(cursor.getString(cursor.getColumnIndex(CATEGORY_AREA_ID)),
                                 cursor.getString(cursor.getColumnIndex(CATEGORY_AREA_NAME))));
             }
 
@@ -245,7 +296,7 @@ public class SQLiteDatabaseHelper extends SQLiteOpenHelper implements IDatabaseH
 
             while (cursor.moveToNext()) {
                 records.add(cursor.getColumnIndex(MATERIAL_AREA_ID),
-                        new MaterialEntity(cursor.getColumnIndex(MATERIAL_AREA_ID),
+                        new MaterialEntity(cursor.getString(cursor.getColumnIndex(MATERIAL_AREA_ID)),
                                 cursor.getString(cursor.getColumnIndex(MATERIAL_AREA_NAME))));
             }
 
@@ -259,12 +310,12 @@ public class SQLiteDatabaseHelper extends SQLiteOpenHelper implements IDatabaseH
 
             while (cursor.moveToNext()) {
                 records.add(cursor.getColumnIndex(IMAGES_AREA_ID),
-                        new ImageEntity(cursor.getColumnIndex(IMAGES_AREA_ID),
-                                cursor.getColumnIndex(IMAGES_AREA_FOOD_ID),
-                                cursor.getColumnIndex(IMAGES_AREA_IMAGE_ID)));
+                        new ImageEntity(cursor.getString(cursor.getColumnIndex(IMAGES_AREA_ID)),
+                                cursor.getString(cursor.getColumnIndex(IMAGES_AREA_FOOD_ID)),
+                                cursor.getString(cursor.getColumnIndex(IMAGES_AREA_IMAGE_ID))));
             }
 
-        } else records.add(-1, new CategoryEntity(-1));
+        } else records.add(-1, new CategoryEntity("-1"));
 
         disconnect();
 

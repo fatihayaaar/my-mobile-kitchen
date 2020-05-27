@@ -14,7 +14,7 @@ import androidx.annotation.Nullable;
 import com.fayarretype.mymobilekitchen.R;
 import com.fayarretype.mymobilekitchen.layers.dal.XMLPullParserHandler;
 import com.fayarretype.mymobilekitchen.layers.entitites.CategoryEntity;
-import com.fayarretype.mymobilekitchen.tools.Images;
+import com.fayarretype.mymobilekitchen.tools.utils.Images;
 
 import java.util.ArrayList;
 
@@ -27,8 +27,8 @@ public class CategoryAdapter extends ArrayAdapter<CategoryEntity> {
     public static CategoryAdapter newInstance(Context context) {
         ArrayList<CategoryEntity> entities = XMLPullParserHandler.getInstance(context)
                 .getCategoryEntities();
-        entities.add(new CategoryEntity(-1, "diğer"));
-        entities.add(new CategoryEntity(-1, "kategoriler"));
+        entities.add(new CategoryEntity("-1", "diğer"));
+        entities.add(new CategoryEntity("-1", "kategoriler"));
 
         return new CategoryAdapter(context, entities);
     }

@@ -6,7 +6,7 @@ import com.fayarretype.mymobilekitchen.layers.bl.abstracts.IManager;
 import com.fayarretype.mymobilekitchen.layers.dal.UnitOfWork;
 import com.fayarretype.mymobilekitchen.layers.entitites.BaseEntity;
 import com.fayarretype.mymobilekitchen.layers.entitites.CategoryEntity;
-import com.fayarretype.mymobilekitchen.tools.validations.EntityValidation;
+import com.fayarretype.mymobilekitchen.tools.utils.validations.EntityValidation;
 
 import java.util.ArrayList;
 

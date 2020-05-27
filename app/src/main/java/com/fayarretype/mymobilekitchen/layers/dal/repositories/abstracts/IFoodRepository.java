@@ -8,7 +8,7 @@ public interface IFoodRepository<TEntity extends BaseEntity> extends IRepository
 
     void addWithWeb(TEntity entity);
 
-    TEntity getFoodByCategoryID(int categoryID);
+    ArrayList<BaseEntity> getFoodByCategoryID(int categoryID);
     
     ArrayList<String> getFoodNames();
 }

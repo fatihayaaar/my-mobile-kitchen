@@ -1,4 +1,4 @@
-package com.fayarretype.mymobilekitchen.tools;
+package com.fayarretype.mymobilekitchen.tools.utils;
 
 import android.content.Context;
 import android.net.ConnectivityManager;

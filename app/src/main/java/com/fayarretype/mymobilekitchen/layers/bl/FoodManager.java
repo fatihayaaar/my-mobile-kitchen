@@ -5,6 +5,7 @@ import android.content.Context;
 import com.fayarretype.mymobilekitchen.layers.bl.abstracts.IFoodManager;
 import com.fayarretype.mymobilekitchen.layers.dal.repositories.FoodRepository;
 import com.fayarretype.mymobilekitchen.layers.dal.repositories.ImageRepository;
+import com.fayarretype.mymobilekitchen.layers.entitites.BaseEntity;
 import com.fayarretype.mymobilekitchen.layers.entitites.FoodEntity;
 import com.fayarretype.mymobilekitchen.layers.entitites.ImageEntity;
 import com.fayarretype.mymobilekitchen.tools.utils.ImageStream;
@@ -13,7 +14,7 @@ import java.util.ArrayList;
 
 public class FoodManager extends BaseManager<FoodEntity> implements IFoodManager<FoodEntity> {
 
-    private int foodID;
+    private String foodID;
     private Context context;
 
     public FoodManager(Context context) {
@@ -31,7 +32,7 @@ public class FoodManager extends BaseManager<FoodEntity> implements IFoodManager
         FoodEntity entity = (FoodEntity) unitOfWork.getRepository(FoodEntity.class).getEntity(ID);
         if (entity != null)
             return entity;
-        return new FoodEntity(-1);
+        return new FoodEntity("-1");
     }
 
     @Override
@@ -40,12 +41,12 @@ public class FoodManager extends BaseManager<FoodEntity> implements IFoodManager
     }
 
     @Override
-    public FoodEntity getFoodByCategoryID(int categoryID) {
-        FoodEntity foodEntity = ((FoodRepository) unitOfWork.getRepository(FoodEntity.class))
+    public ArrayList<BaseEntity> getFoodByCategoryID(int categoryID) {
+        ArrayList<BaseEntity> foodEntity = ((FoodRepository) unitOfWork.getRepository(FoodEntity.class))
                 .getFoodByCategoryID(categoryID);
         if (foodEntity != null)
             return foodEntity;
-        return new FoodEntity(-1);
+        return new ArrayList<>();
     }
 
     @Override
@@ -57,8 +58,8 @@ public class FoodManager extends BaseManager<FoodEntity> implements IFoodManager
     }
 
     private void uploadImages(ImageEntity[] entity) {
-        ImageStream imageStream = new ImageStream(context);
         for (int i = 0; i < entity.length; i++) {
+            ImageStream imageStream = new ImageStream(context);
             entity[i] = new ImageEntity();
             imageStream.setPictureBitmap(entity[i].getImage());
             imageStream.saveImage();

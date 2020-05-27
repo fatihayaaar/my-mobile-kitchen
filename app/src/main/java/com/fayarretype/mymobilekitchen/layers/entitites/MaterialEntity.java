@@ -8,16 +8,12 @@ public class MaterialEntity extends BaseEntity {
         
     }
     
-    public MaterialEntity(int id) {
+    public MaterialEntity(String id) {
         super(id);
     }
 
-    public MaterialEntity(int id, String materialName) {
+    public MaterialEntity(String id, String materialName) {
         super(id);
-        this.materialName = materialName;
-    }
-    
-    public MaterialEntity(String materialName) {
         this.materialName = materialName;
     }
     

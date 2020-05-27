@@ -24,7 +24,7 @@ public class MaterialManager extends BaseManager<MaterialEntity> implements IMat
         MaterialEntity entity = (MaterialEntity) unitOfWork.getRepository(MaterialEntity.class).getEntity(ID);
         if (entity != null)
             return entity;
-        return new MaterialEntity(-1);
+        return new MaterialEntity("-1");
     }
 
     @Override

@@ -28,6 +28,9 @@ public class FoodsActivity extends AppCompatActivity
 
         BottomNavigationView bottomNavigationView = findViewById(R.id.nav_view);
         bottomNavigationView.setOnNavigationItemSelectedListener(this);
+
+        loadFragment(FragmentContainer.getInstance(this)
+                .getFragment(FragmentName.VIEW_FOODS_FRAGMENT));
     }
 
     private void loadToolbar(@StringRes int resId) {

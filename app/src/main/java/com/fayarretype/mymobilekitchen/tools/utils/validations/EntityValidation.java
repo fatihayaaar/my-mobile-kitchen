@@ -1,4 +1,4 @@
-package com.fayarretype.mymobilekitchen.tools.validations;
+package com.fayarretype.mymobilekitchen.tools.utils.validations;
 
 import com.fayarretype.mymobilekitchen.layers.entitites.BaseEntity;
 import com.fayarretype.mymobilekitchen.layers.entitites.CategoryEntity;

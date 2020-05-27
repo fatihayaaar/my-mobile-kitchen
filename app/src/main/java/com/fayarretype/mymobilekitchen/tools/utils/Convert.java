@@ -1,4 +1,4 @@
-package com.fayarretype.mymobilekitchen.tools;
+package com.fayarretype.mymobilekitchen.tools.utils;
 
 import java.util.ArrayList;
 

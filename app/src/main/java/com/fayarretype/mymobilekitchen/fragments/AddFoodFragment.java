@@ -7,7 +7,6 @@ import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,6 +17,7 @@ import android.widget.ImageView;
 import android.widget.MultiAutoCompleteTextView;
 import android.widget.ScrollView;
 import android.widget.Spinner;
+import android.widget.Toast;
 
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
@@ -27,18 +27,20 @@ import com.fayarretype.mymobilekitchen.R;
 import com.fayarretype.mymobilekitchen.layers.bl.DataProcessingFactory;
 import com.fayarretype.mymobilekitchen.layers.bl.ManagerName;
 import com.fayarretype.mymobilekitchen.layers.bl.MaterialManager;
+import com.fayarretype.mymobilekitchen.layers.dal.repositories.FoodRepository;
 import com.fayarretype.mymobilekitchen.layers.entitites.FoodEntity;
 import com.fayarretype.mymobilekitchen.layers.entitites.ImageEntity;
 import com.fayarretype.mymobilekitchen.layers.pl.CategoryAdapter;
-import com.fayarretype.mymobilekitchen.tools.Convert;
-import com.fayarretype.mymobilekitchen.tools.ServiceControl;
 import com.fayarretype.mymobilekitchen.tools.dialogbox.DialogBox;
 import com.fayarretype.mymobilekitchen.tools.dialogbox.DialogBoxContainer;
 import com.fayarretype.mymobilekitchen.tools.dialogbox.DialogBoxName;
-import com.fayarretype.mymobilekitchen.tools.validations.NumberValidate;
-import com.fayarretype.mymobilekitchen.tools.validations.TextValidate;
+import com.fayarretype.mymobilekitchen.tools.utils.Convert;
+import com.fayarretype.mymobilekitchen.tools.utils.validations.NumberValidate;
+import com.fayarretype.mymobilekitchen.tools.utils.validations.TextValidate;
 
 import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 public class AddFoodFragment extends Fragment {
 
@@ -282,14 +284,15 @@ public class AddFoodFragment extends Fragment {
                 .getDialogBox(DialogBoxName.ERROR_DIALOG_BOX);
 
         if (validateControl()) {
-            if (!ServiceControl.networkConnection(context)) {
+            /*if (!ServiceControl.networkConnection(context)) {
                 DialogBoxContainer
                         .getInstance(context, fragmentActivity.getSupportFragmentManager())
                         .getDialogBox(DialogBoxName.INTERNET_CONNECTION_ERROR_DIALOG_BOX)
                         .show();
-            } else {
-                saveFood();
-            }
+            } else {*/
+            Toast.makeText(context.getApplicationContext(), "Yeni Yemek Eklendi", Toast.LENGTH_LONG).show();
+            saveFood();
+            /*}*/
         } else {
             dialogBox.setTitle("Uyarı");
             dialogBox.setPreparation("Hatalı alanları düzeltiniz.");
@@ -302,6 +305,8 @@ public class AddFoodFragment extends Fragment {
 
     private void createFood() {
         food = new FoodEntity();
+        String key = new SimpleDateFormat("yyddHHmmss").format(new Date());
+        food.setID(key);
         food.setFoodName(foodName);
         food.setPreparationText(foodPreparation);
         food.setCookingTime(String.valueOf(foodCookingTime));

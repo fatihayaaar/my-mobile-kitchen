@@ -1,40 +1,41 @@
 package com.fayarretype.mymobilekitchen.layers.entitites;
 
 import android.graphics.Bitmap;
+import android.util.Log;
 
 public class ImageEntity extends BaseEntity {
 
-    private int foodID;
-    private int ImageID;
+    private String foodID;
+    private String ImageID;
     private Bitmap image;
 
     public ImageEntity() {
 
     }
 
-    public ImageEntity(int ID) {
+    public ImageEntity(String ID) {
         super(ID);
     }
 
-    public ImageEntity(int ID, int foodID, int imageID) {
+    public ImageEntity(String ID, String foodID, String imageID) {
         this(ID);
         setFoodID(foodID);
         setImageID(imageID);
     }
 
-    public int getFoodID() {
+    public String getFoodID() {
         return foodID;
     }
 
-    public void setFoodID(int foodID) {
+    public void setFoodID(String foodID) {
         this.foodID = foodID;
     }
 
-    public int getImageID() {
+    public String getImageID() {
         return ImageID;
     }
 
-    public void setImageID(int imageID) {
+    public void setImageID(String imageID) {
         ImageID = imageID;
     }
 
