@@ -2,6 +2,7 @@ package com.fayarretype.mymobilekitchen.activities;
 
 import android.os.Bundle;
 import android.view.MenuItem;
+import android.view.View;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.StringRes;
@@ -54,9 +55,11 @@ public class FoodsActivity extends AppCompatActivity
         if (getMode() == EDIT_MODE) {
             AddFoodFragment.setMode(EDIT_MODE);
             AddFoodFragment.setMFood(food);
+            bottomNavigationView.setVisibility(View.GONE);
             loadFragment(FragmentContainer.getInstance(this).getFragment(FragmentName.ADD_FOOD_FRAGMENT));
             return;
         }
+        bottomNavigationView.setVisibility(View.VISIBLE);
         AddFoodFragment.setMode(NORMAL_MODE);
         loadFragment(FragmentContainer.getInstance(this).getFragment(FragmentName.VIEW_FOODS_FRAGMENT));
 
@@ -81,7 +84,7 @@ public class FoodsActivity extends AppCompatActivity
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
         Fragment fragment;
-        
+
         FoodsActivity.setMode(NORMAL_MODE);
         AddFoodFragment.setMode(NORMAL_MODE);
 
