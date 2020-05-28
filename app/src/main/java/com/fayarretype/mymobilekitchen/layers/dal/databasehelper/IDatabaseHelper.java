@@ -6,7 +6,7 @@ public interface IDatabaseHelper<T> {
 
     void add(T entity);
 
-    void delete(int id, Class entity);
+    void delete(String id, Class entity);
 
     void update(T entity, int id);
 

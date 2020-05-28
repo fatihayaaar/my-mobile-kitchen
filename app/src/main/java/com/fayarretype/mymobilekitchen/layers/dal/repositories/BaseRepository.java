@@ -24,7 +24,7 @@ public abstract class BaseRepository<TEntity extends BaseEntity> implements IRep
     }
 
     @Override
-    public void delete(int id, Class entity) {
+    public void delete(String id, Class entity) {
         databaseHelper.delete(id, entity);
     }
 

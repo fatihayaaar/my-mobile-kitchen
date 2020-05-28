@@ -8,7 +8,7 @@ public interface IRepository<TEntity extends BaseEntity> {
          
     void add(TEntity entity);
 
-    void delete(int id, Class entityClass);
+    void delete(String id, Class entityClass);
 
     void update(TEntity entity, int id);
     

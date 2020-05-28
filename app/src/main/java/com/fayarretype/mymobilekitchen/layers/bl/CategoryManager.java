@@ -14,7 +14,7 @@ public class CategoryManager extends BaseManager<CategoryEntity> implements ICat
     }
 
     @Override
-    public void delete(int ID) {
+    public void delete(String ID) {
         unitOfWork.getRepository(CategoryEntity.class).delete(ID, CategoryEntity.class);
     }
 

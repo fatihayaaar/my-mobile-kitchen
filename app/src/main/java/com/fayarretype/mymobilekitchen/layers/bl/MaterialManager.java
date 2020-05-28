@@ -15,7 +15,7 @@ public class MaterialManager extends BaseManager<MaterialEntity> implements IMat
     }
 
     @Override
-    public void delete(int ID) {
+    public void delete(String ID) {
         unitOfWork.getRepository(MaterialEntity.class).delete(ID, MaterialEntity.class);
     }
 

@@ -8,7 +8,7 @@ public interface IManager<TEntity> {
 
     boolean update(TEntity entity, int ID);
 
-    void delete(int ID);
+    void delete(String ID);
 
     TEntity getEntity(int ID);
 

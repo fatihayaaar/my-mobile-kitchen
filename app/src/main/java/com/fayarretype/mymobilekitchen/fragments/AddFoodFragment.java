@@ -24,10 +24,14 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentActivity;
 
 import com.fayarretype.mymobilekitchen.R;
+import com.fayarretype.mymobilekitchen.activities.FoodsActivity;
+import com.fayarretype.mymobilekitchen.activities.RecipeBookFoodDetailActivity;
 import com.fayarretype.mymobilekitchen.layers.bl.DataProcessingFactory;
+import com.fayarretype.mymobilekitchen.layers.bl.ManagerContainer;
 import com.fayarretype.mymobilekitchen.layers.bl.ManagerName;
 import com.fayarretype.mymobilekitchen.layers.bl.MaterialManager;
-import com.fayarretype.mymobilekitchen.layers.dal.repositories.FoodRepository;
+import com.fayarretype.mymobilekitchen.layers.bl.abstracts.IManager;
+import com.fayarretype.mymobilekitchen.layers.entitites.CategoryEntity;
 import com.fayarretype.mymobilekitchen.layers.entitites.FoodEntity;
 import com.fayarretype.mymobilekitchen.layers.entitites.ImageEntity;
 import com.fayarretype.mymobilekitchen.layers.pl.CategoryAdapter;
@@ -48,6 +52,8 @@ public class AddFoodFragment extends Fragment {
     private final static int IMAGE_VIEWS_COUNT = 5;
     private final static int CAMERA_REQUEST_CODE = 1000;
     private final static int GALLERY_REQUEST_CODE = 1001;
+    private static FoodEntity mFood;
+    private static int mode;
     private Context context;
     private View view;
     private FragmentActivity fragmentActivity;
@@ -77,6 +83,14 @@ public class AddFoodFragment extends Fragment {
         this.fragmentActivity = (FragmentActivity) context;
     }
 
+    public static int getMode() {
+        return mode;
+    }
+
+    public static void setMode(int mode) {
+        AddFoodFragment.mode = mode;
+    }
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.fragment_add_food, container, false);
@@ -93,6 +107,16 @@ public class AddFoodFragment extends Fragment {
         initPhotoOptionsBox();
         initComponentsEvents();
         loadValues();
+
+        if (AddFoodFragment.mode == FoodsActivity.EDIT_MODE) {
+            foodNameEditText.setText(mFood.getFoodName());
+            foodPreparationEditText.setText(mFood.getPreparationText());
+            foodCookingTimeEditText.setText(mFood.getCookingTime());
+            foodPreparationTimeEditText.setText(mFood.getPreparationTime());
+            foodHowManyPersonEditText.setText(mFood.getHowManyPerson());
+            categoryAddSpinner.setSelection(mFood.getCategoryID() - 1);
+            saveButton.setText("Düzenle");
+        }
     }
 
     private void initComponents() {
@@ -290,6 +314,16 @@ public class AddFoodFragment extends Fragment {
                         .getDialogBox(DialogBoxName.INTERNET_CONNECTION_ERROR_DIALOG_BOX)
                         .show();
             } else {*/
+            if (getMode() == FoodsActivity.EDIT_MODE) {
+                Toast.makeText(context.getApplicationContext(), "Yemek Düzenlendi", Toast.LENGTH_LONG).show();
+                IManager categoryManager = ManagerContainer.getInstance(context).getManager(ManagerName.CATEGORY_MANAGER);
+                CategoryEntity categoryEntity = (CategoryEntity) categoryManager.getEntity(mFood.getCategoryID());
+                RecipeBookFoodDetailActivity.setFood(mFood, categoryEntity);
+                Intent intent = new Intent(getActivity().getBaseContext(), RecipeBookFoodDetailActivity.class);
+                startActivity(intent);
+                getActivity().finish();
+                return;
+            }
             Toast.makeText(context.getApplicationContext(), "Yeni Yemek Eklendi", Toast.LENGTH_LONG).show();
             saveFood();
             /*}*/
@@ -339,6 +373,14 @@ public class AddFoodFragment extends Fragment {
         if (selectedImageViewElement < IMAGE_VIEWS_COUNT) {
             this.selectedImageViewElement = selectedImageViewElement;
         }
+    }
+
+    public static FoodEntity getMFood() {
+        return mFood;
+    }
+
+    public static void setMFood(FoodEntity mFood) {
+        AddFoodFragment.mFood = mFood;
     }
 
     private class LoadValuesCategory implements Runnable {

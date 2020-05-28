@@ -4,10 +4,12 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.MotionEvent;
 import android.view.View;
+import android.widget.LinearLayout;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.fayarretype.mymobilekitchen.activities.FoodsActivity;
+import com.fayarretype.mymobilekitchen.activities.RecipeBookActivity;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -22,6 +24,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(getBaseContext(), FoodsActivity.class);
+                FoodsActivity.setMode(FoodsActivity.NORMAL_MODE);
                 startActivity(intent);
             }
         });
@@ -55,9 +58,9 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
-
-        LinearLayout recipeBookOptionsLayout = findViewById(R.id.recipeBookOptionsLayout);
-        recipeBookOptionsLayout.setOnClickListener(new View.OnClickListener() {
+*/
+        androidx.cardview.widget.CardView recipeBookOptions = findViewById(R.id.recipeBooksCardView);
+        recipeBookOptions.setOnClickListener(new View.OnClickListener() {
 
             @Override
             public void onClick(View v) {
@@ -65,7 +68,7 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
-
+/*
         LinearLayout aboutOptionsLayout = findViewById(R.id.aboutOptionsLayout);
         aboutOptionsLayout.setOnClickListener(new View.OnClickListener() {
 

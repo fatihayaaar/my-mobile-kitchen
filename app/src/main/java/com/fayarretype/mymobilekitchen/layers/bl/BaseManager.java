@@ -34,7 +34,7 @@ public abstract class BaseManager<TEntity> implements IManager<TEntity> {
     }
 
     @Override
-    public abstract void delete(int ID);
+    public abstract void delete(String ID);
 
     @Override
     public abstract TEntity getEntity(int ID);

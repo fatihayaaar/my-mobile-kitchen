@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#f9f9f9"
-    tools:context="com.example.mymobilekitchen.MainActivity">
+    tools:context="com.fayarretype.mymobilekitchen.MainActivity">
 
     <ScrollView
         android:layout_width="match_parent"
@@ -135,6 +135,7 @@
                     android:orientation="horizontal">
 
                     <androidx.cardview.widget.CardView
+                        android:id="@+id/recipeBooksCardView"
                         android:layout_width="130dp"
                         android:layout_height="130dp"
                         android:layout_gravity="center"

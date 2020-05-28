@@ -23,7 +23,7 @@ public class FoodManager extends BaseManager<FoodEntity> implements IFoodManager
     }
 
     @Override
-    public void delete(int ID) {
+    public void delete(String ID) {
         unitOfWork.getRepository(FoodEntity.class).delete(ID, FoodEntity.class);
     }
 

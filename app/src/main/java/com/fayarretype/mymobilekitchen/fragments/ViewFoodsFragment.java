@@ -3,7 +3,6 @@ package com.fayarretype.mymobilekitchen.fragments;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -27,7 +26,6 @@ import com.fayarretype.mymobilekitchen.layers.pl.CategoryAdapter;
 import com.fayarretype.mymobilekitchen.layers.pl.FoodAdapter;
 
 import java.util.ArrayList;
-import java.util.List;
 
 public class ViewFoodsFragment extends Fragment {
 
@@ -44,20 +42,18 @@ public class ViewFoodsFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.fragment_view_foods, container, false);
         categoryAddSpinner = view.findViewById(R.id.categorySpinner);
-        categoryAddSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener()
-        {
+        categoryAddSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
-            public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int position, long id)
-            {
+            public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int position, long id) {
                 if (categoryAddSpinner.getSelectedItemPosition() + 1 != 34) {
                     new LoadValuesFoodByCategory().start(categoryAddSpinner.getSelectedItemPosition() + 1);
                 } else {
                     new LoadValuesFood().start();
                 }
             }
+
             @Override
-            public void onNothingSelected(AdapterView<?> adapterView)
-            {
+            public void onNothingSelected(AdapterView<?> adapterView) {
             }
         });
         new LoadValuesFood().start();
@@ -73,12 +69,12 @@ public class ViewFoodsFragment extends Fragment {
 
     public void loadValuesFoodRowLayoutByCategory(int categoryID) {
         DataProcessingFactory dataProcessingFactory = DataProcessingFactory.getInstance(getContext());
-        final ArrayList<BaseEntity> foodEntities = ((FoodManager)dataProcessingFactory.getManager(ManagerName.FOOD_MANAGER)).getFoodByCategoryID(categoryID);
+        final ArrayList<BaseEntity> foodEntities = ((FoodManager) dataProcessingFactory.getManager(ManagerName.FOOD_MANAGER)).getFoodByCategoryID(categoryID);
         GridView foodGridView = view.findViewById(R.id.foodGridView);
 
         ArrayList<FoodEntity> foods = new ArrayList<>();
         for (BaseEntity food : foodEntities) {
-            foods.add((FoodEntity)food);
+            foods.add((FoodEntity) food);
         }
 
         FoodAdapter foodAdapter = new FoodAdapter(context, foods);

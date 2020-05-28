@@ -45,7 +45,7 @@ public class SQLiteDatabaseHelper extends SQLiteOpenHelper implements IDatabaseH
     private final int CONTENT_VALUES_FOOD = 2;
     private final int CONTENT_VALUES_IMAGE = 3;
     private ArrayList<ArrayList<ArrayList<ContentValues>>> contentValues;
-    private ArrayList<ArrayList<Integer>> deleteIDList;
+    private ArrayList<ArrayList<String>> deleteIDList;
     private ArrayList<ArrayList<Integer>> updateIDList;
     private SQLiteDatabase database;
 
@@ -74,10 +74,10 @@ public class SQLiteDatabaseHelper extends SQLiteOpenHelper implements IDatabaseH
         contentValues.get(CONTENT_VALUES_UPDATE).add(CONTENT_VALUES_IMAGE, new ArrayList<ContentValues>());
 
         deleteIDList = new ArrayList<>();
-        deleteIDList.add(CONTENT_VALUES_CATEGORY, new ArrayList<Integer>());
-        deleteIDList.add(CONTENT_VALUES_MATERIAL, new ArrayList<Integer>());
-        deleteIDList.add(CONTENT_VALUES_FOOD, new ArrayList<Integer>());
-        deleteIDList.add(CONTENT_VALUES_IMAGE, new ArrayList<Integer>());
+        deleteIDList.add(CONTENT_VALUES_CATEGORY, new ArrayList<String>());
+        deleteIDList.add(CONTENT_VALUES_MATERIAL, new ArrayList<String>());
+        deleteIDList.add(CONTENT_VALUES_FOOD, new ArrayList<String>());
+        deleteIDList.add(CONTENT_VALUES_IMAGE, new ArrayList<String>());
         updateIDList = new ArrayList<>();
         updateIDList.add(CONTENT_VALUES_CATEGORY, new ArrayList<Integer>());
         updateIDList.add(CONTENT_VALUES_MATERIAL, new ArrayList<Integer>());
@@ -186,7 +186,7 @@ public class SQLiteDatabaseHelper extends SQLiteOpenHelper implements IDatabaseH
     }
 
     @Override
-    public void delete(int id, Class entity) {
+    public void delete(String id, Class entity) {
         if (entity.getName().equals(EntityName.CATEGORY_ENTITY_CLASS.getName()))
             deleteIDList.get(CONTENT_VALUES_CATEGORY).add(id);
         else if (entity.getName().equals(EntityName.MATERIAL_ENTITY_CLASS.getName()))
@@ -388,7 +388,7 @@ public class SQLiteDatabaseHelper extends SQLiteOpenHelper implements IDatabaseH
             }
             for (int i = 0; i < deleteIDList.get(CONTENT_VALUES_FOOD).size(); i++) {
                 database.delete(FOOD_TABLE_NAME,
-                        FOOD_AREA_ID + " = " + deleteIDList.get(CONTENT_VALUES_FOOD).get(i), null);
+                        FOOD_AREA_ID + " = '" + deleteIDList.get(CONTENT_VALUES_FOOD).get(i) + "'", null);
             }
         } finally {
             disconnect();
