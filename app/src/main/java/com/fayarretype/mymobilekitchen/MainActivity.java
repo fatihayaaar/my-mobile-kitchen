@@ -8,7 +8,9 @@ import android.widget.LinearLayout;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.fayarretype.mymobilekitchen.activities.AboutActivity;
 import com.fayarretype.mymobilekitchen.activities.FoodsActivity;
+import com.fayarretype.mymobilekitchen.activities.ProfileActivity;
 import com.fayarretype.mymobilekitchen.activities.RecipeBookActivity;
 
 public class MainActivity extends AppCompatActivity {
@@ -38,9 +40,9 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
-
-        LinearLayout profileOptionsLayout = findViewById(R.id.profileOptionsLayout);
-        profileOptionsLayout.setOnClickListener(new View.OnClickListener() {
+*/
+        androidx.cardview.widget.CardView profileOptions = findViewById(R.id.profileOptionsCardView);
+        profileOptions.setOnClickListener(new View.OnClickListener() {
 
             @Override
             public void onClick(View v) {
@@ -48,7 +50,7 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
-
+/*
         LinearLayout stockOptionsLayout = findViewById(R.id.stockOptionsLayout);
         stockOptionsLayout.setOnClickListener(new View.OnClickListener() {
 
@@ -68,15 +70,15 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
-/*
-        LinearLayout aboutOptionsLayout = findViewById(R.id.aboutOptionsLayout);
-        aboutOptionsLayout.setOnClickListener(new View.OnClickListener() {
+
+        androidx.cardview.widget.CardView aboutOptions = findViewById(R.id.aboutActivityCardView);
+        aboutOptions.setOnClickListener(new View.OnClickListener() {
 
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(getBaseContext(), AboutActivity.class);
                 startActivity(intent);
             }
-        });/*/
+        });
     }
 }
