@@ -50,6 +50,7 @@ public class MaterialCardAdapter extends ArrayAdapter<MaterialEntity> {
             convertView = LayoutInflater.from(getContext()).inflate(R.layout.items_layout, parent, false);
         }
         TextView textViewItemName = convertView.findViewById(R.id.item_name);
+        Button buttonItemCount = convertView.findViewById(R.id.item_count);
         Button deleteItem = convertView.findViewById(R.id.delete_item_button);
 
         final MaterialEntity materialEntity = getItem(position);
@@ -92,6 +93,7 @@ public class MaterialCardAdapter extends ArrayAdapter<MaterialEntity> {
 
         if (materialEntity != null) {
             textViewItemName.setText(materialEntity.getMaterialName().toUpperCase());
+            buttonItemCount.setText(materialEntity.getMaterialCount().toUpperCase() + "X");
         }
         return convertView;
     }

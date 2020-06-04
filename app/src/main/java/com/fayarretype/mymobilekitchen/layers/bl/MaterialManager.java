@@ -36,4 +36,8 @@ public class MaterialManager extends BaseManager<MaterialEntity> implements IMat
     public ArrayList<String> getNames() {
         return ((MaterialRepository) unitOfWork.getRepository(MaterialEntity.class)).getMaterialNames();
     }
+
+    public void increaseCount() {
+        //unitOfWork.getRepository(MaterialEntity.class).update();
+    }
 }

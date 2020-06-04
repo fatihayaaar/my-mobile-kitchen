@@ -5,7 +5,6 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
-import android.util.Log;
 
 import com.fayarretype.mymobilekitchen.layers.dal.repositories.EntityName;
 import com.fayarretype.mymobilekitchen.layers.entitites.BaseEntity;
@@ -23,6 +22,8 @@ public class SQLiteDatabaseHelper extends SQLiteOpenHelper implements IDatabaseH
     public static final String FOOD_AREA_CATEGORY_ID = "categoryID";
     public static final String CATEGORY_AREA_ID = "categoryID";
     public static final String MATERIAL_AREA_ID = "materialID";
+    public static final String IMAGES_AREA_ID = "imagesID";
+    public static final String IMAGES_AREA_FOOD_ID = "foodID";
     private static final String FOOD_TABLE_NAME = "Food";
     private static final String CATEGORY_TABLE_NAME = "Category";
     private static final String MATERIAL_TABLE_NAME = "Material";
@@ -34,8 +35,7 @@ public class SQLiteDatabaseHelper extends SQLiteOpenHelper implements IDatabaseH
     private static final String FOOD_AREA_HOW_MANY_PERSON = "howManyPerson";
     private static final String CATEGORY_AREA_NAME = "categoryName";
     private static final String MATERIAL_AREA_NAME = "materialName";
-    public static final String IMAGES_AREA_ID = "imagesID";
-    public static final String IMAGES_AREA_FOOD_ID = "foodID";
+    private static final String MATERIAL_AREA_COUNT = "materialCount";
     private static final String IMAGES_AREA_IMAGE_ID = "imageID";
     private static SQLiteDatabaseHelper databaseHelper;
     private final int CONTENT_VALUES_INSERT = 0;
@@ -50,7 +50,7 @@ public class SQLiteDatabaseHelper extends SQLiteOpenHelper implements IDatabaseH
     private SQLiteDatabase database;
 
     private SQLiteDatabaseHelper(Context context) {
-        super(context, "my_mobile_kitchen.db", null, 14);
+        super(context, "my_mobile_kitchen.db", null, 15);
         init();
     }
 
@@ -99,7 +99,8 @@ public class SQLiteDatabaseHelper extends SQLiteOpenHelper implements IDatabaseH
         db.execSQL("CREATE TABLE " + MATERIAL_TABLE_NAME + " (" +
                 "id INTEGER PRIMARY KEY AUTOINCREMENT," +
                 MATERIAL_AREA_ID + " TEXT," +
-                MATERIAL_AREA_NAME + " TEXT NOT NULL );");
+                MATERIAL_AREA_NAME + " TEXT NOT NULL," +
+                MATERIAL_AREA_COUNT + " TEXT NOT NULL);");
 
         db.execSQL("CREATE TABLE " + FOOD_TABLE_NAME + " ( " +
                 "id INTEGER PRIMARY KEY AUTOINCREMENT," +
@@ -167,6 +168,7 @@ public class SQLiteDatabaseHelper extends SQLiteOpenHelper implements IDatabaseH
         } else if (entity.getClass() == MaterialEntity.class) {
             contentValues.put(MATERIAL_AREA_ID, entity.getID());
             contentValues.put(MATERIAL_AREA_NAME, ((MaterialEntity) entity).getMaterialName());
+            contentValues.put(MATERIAL_AREA_COUNT, ((MaterialEntity) entity).getMaterialCount());
             this.contentValues.get(CONTENT_VALUES_INSERT).get(CONTENT_VALUES_MATERIAL).add(contentValues);
         } else if (entity.getClass() == FoodEntity.class) {
             contentValues.put(FOOD_AREA_ID, entity.getID());
@@ -209,6 +211,7 @@ public class SQLiteDatabaseHelper extends SQLiteOpenHelper implements IDatabaseH
         } else if (entity.getClass() == MaterialEntity.class) {
             contentValues.put(MATERIAL_AREA_ID, entity.getID());
             contentValues.put(MATERIAL_AREA_NAME, ((MaterialEntity) entity).getMaterialName());
+            contentValues.put(MATERIAL_AREA_COUNT, ((MaterialEntity) entity).getMaterialCount());
             this.contentValues.get(CONTENT_VALUES_UPDATE).get(CONTENT_VALUES_MATERIAL).add(contentValues);
             updateIDList.get(CONTENT_VALUES_MATERIAL).add(id);
         } else if (entity.getClass() == FoodEntity.class) {
@@ -290,6 +293,7 @@ public class SQLiteDatabaseHelper extends SQLiteOpenHelper implements IDatabaseH
         } else if (entity == EntityName.MATERIAL_ENTITY_CLASS) {
             columns.add(MATERIAL_AREA_ID);
             columns.add(MATERIAL_AREA_NAME);
+            columns.add(MATERIAL_AREA_COUNT);
 
             Cursor cursor = database.query(MATERIAL_TABLE_NAME, Convert.getStringArray(columns),
                     selection, new String[]{}, groupBy, having, orderBy);
@@ -297,7 +301,8 @@ public class SQLiteDatabaseHelper extends SQLiteOpenHelper implements IDatabaseH
             while (cursor.moveToNext()) {
                 records.add(cursor.getColumnIndex(MATERIAL_AREA_ID),
                         new MaterialEntity(cursor.getString(cursor.getColumnIndex(MATERIAL_AREA_ID)),
-                                cursor.getString(cursor.getColumnIndex(MATERIAL_AREA_NAME))));
+                                cursor.getString(cursor.getColumnIndex(MATERIAL_AREA_NAME)),
+                                cursor.getString(cursor.getColumnIndex(MATERIAL_AREA_COUNT))));
             }
 
         } else if (entity == EntityName.IMAGE_ENTITY_CLASS) {

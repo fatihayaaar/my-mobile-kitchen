@@ -6,6 +6,7 @@
     android:orientation="horizontal">
 
     <Button
+        android:id="@+id/item_count"
         android:layout_width="22dp"
         android:layout_height="22dp"
         android:layout_alignParentLeft="true"
@@ -13,7 +14,6 @@
         android:layout_alignParentRight="false"
         android:textSize="5pt"
         android:textColor="#555"
-        android:text="2x"
         android:background="@drawable/background_item_count"/>
 
     <Button

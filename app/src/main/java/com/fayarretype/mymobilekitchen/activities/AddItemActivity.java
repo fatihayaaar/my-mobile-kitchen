@@ -49,6 +49,7 @@ public class AddItemActivity extends AppCompatActivity {
                 String key = new SimpleDateFormat("yyddHHmmss").format(new Date());
                 materialEntity.setID(key);
                 materialEntity.setMaterialName(autoCompleteTextView.getText().toString().trim().toLowerCase());
+                materialEntity.setMaterialCount("1");
 
                 DataProcessingFactory dataProcessingFactory = DataProcessingFactory.getInstance(this);
                 MaterialManager materialManager = (MaterialManager) dataProcessingFactory.getManager(ManagerName.MATERIAL_MANAGER);
