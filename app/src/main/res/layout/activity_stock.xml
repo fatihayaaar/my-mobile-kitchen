@@ -3,6 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#FAFAFA"
     tools:context="com.fayarretype.mymobilekitchen.activities.StockActivity">
 
     <include
@@ -11,15 +12,26 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:layout_below="@+id/toolbar"
+        android:layout_margin="20dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginEnd="20dp"
+        android:layout_marginRight="20dp"
+        android:layout_marginBottom="20dp"
+        android:gravity="center_horizontal">
 
         <GridView
             android:id="@+id/item_grid_view"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
             android:clipToPadding="true"
             android:fitsSystemWindows="true"
-            android:numColumns="1"
+            android:gravity="center_horizontal"
+            android:numColumns="2"
             android:stretchMode="columnWidth" />
 
     </LinearLayout>

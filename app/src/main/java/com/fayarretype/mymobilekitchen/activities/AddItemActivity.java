@@ -55,6 +55,7 @@ public class AddItemActivity extends AppCompatActivity {
                 materialManager.add(materialEntity);
                 dataProcessingFactory.saveChanges();
                 Toast.makeText(getApplicationContext(), "Envantere yeni malzeme eklendi", Toast.LENGTH_LONG).show();
+                finish();
             }
         } catch (Exception e) {
             Log.i("Error :", e.getMessage());
