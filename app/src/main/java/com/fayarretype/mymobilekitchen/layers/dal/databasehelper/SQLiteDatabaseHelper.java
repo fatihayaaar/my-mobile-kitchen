@@ -46,7 +46,7 @@ public class SQLiteDatabaseHelper extends SQLiteOpenHelper implements IDatabaseH
     private final int CONTENT_VALUES_IMAGE = 3;
     private ArrayList<ArrayList<ArrayList<ContentValues>>> contentValues;
     private ArrayList<ArrayList<String>> deleteIDList;
-    private ArrayList<ArrayList<Integer>> updateIDList;
+    private ArrayList<ArrayList<String>> updateIDList;
     private SQLiteDatabase database;
 
     private SQLiteDatabaseHelper(Context context) {
@@ -79,10 +79,10 @@ public class SQLiteDatabaseHelper extends SQLiteOpenHelper implements IDatabaseH
         deleteIDList.add(CONTENT_VALUES_FOOD, new ArrayList<String>());
         deleteIDList.add(CONTENT_VALUES_IMAGE, new ArrayList<String>());
         updateIDList = new ArrayList<>();
-        updateIDList.add(CONTENT_VALUES_CATEGORY, new ArrayList<Integer>());
-        updateIDList.add(CONTENT_VALUES_MATERIAL, new ArrayList<Integer>());
-        updateIDList.add(CONTENT_VALUES_FOOD, new ArrayList<Integer>());
-        updateIDList.add(CONTENT_VALUES_IMAGE, new ArrayList<Integer>());
+        updateIDList.add(CONTENT_VALUES_CATEGORY, new ArrayList<String>());
+        updateIDList.add(CONTENT_VALUES_MATERIAL, new ArrayList<String>());
+        updateIDList.add(CONTENT_VALUES_FOOD, new ArrayList<String>());
+        updateIDList.add(CONTENT_VALUES_IMAGE, new ArrayList<String>());
     }
 
     public void finish() {
@@ -200,7 +200,7 @@ public class SQLiteDatabaseHelper extends SQLiteOpenHelper implements IDatabaseH
     }
 
     @Override
-    public void update(BaseEntity entity, int id) {
+    public void update(BaseEntity entity, String id) {
         ContentValues contentValues = new ContentValues();
 
         if (entity.getClass() == CategoryEntity.class) {

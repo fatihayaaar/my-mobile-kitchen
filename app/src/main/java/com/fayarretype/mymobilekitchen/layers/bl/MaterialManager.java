@@ -20,7 +20,7 @@ public class MaterialManager extends BaseManager<MaterialEntity> implements IMat
     }
 
     @Override
-    public MaterialEntity getEntity(int ID) {
+    public MaterialEntity getEntity(String ID) {
         MaterialEntity entity = (MaterialEntity) unitOfWork.getRepository(MaterialEntity.class).getEntity(ID);
         if (entity != null)
             return entity;
@@ -37,7 +37,9 @@ public class MaterialManager extends BaseManager<MaterialEntity> implements IMat
         return ((MaterialRepository) unitOfWork.getRepository(MaterialEntity.class)).getMaterialNames();
     }
 
-    public void increaseCount() {
-        //unitOfWork.getRepository(MaterialEntity.class).update();
+    public void increaseCount(String id) {
+        MaterialEntity materialEntity = (MaterialEntity) unitOfWork.getRepository(MaterialEntity.class).getEntity(id);
+        materialEntity.setMaterialCount(String.valueOf(Integer.valueOf(materialEntity.getMaterialCount()) + 1));
+        unitOfWork.getRepository(MaterialEntity.class).update(materialEntity, id);
     }
 }

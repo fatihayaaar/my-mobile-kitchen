@@ -19,7 +19,7 @@ public class CategoryManager extends BaseManager<CategoryEntity> implements ICat
     }
 
     @Override
-    public CategoryEntity getEntity(int ID) {
+    public CategoryEntity getEntity(String ID) {
         CategoryEntity entity = (CategoryEntity) unitOfWork.getRepository(CategoryEntity.class).getEntity(ID);
         if (entity != null)
             return entity;

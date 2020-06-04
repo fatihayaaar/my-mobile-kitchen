@@ -10,9 +10,9 @@ public interface IRepository<TEntity extends BaseEntity> {
 
     void delete(String id, Class entityClass);
 
-    void update(TEntity entity, int id);
+    void update(TEntity entity, String id);
     
-    TEntity getEntity(int id);
+    TEntity getEntity(String id);
     
     ArrayList<TEntity> getEntities();
 

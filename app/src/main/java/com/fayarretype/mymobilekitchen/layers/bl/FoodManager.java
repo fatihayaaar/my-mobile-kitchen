@@ -28,7 +28,7 @@ public class FoodManager extends BaseManager<FoodEntity> implements IFoodManager
     }
 
     @Override
-    public FoodEntity getEntity(int ID) {
+    public FoodEntity getEntity(String ID) {
         FoodEntity entity = (FoodEntity) unitOfWork.getRepository(FoodEntity.class).getEntity(ID);
         if (entity != null)
             return entity;

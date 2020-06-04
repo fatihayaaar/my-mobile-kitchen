@@ -16,7 +16,7 @@ public class CategoryRepository extends BaseRepository<CategoryEntity> implement
     }
 
     @Override
-    public CategoryEntity getEntity(int id) {
+    public CategoryEntity getEntity(String id) {
         return (CategoryEntity) (databaseHelper.list(CategoryEntity.class,
                 SQLiteDatabaseHelper.CATEGORY_AREA_ID, String.valueOf(id)).get(0));
     }

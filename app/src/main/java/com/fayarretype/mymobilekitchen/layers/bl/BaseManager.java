@@ -25,7 +25,7 @@ public abstract class BaseManager<TEntity> implements IManager<TEntity> {
     }
 
     @Override
-    public boolean update(TEntity entity, int ID) {
+    public boolean update(TEntity entity, String ID) {
         if (EntityValidation.entityValidation((CategoryEntity) entity)) {
             unitOfWork.getRepository(entity.getClass()).update((BaseEntity) entity, ID);
             return true;
@@ -37,7 +37,7 @@ public abstract class BaseManager<TEntity> implements IManager<TEntity> {
     public abstract void delete(String ID);
 
     @Override
-    public abstract TEntity getEntity(int ID);
+    public abstract TEntity getEntity(String ID);
 
     @Override
     public abstract ArrayList<TEntity> getEntities();

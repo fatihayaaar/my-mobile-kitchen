@@ -51,7 +51,7 @@ public class RecipeBookActivity extends AppCompatActivity {
         gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             public void onItemClick(AdapterView<?> parent, View v, int position, long id) {
                 IManager categoryManager = ManagerContainer.getInstance(context).getManager(ManagerName.CATEGORY_MANAGER);
-                CategoryEntity categoryEntity = (CategoryEntity) categoryManager.getEntity(foodEntities.get(position).getCategoryID());
+                CategoryEntity categoryEntity = (CategoryEntity) categoryManager.getEntity(String.valueOf(foodEntities.get(position).getCategoryID()));
                 RecipeBookFoodDetailActivity.setFood(foodEntities.get(position), categoryEntity);
                 Intent intent = new Intent(getBaseContext(), RecipeBookFoodDetailActivity.class);
                 startActivity(intent);

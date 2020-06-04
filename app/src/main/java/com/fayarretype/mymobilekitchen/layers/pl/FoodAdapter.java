@@ -55,7 +55,7 @@ public class FoodAdapter extends ArrayAdapter<FoodEntity> {
         FoodEntity foodEntity = getItem(position);
 
         IManager categoryManager = ManagerContainer.getInstance(context).getManager(ManagerName.CATEGORY_MANAGER);
-        CategoryEntity categoryEntity = (CategoryEntity) categoryManager.getEntity(foodEntity.getCategoryID());
+        CategoryEntity categoryEntity = (CategoryEntity) categoryManager.getEntity(String.valueOf(foodEntity.getCategoryID()));
 
         IRepository repository = RepositoryContainer.getInstance(context).getRepository(RepositoryName.IMAGE);
 
@@ -68,7 +68,7 @@ public class FoodAdapter extends ArrayAdapter<FoodEntity> {
         TextView textViewForHowManyPerson = convertView.findViewById(R.id.forHowManyPersonTextView);
 
         if (foodEntity != null) {
-            Bitmap bitmap = ((ImageRepository) repository).getEntity(foodEntity.getID())[0].getImage();
+            Bitmap bitmap = ((ImageRepository) repository).getEntityByImage(String.valueOf(foodEntity.getID()))[0].getImage();
             if (bitmap == null) imageViewIcon.setImageResource(R.drawable.food_no_images_mini);
             else imageViewIcon.setImageBitmap(bitmap);
             textViewName.setText(foodEntity.getFoodName().toUpperCase());

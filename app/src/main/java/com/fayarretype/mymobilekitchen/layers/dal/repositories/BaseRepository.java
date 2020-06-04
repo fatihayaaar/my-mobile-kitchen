@@ -29,12 +29,12 @@ public abstract class BaseRepository<TEntity extends BaseEntity> implements IRep
     }
 
     @Override
-    public void update(TEntity entity, int id) {
+    public void update(TEntity entity, String id) {
         databaseHelper.update(entity, id);
     }
 
     @Override
-    public abstract TEntity getEntity(int id);
+    public abstract TEntity getEntity(String id);
 
     @Override
     public abstract ArrayList<TEntity> getEntities();

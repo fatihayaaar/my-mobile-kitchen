@@ -16,7 +16,7 @@ public class FoodRepository extends BaseRepository<FoodEntity> implements IFoodR
     }
 
     @Override
-    public FoodEntity getEntity(int id) {
+    public FoodEntity getEntity(String id) {
         return (FoodEntity) (databaseHelper.list(FoodEntity.class,
                 SQLiteDatabaseHelper.FOOD_AREA_ID, String.valueOf(id))).get(0);
     }

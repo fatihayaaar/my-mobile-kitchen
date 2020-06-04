@@ -8,7 +8,7 @@ public interface IDatabaseHelper<T> {
 
     void delete(String id, Class entity);
 
-    void update(T entity, int id);
+    void update(T entity, String id);
 
     ArrayList<T> list(Class entity);
 

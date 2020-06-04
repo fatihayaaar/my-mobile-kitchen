@@ -20,7 +20,7 @@ public class ImageRepository extends BaseRepository<ImageEntity> implements IIma
     }
 
     @Override
-    public ImageEntity getEntity(int id) {
+    public ImageEntity getEntity(String id) {
         return null;
     }
 
@@ -29,7 +29,7 @@ public class ImageRepository extends BaseRepository<ImageEntity> implements IIma
         return null;
     }
 
-    public ImageEntity[] getEntity(String id) {
+    public ImageEntity[] getEntityByImage(String id) {
         ArrayList<BaseEntity> entities = databaseHelper.list(EntityName.IMAGE_ENTITY_CLASS,
                 SQLiteDatabaseHelper.IMAGES_AREA_FOOD_ID, id);
         ImageEntity[] imageEntity = new ImageEntity[entities.size()];

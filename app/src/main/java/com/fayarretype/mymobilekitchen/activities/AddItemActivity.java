@@ -18,6 +18,7 @@ import com.fayarretype.mymobilekitchen.layers.entitites.MaterialEntity;
 import com.fayarretype.mymobilekitchen.tools.utils.Convert;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 
 public class AddItemActivity extends AppCompatActivity {
@@ -44,6 +45,7 @@ public class AddItemActivity extends AppCompatActivity {
 
     public void addButtonOnClick(View view) {
         try {
+            Boolean isAddItem = true;
             if (validateControl()) {
                 MaterialEntity materialEntity = new MaterialEntity();
                 String key = new SimpleDateFormat("yyddHHmmss").format(new Date());
@@ -53,9 +55,21 @@ public class AddItemActivity extends AppCompatActivity {
 
                 DataProcessingFactory dataProcessingFactory = DataProcessingFactory.getInstance(this);
                 MaterialManager materialManager = (MaterialManager) dataProcessingFactory.getManager(ManagerName.MATERIAL_MANAGER);
-                materialManager.add(materialEntity);
+
+                ArrayList<MaterialEntity> entities = materialManager.getEntities();
+                for (MaterialEntity entity : entities) {
+                    if (materialEntity.getMaterialName().trim().toLowerCase().equals(entity.getMaterialName().trim().toLowerCase())) {
+                        materialEntity.setID(entity.getID());
+                        isAddItem = false;
+                    }
+                }
+                if (isAddItem) {
+                    materialManager.add(materialEntity);
+                } else {
+                    materialManager.increaseCount(materialEntity.getID());
+                }
                 dataProcessingFactory.saveChanges();
-                Toast.makeText(getApplicationContext(), "Envantere yeni malzeme eklendi", Toast.LENGTH_LONG).show();
+                Toast.makeText(getApplicationContext(), "Başarılı", Toast.LENGTH_LONG).show();
                 finish();
             }
         } catch (Exception e) {

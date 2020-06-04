@@ -317,7 +317,7 @@ public class AddFoodFragment extends Fragment {
             if (getMode() == FoodsActivity.EDIT_MODE) {
                 Toast.makeText(context.getApplicationContext(), "Yemek Düzenlendi", Toast.LENGTH_LONG).show();
                 IManager categoryManager = ManagerContainer.getInstance(context).getManager(ManagerName.CATEGORY_MANAGER);
-                CategoryEntity categoryEntity = (CategoryEntity) categoryManager.getEntity(mFood.getCategoryID());
+                CategoryEntity categoryEntity = (CategoryEntity) categoryManager.getEntity(String.valueOf(mFood.getCategoryID()));
                 RecipeBookFoodDetailActivity.setFood(mFood, categoryEntity);
                 Intent intent = new Intent(getActivity().getBaseContext(), RecipeBookFoodDetailActivity.class);
                 startActivity(intent);

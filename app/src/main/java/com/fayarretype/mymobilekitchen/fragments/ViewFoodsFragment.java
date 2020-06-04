@@ -93,7 +93,7 @@ public class ViewFoodsFragment extends Fragment {
         gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             public void onItemClick(AdapterView<?> parent, View v, int position, long id) {
                 IManager categoryManager = ManagerContainer.getInstance(context).getManager(ManagerName.CATEGORY_MANAGER);
-                CategoryEntity categoryEntity = (CategoryEntity) categoryManager.getEntity(foodEntities.get(position).getCategoryID());
+                CategoryEntity categoryEntity = (CategoryEntity) categoryManager.getEntity(String.valueOf(foodEntities.get(position).getCategoryID()));
                 FoodDetailActivity.setFood(foodEntities.get(position), categoryEntity);
                 Intent intent = new Intent(getActivity().getBaseContext(), FoodDetailActivity.class);
                 startActivity(intent);
