@@ -3,7 +3,6 @@ package com.fayarretype.mymobilekitchen.layers.pl;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.graphics.Bitmap;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -24,7 +23,6 @@ import com.fayarretype.mymobilekitchen.layers.dal.repositories.RepositoryName;
 import com.fayarretype.mymobilekitchen.layers.dal.repositories.abstracts.IRepository;
 import com.fayarretype.mymobilekitchen.layers.entitites.CategoryEntity;
 import com.fayarretype.mymobilekitchen.layers.entitites.FoodEntity;
-import com.fayarretype.mymobilekitchen.layers.entitites.ImageEntity;
 
 import java.util.ArrayList;
 

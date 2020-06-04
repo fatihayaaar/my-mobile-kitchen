@@ -12,6 +12,7 @@ import com.fayarretype.mymobilekitchen.activities.AboutActivity;
 import com.fayarretype.mymobilekitchen.activities.FoodsActivity;
 import com.fayarretype.mymobilekitchen.activities.ProfileActivity;
 import com.fayarretype.mymobilekitchen.activities.RecipeBookActivity;
+import com.fayarretype.mymobilekitchen.activities.StockActivity;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -50,9 +51,9 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
-/*
-        LinearLayout stockOptionsLayout = findViewById(R.id.stockOptionsLayout);
-        stockOptionsLayout.setOnClickListener(new View.OnClickListener() {
+
+        androidx.cardview.widget.CardView stockOptions = findViewById(R.id.stockOptions);
+        stockOptions.setOnClickListener(new View.OnClickListener() {
 
             @Override
             public void onClick(View v) {
@@ -60,7 +61,7 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
-*/
+
         androidx.cardview.widget.CardView recipeBookOptions = findViewById(R.id.recipeBooksCardView);
         recipeBookOptions.setOnClickListener(new View.OnClickListener() {
 

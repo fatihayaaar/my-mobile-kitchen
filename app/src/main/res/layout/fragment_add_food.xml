@@ -317,7 +317,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:paddingLeft="15dp"
-                android:text="@string/MaterialAddFoodTitle"
+                android:text= "@string/MaterialAddFoodTitle"
                 android:textSize="12sp" />
         </LinearLayout>
 
