@@ -2,26 +2,28 @@ package com.fayarretype.mymobilekitchen.activities;
 
 import android.os.Bundle;
 import android.widget.ArrayAdapter;
-import android.widget.MultiAutoCompleteTextView;
+import android.widget.AutoCompleteTextView;
 
+import androidx.annotation.StringRes;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.fayarretype.mymobilekitchen.R;
-import com.fayarretype.mymobilekitchen.layers.bl.ManagerName;
 import com.fayarretype.mymobilekitchen.layers.bl.DataProcessingFactory;
+import com.fayarretype.mymobilekitchen.layers.bl.ManagerName;
 import com.fayarretype.mymobilekitchen.layers.bl.MaterialManager;
 import com.fayarretype.mymobilekitchen.tools.utils.Convert;
 
 public class WizardFoodActivity extends AppCompatActivity {
+
+    private androidx.appcompat.widget.Toolbar toolbar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_wizard_food);
 
-        getSupportActionBar().show();
-        getSupportActionBar().setTitle(R.string.WizardFoodOptionLayoutName);
-        getSupportActionBar().setDisplayUseLogoEnabled(false);
+        toolbar = findViewById(R.id.toolbar);
+        loadToolbar(R.string.WizardFoodOptionLayoutName);
 
         init();
     }
@@ -31,15 +33,19 @@ public class WizardFoodActivity extends AppCompatActivity {
         loadValuesMaterial.start();
     }
 
+    private void loadToolbar(@StringRes int resId) {
+        toolbar.setTitle(resId);
+        setSupportActionBar(toolbar);
+    }
+
     public void bindToMaterialsMultiAutoCompleteTextView() {
         ArrayAdapter<String> adapter = new ArrayAdapter<>(this, R.layout.materials_row, R.id.materialTextView,
                 Convert.getStringArray(((MaterialManager) DataProcessingFactory.getInstance(this)
                         .getManager(ManagerName.MATERIAL_MANAGER)).getNames()));
 
-        MultiAutoCompleteTextView multiAutoCompleteTextView = findViewById(R.id.materialsAddMultiAutoCompleteTextView);
+        AutoCompleteTextView multiAutoCompleteTextView = findViewById(R.id.materialsAddAutoCompleteTextView);
         multiAutoCompleteTextView.setThreshold(1);
         multiAutoCompleteTextView.setAdapter(adapter);
-        multiAutoCompleteTextView.setTokenizer(new MultiAutoCompleteTextView.CommaTokenizer());
     }
 
     private class LoadValuesMaterial implements Runnable {

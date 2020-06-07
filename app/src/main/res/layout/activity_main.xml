@@ -90,6 +90,7 @@
                     </androidx.cardview.widget.CardView>
 
                     <androidx.cardview.widget.CardView
+                        android:id="@+id/wizard_food_activity"
                         android:layout_width="130dp"
                         android:layout_height="130dp"
                         android:layout_gravity="center"

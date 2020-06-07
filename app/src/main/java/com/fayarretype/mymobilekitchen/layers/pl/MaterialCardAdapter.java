@@ -66,6 +66,11 @@ public class MaterialCardAdapter extends ArrayAdapter<MaterialEntity> {
                         new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
+                                DataProcessingFactory dataProcessingFactory = DataProcessingFactory.getInstance(context);
+                                MaterialManager materialManager = (MaterialManager)
+                                        dataProcessingFactory.getManager(ManagerName.MATERIAL_MANAGER);
+                                materialManager.decreaseCount(materialEntity.getID());
+                                dataProcessingFactory.saveChanges();
                                 Toast.makeText(context, "Güncellendi", Toast.LENGTH_LONG).show();
                                 StockActivity.loadValues();
                             }

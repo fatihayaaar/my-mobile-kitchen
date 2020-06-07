@@ -2,9 +2,12 @@ package com.fayarretype.mymobilekitchen.activities;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.GridView;
+import android.widget.ImageView;
+import android.widget.RelativeLayout;
 
 import androidx.annotation.StringRes;
 import androidx.appcompat.app.AppCompatActivity;
@@ -12,7 +15,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.fayarretype.mymobilekitchen.R;
 import com.fayarretype.mymobilekitchen.layers.bl.DataProcessingFactory;
 import com.fayarretype.mymobilekitchen.layers.bl.ManagerName;
-import com.fayarretype.mymobilekitchen.layers.entitites.MaterialEntity;
 import com.fayarretype.mymobilekitchen.layers.pl.MaterialCardAdapter;
 
 import java.util.ArrayList;
@@ -24,7 +26,27 @@ public class StockActivity extends AppCompatActivity {
     private androidx.appcompat.widget.Toolbar toolbar;
 
     public static void loadValues() {
-        new LoadValuesItemStatic(context, view).start();
+        new LoadValuesItem().start();
+    }
+
+    private static void LoadValuesItems() {
+        RelativeLayout relativeLayout = view.findViewById(R.id.stock_activity_relative_layout);
+        ImageView im = view.findViewById(R.id.stock_activity_back);
+        GridView itemGridView = view.findViewById(R.id.item_grid_view);
+        DataProcessingFactory dataProcessingFactory = DataProcessingFactory.getInstance(context);
+        ArrayList materialEntities = dataProcessingFactory.getManager(ManagerName.MATERIAL_MANAGER).getEntities();
+        if (materialEntities.isEmpty()) {
+            relativeLayout.setBackgroundColor(Color.WHITE);
+            im.setVisibility(View.VISIBLE);
+            im.setImageResource(R.drawable.no_data);
+            itemGridView.setVisibility(View.GONE);
+        } else {
+            relativeLayout.setBackgroundColor(Color.rgb(240, 240, 240));
+            im.setVisibility(View.GONE);
+
+            MaterialCardAdapter materialCardViewAdapter = new MaterialCardAdapter(context, materialEntities);
+            itemGridView.setAdapter(materialCardViewAdapter);
+        }
     }
 
     @Override
@@ -51,57 +73,19 @@ public class StockActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
-    public void loadValuesItems() {
-        DataProcessingFactory dataProcessingFactory = DataProcessingFactory.getInstance(this);
-        ArrayList<MaterialEntity> materialEntities = dataProcessingFactory.getManager(ManagerName.MATERIAL_MANAGER).getEntities();
-        GridView itemGridView = findViewById(R.id.item_grid_view);
-
-        MaterialCardAdapter materialCardViewAdapter = new MaterialCardAdapter(this, materialEntities);
-        itemGridView.setAdapter(materialCardViewAdapter);
-    }
-
     @Override
     public void onResume() {
         super.onResume();
         new LoadValuesItem().start();
     }
 
-    private static class LoadValuesItemStatic implements Runnable {
-
-        Thread thread;
-        Context context;
-        View view;
-
-        public LoadValuesItemStatic(Context context, View view) {
-            this.context = context;
-            this.view = view;
-        }
-
-        @Override
-        public void run() {
-            DataProcessingFactory dataProcessingFactory = DataProcessingFactory.getInstance(context);
-            ArrayList<MaterialEntity> materialEntities = dataProcessingFactory.getManager(ManagerName.MATERIAL_MANAGER).getEntities();
-            GridView itemGridView = view.findViewById(R.id.item_grid_view);
-
-            MaterialCardAdapter materialCardViewAdapter = new MaterialCardAdapter(context, materialEntities);
-            itemGridView.setAdapter(materialCardViewAdapter);
-        }
-
-        void start() {
-            if (thread == null) {
-                thread = new Thread(this);
-                thread.run();
-            }
-        }
-    }
-
-    private class LoadValuesItem implements Runnable {
+    private static class LoadValuesItem implements Runnable {
 
         Thread thread;
 
         @Override
         public void run() {
-            loadValuesItems();
+            LoadValuesItems();
         }
 
         void start() {

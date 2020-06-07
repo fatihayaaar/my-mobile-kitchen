@@ -8,6 +8,7 @@ import com.fayarretype.mymobilekitchen.layers.entitites.MaterialEntity;
 import org.xmlpull.v1.XmlPullParser;
 import org.xmlpull.v1.XmlPullParserFactory;
 
+import java.io.StringReader;
 import java.util.ArrayList;
 
 public class XMLPullParserHandler {
@@ -112,5 +113,19 @@ public class XMLPullParserHandler {
         }
 
         return materialEntities;
+    }
+
+    public void setMaterialEntityXMLData(MaterialEntity materialEntity) {
+        try {
+            factory = XmlPullParserFactory.newInstance();
+            factory.setNamespaceAware(true);
+            parser = factory.newPullParser();
+
+            parser.setInput(context.getAssets().open("materials.xml"), null);
+
+            parser.setInput(new StringReader("<Material><MaterialName>" + materialEntity.getMaterialName() + "</MaterialName></Material>"));
+        } catch (Exception e) {
+            e.getStackTrace();
+        }
     }
 }

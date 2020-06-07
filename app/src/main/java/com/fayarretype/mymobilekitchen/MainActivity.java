@@ -13,6 +13,7 @@ import com.fayarretype.mymobilekitchen.activities.FoodsActivity;
 import com.fayarretype.mymobilekitchen.activities.ProfileActivity;
 import com.fayarretype.mymobilekitchen.activities.RecipeBookActivity;
 import com.fayarretype.mymobilekitchen.activities.StockActivity;
+import com.fayarretype.mymobilekitchen.activities.WizardFoodActivity;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -31,9 +32,9 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
-/*
-        LinearLayout wizardFoodOptionsLayout = findViewById(R.id.wizardFoodOptionsLayout);
-        wizardFoodOptionsLayout.setOnClickListener(new View.OnClickListener() {
+
+        androidx.cardview.widget.CardView wizardFoodOptions = findViewById(R.id.wizard_food_activity);
+        wizardFoodOptions.setOnClickListener(new View.OnClickListener() {
 
             @Override
             public void onClick(View v) {
@@ -41,7 +42,7 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
-*/
+
         androidx.cardview.widget.CardView profileOptions = findViewById(R.id.profileOptionsCardView);
         profileOptions.setOnClickListener(new View.OnClickListener() {
 

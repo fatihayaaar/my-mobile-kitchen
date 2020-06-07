@@ -2,10 +2,14 @@ package com.fayarretype.mymobilekitchen.activities;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.GridView;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -40,23 +44,33 @@ public class RecipeBookActivity extends AppCompatActivity {
     }
 
     public void loadValuesFoodRowLayout() {
+        LinearLayout relativeLayout = findViewById(R.id.recipe_book_linear_layout);
+        ImageView im = findViewById(R.id.recipe_book_activity_back);
         DataProcessingFactory dataProcessingFactory = DataProcessingFactory.getInstance(this);
         final ArrayList<FoodEntity> foodEntities = dataProcessingFactory.getManager(ManagerName.FOOD_MANAGER).getEntities();
         GridView foodGridView = findViewById(R.id.foodGridViewRecipes);
+        if (foodEntities.isEmpty()) {
+            relativeLayout.setBackgroundColor(Color.WHITE);
+            im.setVisibility(View.VISIBLE);
+            im.setImageResource(R.drawable.no_data);
+            foodGridView.setVisibility(View.GONE);
+        } else {
+            relativeLayout.setBackgroundColor(Color.rgb(240, 240, 240));
+            im.setVisibility(View.GONE);
 
-        FoodAdapter foodAdapter = new FoodAdapter(this, foodEntities);
-        foodGridView.setAdapter(foodAdapter);
+            FoodAdapter foodAdapter = new FoodAdapter(this, foodEntities);
+            foodGridView.setAdapter(foodAdapter);
 
-        gridView = findViewById(R.id.foodGridViewRecipes);
-        gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            public void onItemClick(AdapterView<?> parent, View v, int position, long id) {
-                IManager categoryManager = ManagerContainer.getInstance(context).getManager(ManagerName.CATEGORY_MANAGER);
-                CategoryEntity categoryEntity = (CategoryEntity) categoryManager.getEntity(String.valueOf(foodEntities.get(position).getCategoryID()));
-                RecipeBookFoodDetailActivity.setFood(foodEntities.get(position), categoryEntity);
-                Intent intent = new Intent(getBaseContext(), RecipeBookFoodDetailActivity.class);
-                startActivity(intent);
-            }
-        });
+            foodGridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                public void onItemClick(AdapterView<?> parent, View v, int position, long id) {
+                    IManager categoryManager = ManagerContainer.getInstance(context).getManager(ManagerName.CATEGORY_MANAGER);
+                    CategoryEntity categoryEntity = (CategoryEntity) categoryManager.getEntity(String.valueOf(foodEntities.get(position).getCategoryID()));
+                    RecipeBookFoodDetailActivity.setFood(foodEntities.get(position), categoryEntity);
+                    Intent intent = new Intent(getBaseContext(), RecipeBookFoodDetailActivity.class);
+                    startActivity(intent);
+                }
+            });
+        }
     }
 
     @Override

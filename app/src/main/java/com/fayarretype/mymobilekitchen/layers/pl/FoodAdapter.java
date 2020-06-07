@@ -67,14 +67,21 @@ public class FoodAdapter extends ArrayAdapter<FoodEntity> {
         TextView textViewPreparationTime = convertView.findViewById(R.id.preparationTimeTextView);
         TextView textViewForHowManyPerson = convertView.findViewById(R.id.forHowManyPersonTextView);
 
+        Bitmap bitmap;
         if (foodEntity != null) {
-            Bitmap bitmap = ((ImageRepository) repository).getEntityByImage(String.valueOf(foodEntity.getID()))[0].getImage();
-            if (bitmap == null) imageViewIcon.setImageResource(R.drawable.food_no_images_mini);
-            else imageViewIcon.setImageBitmap(bitmap);
+            try {
+                bitmap = ((ImageRepository) repository).getEntityByImage(String.valueOf(foodEntity.getID()))[0].getImage();
+                if (bitmap == null) imageViewIcon.setImageResource(R.drawable.food_no_images_mini);
+                else imageViewIcon.setImageBitmap(bitmap);
+            } catch (Exception e) {
+                imageViewIcon.setImageResource(R.drawable.food_no_images_mini);
+            }
             textViewName.setText(foodEntity.getFoodName().toUpperCase());
             textViewCategory.setText(categoryEntity.getCategoryName().toUpperCase());
-            textViewPreparationOfText.setText(((foodEntity.getPreparationText().length() <= 50)
-                    ? foodEntity.getPreparationText() : foodEntity.getPreparationText().substring(0, 50)) + "...");
+            if (foodEntity.getPreparationText().length() <= 50)
+                textViewPreparationOfText.setText(foodEntity.getPreparationText() + "...");
+            else
+                textViewPreparationOfText.setText(foodEntity.getPreparationText().substring(0, 50) + "...");
             textViewCookingTime.setText("PİŞMESİ: " + foodEntity.getCookingTime().toUpperCase());
             textViewPreparationTime.setText("HAZIRLANMASI: " + foodEntity.getPreparationTime().toUpperCase());
             textViewForHowManyPerson.setText("Kişi: " + foodEntity.getHowManyPerson().toUpperCase());
