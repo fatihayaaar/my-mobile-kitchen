@@ -46,6 +46,7 @@ public class StockActivity extends AppCompatActivity {
 
             MaterialCardAdapter materialCardViewAdapter = new MaterialCardAdapter(context, materialEntities);
             itemGridView.setAdapter(materialCardViewAdapter);
+            itemGridView.setVisibility(View.VISIBLE);
         }
     }
 
