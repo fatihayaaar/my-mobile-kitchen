@@ -143,6 +143,13 @@ public class RecipeBookFoodDetailActivity extends AppCompatActivity {
         FoodsActivity.setFood(mFood);
         FoodsActivity.setMode(FoodsActivity.EDIT_MODE);
         startActivity(intent);
+        finish();
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        loadValues();
     }
 
     @Override

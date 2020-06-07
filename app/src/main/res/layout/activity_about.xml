@@ -20,7 +20,7 @@
         android:layout_marginBottom="0dp"
         android:background="#FFFFFF"
         android:padding="25dp"
-        android:text="Mobil Mutfağım insanların hayatını kolaylıştıran bir akıllı mutfak uygulamasıdır. Amaç mutfaktaki verilerin bir mobil uygulamada saklanmasını sağlamaktır. Uygulamanın tüm hakları Fayarcompany.com tarafından saklanmaktadır. Fayarcompany.com mobil ve masaüstü yazılımlar geliştiren bir firmadır. Bu uygulama Fatih Ayar tarafından geliştirilmiştir." />
+        android:text="Mobil Mutfağım insanların hayatını kolaylaştıran bir akıllı mutfak uygulamasıdır. Amaç mutfaktaki verilerin bir mobil uygulamada saklanmasını sağlamaktır. Uygulamanın tüm hakları Fayarcompany.com tarafından saklanmaktadır. Fayarcompany.com mobil ve masaüstü yazılımlar geliştiren bir firmadır. Bu uygulama Fatih Ayar tarafından geliştirilmiştir." />
 
     <TextView
         android:id="@+id/textView"

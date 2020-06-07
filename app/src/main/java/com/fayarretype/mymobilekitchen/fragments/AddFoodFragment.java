@@ -317,9 +317,13 @@ public class AddFoodFragment extends Fragment {
             if (getMode() == FoodsActivity.EDIT_MODE) {
                 Toast.makeText(context.getApplicationContext(), "Yemek Düzenlendi", Toast.LENGTH_LONG).show();
                 IManager categoryManager = ManagerContainer.getInstance(context).getManager(ManagerName.CATEGORY_MANAGER);
-                CategoryEntity categoryEntity = (CategoryEntity) categoryManager.getEntity(String.valueOf(mFood.getCategoryID()));
-                RecipeBookFoodDetailActivity.setFood(mFood, categoryEntity);
+                createFood();
+                DataProcessingFactory dataProcessingFactory = DataProcessingFactory.getInstance(context);
+                dataProcessingFactory.getManager(ManagerName.FOOD_MANAGER).update(food, food.getID());
+                dataProcessingFactory.saveChanges();
                 Intent intent = new Intent(getActivity().getBaseContext(), RecipeBookFoodDetailActivity.class);
+                CategoryEntity categoryEntity = (CategoryEntity) categoryManager.getEntity(String.valueOf(food.getCategoryID()));
+                RecipeBookFoodDetailActivity.setFood(food, categoryEntity);
                 startActivity(intent);
                 getActivity().finish();
                 return;
@@ -339,7 +343,9 @@ public class AddFoodFragment extends Fragment {
 
     private void createFood() {
         food = new FoodEntity();
-        String key = new SimpleDateFormat("yyddHHmmss").format(new Date());
+        String key;
+        if (getMode() == FoodsActivity.EDIT_MODE) key = mFood.getID();
+        else key = new SimpleDateFormat("yyddHHmmss").format(new Date());
         food.setID(key);
         food.setFoodName(foodName);
         food.setPreparationText(foodPreparation);
