@@ -128,7 +128,9 @@ public class RecipeBookFoodDetailActivity extends AppCompatActivity {
         dlgAlert.setPositiveButton("SİL",
                 new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int which) {
-                        FoodManager foodManager = (FoodManager) DataProcessingFactory.getInstance(context).getManager(ManagerName.FOOD_MANAGER);
+                        FoodManager foodManager = (FoodManager) DataProcessingFactory
+                                .getInstance(context)
+                                .getManager(ManagerName.FOOD_MANAGER);
                         foodManager.delete(mFood.getID());
                         DataProcessingFactory.getInstance(context).saveChanges();
                         finish();

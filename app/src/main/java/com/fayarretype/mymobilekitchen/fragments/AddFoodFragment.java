@@ -91,6 +91,14 @@ public class AddFoodFragment extends Fragment {
         AddFoodFragment.mode = mode;
     }
 
+    public static FoodEntity getMFood() {
+        return mFood;
+    }
+
+    public static void setMFood(FoodEntity mFood) {
+        AddFoodFragment.mFood = mFood;
+    }
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.fragment_add_food, container, false);
@@ -316,7 +324,8 @@ public class AddFoodFragment extends Fragment {
             } else {*/
             if (getMode() == FoodsActivity.EDIT_MODE) {
                 Toast.makeText(context.getApplicationContext(), "Yemek Düzenlendi", Toast.LENGTH_LONG).show();
-                IManager categoryManager = ManagerContainer.getInstance(context).getManager(ManagerName.CATEGORY_MANAGER);
+                IManager categoryManager = ManagerContainer.getInstance(context)
+                        .getManager(ManagerName.CATEGORY_MANAGER);
                 createFood();
                 DataProcessingFactory dataProcessingFactory = DataProcessingFactory.getInstance(context);
                 dataProcessingFactory.getManager(ManagerName.FOOD_MANAGER).update(food, food.getID());
@@ -379,14 +388,6 @@ public class AddFoodFragment extends Fragment {
         if (selectedImageViewElement < IMAGE_VIEWS_COUNT) {
             this.selectedImageViewElement = selectedImageViewElement;
         }
-    }
-
-    public static FoodEntity getMFood() {
-        return mFood;
-    }
-
-    public static void setMFood(FoodEntity mFood) {
-        AddFoodFragment.mFood = mFood;
     }
 
     private class LoadValuesCategory implements Runnable {
