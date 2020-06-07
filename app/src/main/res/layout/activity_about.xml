@@ -6,16 +6,9 @@
     tools:context="com.fayarretype.mymobilekitchen.activities.AboutActivity"
     android:orientation="vertical">
 
-
-    <TextView
-        android:id="@+id/textView2"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="25dp"
-        android:paddingLeft="25dp"
-        android:text="Hakkımızda"
-        android:textSize="35dp"
-        android:textStyle="bold" />
+    <include
+        android:id="@+id/toolbar"
+        layout="@layout/toolbar_layout" />
 
     <TextView
         android:id="@+id/textView3"
@@ -28,65 +21,4 @@
         android:background="#FFFFFF"
         android:padding="25dp"
         android:text="Mobil Mutfağım insanların hayatını kolaylıştıran bir akıllı mutfak uygulamasıdır. Amaç mutfaktaki verilerin bir mobil uygulamada saklanmasını sağlamaktır. Uygulamanın tüm hakları Fayarcompany.com tarafından saklanmaktadır. Fayarcompany.com mobil ve masaüstü yazılımlar geliştiren bir firmadır. Bu uygulama Fatih Ayar tarafından geliştirilmiştir." />
-
-    <TextView
-        android:id="@+id/textView4"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_gravity="right"
-        android:layout_marginLeft="25dp"
-        android:layout_marginTop="5dp"
-        android:layout_marginRight="25dp"
-        android:layout_marginBottom="5dp"
-        android:background="#FFFFFF"
-        android:gravity="right"
-        android:paddingLeft="3dp"
-        android:paddingTop="3dp"
-        android:paddingRight="20dp"
-        android:paddingBottom="3dp"
-        android:text="fatihayaaar@gmail.com" />
-
-    <TextView
-        android:id="@+id/textView6"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_gravity="right"
-        android:layout_marginLeft="25dp"
-        android:layout_marginTop="0dp"
-        android:layout_marginRight="25dp"
-        android:layout_marginBottom="5dp"
-        android:background="#FFFFFF"
-        android:gravity="right"
-        android:paddingLeft="3dp"
-        android:paddingTop="3dp"
-        android:paddingRight="20dp"
-        android:paddingBottom="3dp"
-        android:text="Fayarcompany.com" />
-
-    <TextView
-        android:id="@+id/textView7"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_gravity="right"
-        android:layout_marginLeft="25dp"
-        android:layout_marginTop="0dp"
-        android:layout_marginRight="25dp"
-        android:layout_marginBottom="5dp"
-        android:background="#FFFFFF"
-        android:gravity="right"
-        android:paddingLeft="3dp"
-        android:paddingTop="3dp"
-        android:paddingRight="20dp"
-        android:paddingBottom="3dp"
-        android:text="Mobil Mutfağım 0.1.0 Alpha"
-        android:textStyle="bold" />
-
-    <Button
-        android:id="@+id/button"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="25dp"
-        android:layout_marginRight="25dp"
-        android:background="#F6F6F6"
-        android:text="GERİ" />
 </LinearLayout>

@@ -48,6 +48,8 @@ public class AddItemActivity extends AppCompatActivity {
     private void loadToolbar(@StringRes int resId) {
         toolbar.setTitle(resId);
         setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
     }
 
     public void addButtonOnClick(View view) {
@@ -128,6 +130,12 @@ public class AddItemActivity extends AppCompatActivity {
 
         autoCompleteTextView.setThreshold(1);
         autoCompleteTextView.setAdapter(adapter);
+    }
+
+    @Override
+    public boolean onSupportNavigateUp() {
+        onBackPressed();
+        return true;
     }
 
     private boolean validateControl() {

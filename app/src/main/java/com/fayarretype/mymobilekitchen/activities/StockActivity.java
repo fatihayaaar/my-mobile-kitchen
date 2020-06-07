@@ -66,11 +66,19 @@ public class StockActivity extends AppCompatActivity {
     private void loadToolbar(@StringRes int resId) {
         toolbar.setTitle(resId);
         setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
     }
 
     public void addItemButtonOnClick(View view) {
         Intent intent = new Intent(getBaseContext(), AddItemActivity.class);
         startActivity(intent);
+    }
+
+    @Override
+    public boolean onSupportNavigateUp() {
+        onBackPressed();
+        return true;
     }
 
     @Override

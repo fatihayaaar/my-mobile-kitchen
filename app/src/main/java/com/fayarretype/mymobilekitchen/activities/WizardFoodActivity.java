@@ -36,6 +36,14 @@ public class WizardFoodActivity extends AppCompatActivity {
     private void loadToolbar(@StringRes int resId) {
         toolbar.setTitle(resId);
         setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
+    }
+
+    @Override
+    public boolean onSupportNavigateUp() {
+        onBackPressed();
+        return true;
     }
 
     public void bindToMaterialsMultiAutoCompleteTextView() {

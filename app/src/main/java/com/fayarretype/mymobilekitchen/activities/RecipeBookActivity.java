@@ -39,6 +39,8 @@ public class RecipeBookActivity extends AppCompatActivity {
         toolbar = findViewById(R.id.toolbar);
         toolbar.setTitle("Yemek Kitabım");
         setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
 
         new LoadValuesFood().start();
     }
@@ -71,6 +73,12 @@ public class RecipeBookActivity extends AppCompatActivity {
                 }
             });
         }
+    }
+
+    @Override
+    public boolean onSupportNavigateUp() {
+        onBackPressed();
+        return true;
     }
 
     @Override

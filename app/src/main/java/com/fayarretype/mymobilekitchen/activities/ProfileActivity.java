@@ -2,6 +2,7 @@ package com.fayarretype.mymobilekitchen.activities;
 
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Toolbar;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -14,15 +15,15 @@ public class ProfileActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profile);
 
-        findViewById(R.id.backButton).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                backButtonOnClick(v);
-            }
-        });
+        androidx.appcompat.widget.Toolbar toolbar = findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
     }
 
-    public void backButtonOnClick(View view) {
-        finish();
+    @Override
+    public boolean onSupportNavigateUp() {
+        onBackPressed();
+        return true;
     }
 }

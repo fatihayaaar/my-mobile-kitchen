@@ -68,6 +68,8 @@ public class FoodsActivity extends AppCompatActivity
     private void loadToolbar(@StringRes int resId) {
         toolbar.setTitle(resId);
         setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
     }
 
     private boolean loadFragment(Fragment fragment) {
@@ -79,6 +81,12 @@ public class FoodsActivity extends AppCompatActivity
             return true;
         }
         return false;
+    }
+
+    @Override
+    public boolean onSupportNavigateUp() {
+        onBackPressed();
+        return true;
     }
 
     @Override
