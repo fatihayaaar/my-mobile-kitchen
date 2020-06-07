@@ -111,6 +111,8 @@ public class ViewFoodsFragment extends Fragment {
                     startActivity(intent);
                 }
             });
+
+            foodGridView.setVisibility(View.VISIBLE);
         }
     }
 
