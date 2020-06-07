@@ -63,6 +63,12 @@ public class FoodDetailActivity extends AppCompatActivity {
         imageLayout.setVisibility(View.GONE);
 
         loadValues();
+
+        androidx.appcompat.widget.Toolbar toolbar = findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setTitle(header.getText().toString());
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
     }
 
     @SuppressLint("SetTextI18n")
@@ -101,6 +107,12 @@ public class FoodDetailActivity extends AppCompatActivity {
                 imageHeaderView.setImageBitmap(images[4]);
             }
         }
+    }
+
+    @Override
+    public boolean onSupportNavigateUp() {
+        onBackPressed();
+        return true;
     }
 
     public static void setFood(FoodEntity food, CategoryEntity categoryEntity) {

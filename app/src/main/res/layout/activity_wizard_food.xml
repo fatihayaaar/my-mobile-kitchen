@@ -83,6 +83,7 @@
             android:background="@drawable/edit_text_background"
             android:hint="Malzemeye göre ara"
             android:overScrollMode="never"
+            android:singleLine="true"
             android:paddingLeft="15dp"
             android:paddingTop="15dp"
             android:paddingRight="10dp"

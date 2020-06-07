@@ -10,6 +10,10 @@
         android:background="#F5F5F5"
         android:orientation="vertical">
 
+        <include
+            android:id="@+id/toolbar"
+            layout="@layout/toolbar_layout" />
+
         <ImageView
             android:id="@+id/imageHeaderView"
             android:layout_width="match_parent"

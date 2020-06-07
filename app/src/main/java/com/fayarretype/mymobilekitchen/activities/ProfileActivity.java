@@ -1,8 +1,6 @@
 package com.fayarretype.mymobilekitchen.activities;
 
 import android.os.Bundle;
-import android.view.View;
-import android.widget.Toolbar;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -17,6 +15,7 @@ public class ProfileActivity extends AppCompatActivity {
 
         androidx.appcompat.widget.Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        getSupportActionBar().setTitle(R.string.ProfileOptionLayoutName);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
     }

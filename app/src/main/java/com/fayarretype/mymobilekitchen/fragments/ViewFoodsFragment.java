@@ -34,7 +34,6 @@ public class ViewFoodsFragment extends Fragment {
 
     private View view;
     private Context context;
-    private GridView gridView;
     private Spinner categoryAddSpinner;
 
     public ViewFoodsFragment(Context context) {

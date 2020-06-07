@@ -75,6 +75,12 @@ public class RecipeBookFoodDetailActivity extends AppCompatActivity {
         imageLayout.setVisibility(View.GONE);
 
         loadValues();
+
+        androidx.appcompat.widget.Toolbar toolbar = findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setTitle(header.getText().toString());
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
     }
 
     @SuppressLint("SetTextI18n")
@@ -137,5 +143,11 @@ public class RecipeBookFoodDetailActivity extends AppCompatActivity {
         FoodsActivity.setFood(mFood);
         FoodsActivity.setMode(FoodsActivity.EDIT_MODE);
         startActivity(intent);
+    }
+
+    @Override
+    public boolean onSupportNavigateUp() {
+        onBackPressed();
+        return true;
     }
 }
