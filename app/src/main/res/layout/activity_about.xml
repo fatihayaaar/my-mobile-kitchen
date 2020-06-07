@@ -21,4 +21,31 @@
         android:background="#FFFFFF"
         android:padding="25dp"
         android:text="Mobil Mutfağım insanların hayatını kolaylıştıran bir akıllı mutfak uygulamasıdır. Amaç mutfaktaki verilerin bir mobil uygulamada saklanmasını sağlamaktır. Uygulamanın tüm hakları Fayarcompany.com tarafından saklanmaktadır. Fayarcompany.com mobil ve masaüstü yazılımlar geliştiren bir firmadır. Bu uygulama Fatih Ayar tarafından geliştirilmiştir." />
+
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="25dp"
+        android:layout_marginTop="0dp"
+        android:layout_marginRight="25dp"
+        android:layout_marginBottom="0dp"
+        android:background="#FFFFFF"
+        android:paddingLeft="25dp"
+        android:paddingRight="25dp"
+        android:text="fatihayaaar@gmail.com" />
+
+    <TextView
+        android:id="@+id/textView2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="25dp"
+        android:layout_marginTop="0dp"
+        android:layout_marginRight="25dp"
+        android:layout_marginBottom="0dp"
+        android:background="#FFFFFF"
+        android:paddingLeft="25dp"
+        android:paddingRight="25dp"
+        android:paddingBottom="25dp"
+        android:text="fayarcompany.com" />
 </LinearLayout>
