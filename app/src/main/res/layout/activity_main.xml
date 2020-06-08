@@ -4,12 +4,21 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#f9f9f9"
+    android:background="#f4f5f6"
+    android:orientation="vertical"
     tools:context="com.fayarretype.mymobilekitchen.MainActivity">
 
-    <ScrollView
+    <ImageView
+        android:id="@+id/main_activity_screen_loading"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:visibility="gone"/>
+
+    <ScrollView
+        android:id="@+id/main_activity_screen"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="gone"
         android:orientation="vertical">
 
         <RelativeLayout

@@ -76,7 +76,13 @@ public class FoodAdapter extends ArrayAdapter<FoodEntity> {
             } catch (Exception e) {
                 imageViewIcon.setImageResource(R.drawable.food_no_images_mini);
             }
-            textViewName.setText(foodEntity.getFoodName().toUpperCase());
+            try {
+                if (foodEntity.getFoodName().toUpperCase().substring(25, 27).length() == 2)
+                    textViewName.setText(foodEntity.getFoodName().toUpperCase().substring(0, 25) + "...");
+                else textViewName.setText(foodEntity.getFoodName().toUpperCase());
+            } catch (Exception e) {
+                textViewName.setText(foodEntity.getFoodName().toUpperCase());
+            }
             textViewCategory.setText(categoryEntity.getCategoryName().toUpperCase());
             if (foodEntity.getPreparationText().length() <= 50)
                 textViewPreparationOfText.setText(foodEntity.getPreparationText() + "...");

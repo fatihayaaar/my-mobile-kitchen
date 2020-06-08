@@ -27,7 +27,6 @@ public class CategoryAdapter extends ArrayAdapter<CategoryEntity> {
     public static CategoryAdapter newInstance(Context context) {
         ArrayList<CategoryEntity> entities = XMLPullParserHandler.getInstance(context)
                 .getCategoryEntities();
-        entities.add(new CategoryEntity("-1", "diğer"));
         entities.add(new CategoryEntity("-1", "kategoriler"));
 
         return new CategoryAdapter(context, entities);

@@ -128,4 +128,8 @@
         <CategoryName>dünya sofrası</CategoryName>
         <CategoryImageNo>32</CategoryImageNo>
     </Category>
+    <Category>
+        <CategoryName>diğer</CategoryName>
+        <CategoryImageNo>5</CategoryImageNo>
+    </Category>
 </Categories>

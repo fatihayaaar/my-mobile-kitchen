@@ -50,7 +50,7 @@ public class SQLiteDatabaseHelper extends SQLiteOpenHelper implements IDatabaseH
     private SQLiteDatabase database;
 
     private SQLiteDatabaseHelper(Context context) {
-        super(context, "my_mobile_kitchen.db", null, 15);
+        super(context, "my_mobile_kitchen.db", null, 16);
         init();
     }
 
@@ -150,6 +150,7 @@ public class SQLiteDatabaseHelper extends SQLiteOpenHelper implements IDatabaseH
         db.execSQL("INSERT INTO " + CATEGORY_TABLE_NAME + " VALUES(29, '30', 'sebzeler')");
         db.execSQL("INSERT INTO " + CATEGORY_TABLE_NAME + " VALUES(30, '31', 'vejeteryan')");
         db.execSQL("INSERT INTO " + CATEGORY_TABLE_NAME + " VALUES(31, '32', 'dünya sofrası')");
+        db.execSQL("INSERT INTO " + CATEGORY_TABLE_NAME + " VALUES(32, '33', 'diğer')");
     }
 
     @Override

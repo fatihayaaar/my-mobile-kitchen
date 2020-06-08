@@ -3,11 +3,16 @@ package com.fayarretype.mymobilekitchen;
 import android.content.Context;
 import android.content.Intent;
 import android.os.AsyncTask;
+import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
+import android.view.WindowManager;
+import android.widget.ImageView;
+import android.widget.ScrollView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.bumptech.glide.Glide;
 import com.fayarretype.mymobilekitchen.activities.AboutActivity;
 import com.fayarretype.mymobilekitchen.activities.FoodsActivity;
 import com.fayarretype.mymobilekitchen.activities.ProfileActivity;
@@ -18,22 +23,32 @@ import com.fayarretype.mymobilekitchen.layers.bl.DataProcessingFactory;
 import com.fayarretype.mymobilekitchen.layers.bl.FoodManager;
 import com.fayarretype.mymobilekitchen.layers.bl.ManagerName;
 import com.fayarretype.mymobilekitchen.layers.entitites.FoodEntity;
+import com.fayarretype.mymobilekitchen.layers.entitites.ImageEntity;
 
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
+import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
 import java.io.IOException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 
 public class MainActivity extends AppCompatActivity {
+
+    private static ImageView imageView;
+    private static ScrollView scrollView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        new GetData(this, getCurrentFocus()).execute();
+        imageView = findViewById(R.id.main_activity_screen_loading);
+        scrollView = findViewById(R.id.main_activity_screen);
+
+        new GetData(this, getWindow().getDecorView()).execute();
     }
 
     private void loadCardView() {
@@ -101,7 +116,7 @@ public class MainActivity extends AppCompatActivity {
 
     private class GetData extends AsyncTask<Void, Void, Void> {
 
-        private final String URL = "";
+        private final String URL = "https://www.nefisyemektarifleri.com";
         private Context context;
         private View view;
         private ArrayList<FoodEntity> entities;
@@ -110,7 +125,7 @@ public class MainActivity extends AppCompatActivity {
         private ArrayList<String> cookingTimes;
         private ArrayList<String> preparationTimes;
         private ArrayList<String> howManyPersons;
-        private ArrayList<String> imgURLs;
+        private ArrayList<ArrayList<String>> imgURLs;
 
         public GetData(Context context, View view) {
             this.context = context;
@@ -127,56 +142,122 @@ public class MainActivity extends AppCompatActivity {
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
+            scrollView.setVisibility(View.GONE);
+            imageView.setVisibility(View.VISIBLE);
+            Glide.with(view).load(R.raw.loading).into(imageView);
+
+            if (Build.VERSION.SDK_INT < 16) {
+                getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
+                        WindowManager.LayoutParams.FLAG_FULLSCREEN);
+            } else {
+                View decorView = getWindow().getDecorView();
+                decorView.setSystemUiVisibility(View.SYSTEM_UI_FLAG_FULLSCREEN);
+            }
         }
 
         @Override
         protected void onPostExecute(Void mVoid) {
             super.onPostExecute(mVoid);
 
+            DataProcessingFactory dataProcessingFactory = DataProcessingFactory.getInstance(context);
+            FoodManager foodManager = (FoodManager) dataProcessingFactory.getManager(ManagerName.FOOD_MANAGER);
+
             for (int i = 0; i < foodNames.size(); i++) {
                 FoodEntity foodEntity = new FoodEntity();
+                String key = new SimpleDateFormat("yyddHHmmss").format(new Date());
+                foodEntity.setID("web" + key + i);
                 foodEntity.setFoodName(foodNames.get(i));
                 foodEntity.setPreparationText(preparationTexts.get(i));
                 foodEntity.setCookingTime(cookingTimes.get(i));
                 foodEntity.setPreparationTime(preparationTimes.get(i));
                 foodEntity.setHowManyPerson(howManyPersons.get(i));
-                foodEntity.setCategoryID(1);
+                foodEntity.setCategoryID(33);
+
+                ImageEntity[] imageEntity = new ImageEntity[5];
+                foodEntity.setImage(imageEntity);
+
                 entities.add(foodEntity);
             }
 
-            DataProcessingFactory dataProcessingFactory = DataProcessingFactory.getInstance(context);
             for (FoodEntity entity : entities) {
-                FoodManager foodManager = (FoodManager) dataProcessingFactory
-                        .getManager(ManagerName.FOOD_MANAGER);
                 foodManager.add(entity);
             }
             dataProcessingFactory.saveChanges();
+
             loadCardView();
+            imageView.setVisibility(View.GONE);
+            scrollView.setVisibility(View.VISIBLE);
+            View decorView = getWindow().getDecorView();
+            decorView.setSystemUiVisibility(View.VISIBLE);
         }
 
         @Override
         protected Void doInBackground(Void... voids) {
             try {
                 Document doc = Jsoup.connect(URL).timeout(30 * 1000).get();
-                Elements foodName = doc.select("");
-                Elements preparationText = doc.select("");
-                Elements cookingTime = doc.select("");
-                Elements preparationTime = doc.select("");
-                Elements howManyPerson = doc.select("");
-                Elements imgURL = doc.select("");
+                Elements foodName = doc.select("a[rel=bookmark]");
 
                 for (int i = 0; i < foodName.size(); i++) {
                     foodNames.add(foodName.get(i).text());
-                    preparationTexts.add(preparationText.get(i).text());
-                    cookingTimes.add(cookingTime.get(i).text());
-                    preparationTimes.add(preparationTime.get(i).text());
-                    howManyPersons.add(howManyPerson.get(i).text());
-                    imgURLs.add(imgURL.get(i).text());
+
+                    String foodDetailURL = foodName.get(i).attr("href");
+                    Document docFoodDetail = Jsoup.connect(foodDetailURL).timeout(30 * 1000).get();
+
+                    Elements preparationText = docFoodDetail.select("ol[itemprop=recipeInstructions] > li");
+                    Elements cookingTime = docFoodDetail.select("strong");
+                    Elements preparationTime = docFoodDetail.select("strong");
+                    Elements howManyPerson = docFoodDetail.select("span[itemprop=recipeYield]");
+                    Elements imgURL = docFoodDetail.select("img[data-lazy-src][alt=" + foodName.get(i) + "]");
+
+                    StringBuilder preparationTextStr = new StringBuilder();
+                    for (Element element : preparationText) {
+                        preparationTextStr.append(element.text()).append(" ");
+                    }
+                    preparationTexts.add(preparationTextStr.toString().trim());
+
+                    try {
+                        Integer.valueOf(cookingTime.get(10).text());
+                        if (!(cookingTime.get(10).text() == null || cookingTime.get(10).text() == "")) {
+                            cookingTimes.add(cookingTime.get(10).text());
+                        } else {
+                            cookingTimes.add("NULL");
+                        }
+                    } catch (Exception e) {
+                        cookingTimes.add("NULL");
+                    }
+
+                    try {
+                        Integer.valueOf(preparationTime.get(9).text());
+                        if (!(preparationTime.get(10).text() == null || preparationTime.get(10).text() == "")) {
+                            preparationTimes.add(preparationTime.get(9).text());
+                        } else {
+                            preparationTimes.add("NULL");
+                        }
+                    } catch (Exception e) {
+                        preparationTimes.add("NULL");
+                    }
+
+                    if (howManyPerson.size() > 0) {
+                        howManyPersons.add(howManyPerson.get(0).text());
+                    } else {
+                        howManyPersons.add("NULL");
+                    }
+
+                    ArrayList<String> urls = new ArrayList<>();
+                    if (!urls.isEmpty()) {
+                        for (int j = 0; j < 5; j++) {
+                            if (!(imgURL.get(i).text().equals("") || imgURL.get(i) == null)) {
+                                urls.add(imgURL.get(i).text());
+                            }
+                        }
+                        imgURLs.add(urls);
+                    }
                 }
             } catch (IOException e) {
                 e.printStackTrace();
             }
             return null;
         }
+
     }
 }
