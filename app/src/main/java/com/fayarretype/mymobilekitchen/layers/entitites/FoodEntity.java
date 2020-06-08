@@ -4,6 +4,7 @@ public class FoodEntity extends BaseEntity {
 
     public static final int INTERNET_FOOD = 0;
     public static final int USER_FOOD = 1;
+    public static final String NULL = "NULL";
     private String foodName;
     private String preparationText;
     private String cookingTime;

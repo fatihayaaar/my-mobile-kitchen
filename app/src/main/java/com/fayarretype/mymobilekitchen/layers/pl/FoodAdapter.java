@@ -76,20 +76,47 @@ public class FoodAdapter extends ArrayAdapter<FoodEntity> {
             } catch (Exception e) {
                 imageViewIcon.setImageResource(R.drawable.food_no_images_mini);
             }
+
             try {
                 if (foodEntity.getFoodName().toUpperCase().substring(25, 27).length() == 2)
                     textViewName.setText(foodEntity.getFoodName().toUpperCase().substring(0, 25) + "...");
-                else textViewName.setText(foodEntity.getFoodName().toUpperCase());
+                else {
+                    textViewName.setText(foodEntity.getFoodName().toUpperCase());
+                }
             } catch (Exception e) {
                 textViewName.setText(foodEntity.getFoodName().toUpperCase());
             }
+
             textViewCategory.setText(categoryEntity.getCategoryName().toUpperCase());
-            if (foodEntity.getPreparationText().length() <= 50)
-                textViewPreparationOfText.setText(foodEntity.getPreparationText() + "...");
-            else
-                textViewPreparationOfText.setText(foodEntity.getPreparationText().substring(0, 50) + "...");
-            textViewCookingTime.setText("PİŞMESİ: " + foodEntity.getCookingTime().toUpperCase());
-            textViewPreparationTime.setText("HAZIRLANMASI: " + foodEntity.getPreparationTime().toUpperCase());
+
+            StringBuilder preparationTextStr = new StringBuilder();
+            if (foodEntity.getPreparationText().length() <= 50) {
+                preparationTextStr.append(foodEntity.getPreparationText());
+            } else {
+                preparationTextStr.append(foodEntity.getPreparationText().substring(0, 50));
+            }
+            preparationTextStr.append("...");
+            preparationTextStr.deleteCharAt(0);
+            textViewPreparationOfText.setText(preparationTextStr);
+
+            StringBuilder cookingTimeStr = new StringBuilder();
+            cookingTimeStr.append("PİŞMESİ: ");
+            if (foodEntity.getCookingTime().equals(FoodEntity.NULL)) {
+                textViewCookingTime.setVisibility(View.INVISIBLE);
+            } else {
+                cookingTimeStr.append(foodEntity.getCookingTime().toUpperCase());
+                textViewCookingTime.setText(cookingTimeStr);
+            }
+
+            StringBuilder preparationTimeStr = new StringBuilder();
+            preparationTimeStr.append("HAZIRLANMASI: ");
+            if (foodEntity.getPreparationTime().equals(FoodEntity.NULL)) {
+                textViewPreparationTime.setVisibility(View.INVISIBLE);
+            } else {
+                preparationTimeStr.append(foodEntity.getPreparationTime().toUpperCase());
+                textViewPreparationTime.setText(preparationTimeStr);
+            }
+
             textViewForHowManyPerson.setText("Kişi: " + foodEntity.getHowManyPerson().toUpperCase());
         }
 

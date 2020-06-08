@@ -72,7 +72,7 @@ public class FoodDetailActivity extends AppCompatActivity {
 
         androidx.appcompat.widget.Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        getSupportActionBar().setTitle(header.getText().toString());
+        getSupportActionBar().setTitle("");
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
     }
@@ -90,15 +90,24 @@ public class FoodDetailActivity extends AppCompatActivity {
 
             switch (mFood.getType()) {
                 case FoodEntity.INTERNET_FOOD:
-                    yukleyen.setBackgroundColor(Color.CYAN);
+                    yukleyen.setBackgroundColor(Color.BLUE);
                     yukleyen.setText("İnternet Tarifi");
                     break;
                 case FoodEntity.USER_FOOD:
                     yukleyen.setText("Kullanıcının Tarifi");
             }
 
-            cookingTime.setText("Pişme Süresi : " + mFood.getCookingTime() + " dakika");
-            preparationTime.setText("Hazırlanma Süresi : " + mFood.getPreparationTime() + " dakika");
+            if (mFood.getCookingTime().equals(FoodEntity.NULL)) {
+                cookingTime.setVisibility(View.GONE);
+            } else {
+                cookingTime.setText("Pişme Süresi : " + mFood.getCookingTime());
+            }
+
+            if (mFood.getPreparationTime().equals(FoodEntity.NULL)) {
+                preparationTime.setVisibility(View.GONE);
+            } else {
+                preparationTime.setText("Hazırlanma Süresi : " + mFood.getPreparationTime());
+            }
             howManyPerson.setText("Kaç Kişilik : " + mFood.getHowManyPerson());
             preparationHeader.setText("HAZIRLANIŞI");
             preparation.setText(mFood.getPreparationText());

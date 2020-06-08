@@ -31,8 +31,7 @@
             android:textAllCaps="true"
             android:textColor="#444"
             android:textSize="16pt"
-            android:textStyle="bold"
-            tools:text="Baslik" />
+            android:textStyle="bold" />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -136,6 +135,7 @@
             android:textColor="#888"
             android:textSize="7pt"
             android:textStyle="normal"
+            android:maxLines="100"
             tools:text="Kategori" />
 
         <LinearLayout

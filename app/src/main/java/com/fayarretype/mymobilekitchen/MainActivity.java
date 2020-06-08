@@ -24,6 +24,7 @@ import com.fayarretype.mymobilekitchen.layers.bl.FoodManager;
 import com.fayarretype.mymobilekitchen.layers.bl.ManagerName;
 import com.fayarretype.mymobilekitchen.layers.entitites.FoodEntity;
 import com.fayarretype.mymobilekitchen.layers.entitites.ImageEntity;
+import com.fayarretype.mymobilekitchen.tools.utils.ServiceControl;
 
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
@@ -48,7 +49,13 @@ public class MainActivity extends AppCompatActivity {
         imageView = findViewById(R.id.main_activity_screen_loading);
         scrollView = findViewById(R.id.main_activity_screen);
 
-        new GetData(this, getWindow().getDecorView()).execute();
+        if (ServiceControl.networkConnection(this)) {
+            new GetData(this, getWindow().getDecorView()).execute();
+        } else {
+            loadCardView();
+            imageView.setVisibility(View.GONE);
+            scrollView.setVisibility(View.VISIBLE);
+        }
     }
 
     private void loadCardView() {
@@ -159,32 +166,6 @@ public class MainActivity extends AppCompatActivity {
         protected void onPostExecute(Void mVoid) {
             super.onPostExecute(mVoid);
 
-            DataProcessingFactory dataProcessingFactory = DataProcessingFactory.getInstance(context);
-            FoodManager foodManager = (FoodManager) dataProcessingFactory.getManager(ManagerName.FOOD_MANAGER);
-
-            for (int i = 0; i < foodNames.size(); i++) {
-                FoodEntity foodEntity = new FoodEntity();
-                String key = new SimpleDateFormat("yyddHHmmss").format(new Date());
-                foodEntity.setID("web" + key + i);
-                foodEntity.setFoodName(foodNames.get(i));
-                foodEntity.setPreparationText(preparationTexts.get(i));
-                foodEntity.setCookingTime(cookingTimes.get(i));
-                foodEntity.setPreparationTime(preparationTimes.get(i));
-                foodEntity.setHowManyPerson(howManyPersons.get(i));
-                foodEntity.setCategoryID(33);
-                foodEntity.setType(FoodEntity.INTERNET_FOOD);
-
-                ImageEntity[] imageEntity = new ImageEntity[5];
-                foodEntity.setImage(imageEntity);
-
-                entities.add(foodEntity);
-            }
-
-            for (FoodEntity entity : entities) {
-                foodManager.add(entity);
-            }
-            dataProcessingFactory.saveChanges();
-
             loadCardView();
             imageView.setVisibility(View.GONE);
             scrollView.setVisibility(View.VISIBLE);
@@ -211,37 +192,45 @@ public class MainActivity extends AppCompatActivity {
                     Elements imgURL = docFoodDetail.select("img[data-lazy-src][alt=" + foodName.get(i) + "]");
 
                     StringBuilder preparationTextStr = new StringBuilder();
+                    preparationTextStr.append("- ");
                     for (Element element : preparationText) {
-                        preparationTextStr.append(element.text()).append(" ");
+                        preparationTextStr.append(element.text()).append("\n- ");
+                    }
+                    if (preparationTextStr.length() >= 20) {
+                        preparationTextStr.deleteCharAt(preparationTextStr.length() - 2);
                     }
                     preparationTexts.add(preparationTextStr.toString().trim());
 
+                    StringBuilder cookingTimeStr = new StringBuilder();
                     try {
-                        Integer.valueOf(cookingTime.get(10).text());
-                        if (!(cookingTime.get(10).text() == null || cookingTime.get(10).text() == "")) {
-                            cookingTimes.add(cookingTime.get(10).text());
+                        cookingTimeStr.append(cookingTime.get(10).text());
+                        if (!(cookingTimeStr.toString().equals(""))) {
+                            Integer.valueOf(String.valueOf(cookingTimeStr.toString().charAt(0)));
+                            cookingTimes.add(cookingTimeStr.toString());
                         } else {
-                            cookingTimes.add("NULL");
+                            cookingTimes.add(FoodEntity.NULL);
                         }
                     } catch (Exception e) {
-                        cookingTimes.add("NULL");
+                        cookingTimes.add(FoodEntity.NULL);
                     }
 
+                    StringBuilder preparationTimeStr = new StringBuilder();
                     try {
-                        Integer.valueOf(preparationTime.get(9).text());
-                        if (!(preparationTime.get(10).text() == null || preparationTime.get(10).text() == "")) {
-                            preparationTimes.add(preparationTime.get(9).text());
+                        preparationTimeStr.append(preparationTime.get(9).text());
+                        if (!(preparationTimeStr.toString().equals(""))) {
+                            Integer.valueOf(String.valueOf(preparationTimeStr.toString().charAt(0)));
+                            preparationTimes.add(preparationTimeStr.toString());
                         } else {
-                            preparationTimes.add("NULL");
+                            preparationTimes.add(FoodEntity.NULL);
                         }
                     } catch (Exception e) {
-                        preparationTimes.add("NULL");
+                        preparationTimes.add(FoodEntity.NULL);
                     }
 
                     if (howManyPerson.size() > 0) {
                         howManyPersons.add(howManyPerson.get(0).text());
                     } else {
-                        howManyPersons.add("NULL");
+                        howManyPersons.add(FoodEntity.NULL);
                     }
 
                     ArrayList<String> urls = new ArrayList<>();
@@ -257,6 +246,39 @@ public class MainActivity extends AppCompatActivity {
             } catch (IOException e) {
                 e.printStackTrace();
             }
+
+            DataProcessingFactory dataProcessingFactory = DataProcessingFactory.getInstance(context);
+            FoodManager foodManager = (FoodManager) dataProcessingFactory.getManager(ManagerName.FOOD_MANAGER);
+            ArrayList<FoodEntity> deleteEntities = foodManager.getEntitiesByType(FoodEntity.INTERNET_FOOD);
+            for (FoodEntity entity : deleteEntities) {
+                foodManager.delete(entity.getID());
+            }
+
+            for (int i = 0; i < foodNames.size(); i++) {
+                if (!(preparationTexts.get(i).trim().length() <= 20)) {
+                    FoodEntity foodEntity = new FoodEntity();
+                    String key = new SimpleDateFormat("yyddHHmmss").format(new Date());
+                    foodEntity.setID("web" + key + i);
+                    foodEntity.setFoodName(foodNames.get(i));
+                    foodEntity.setPreparationText(preparationTexts.get(i));
+                    foodEntity.setCookingTime(cookingTimes.get(i));
+                    foodEntity.setPreparationTime(preparationTimes.get(i));
+                    foodEntity.setHowManyPerson(howManyPersons.get(i));
+                    foodEntity.setCategoryID(33);
+                    foodEntity.setType(FoodEntity.INTERNET_FOOD);
+
+                    ImageEntity[] imageEntity = new ImageEntity[5];
+                    foodEntity.setImage(imageEntity);
+
+                    entities.add(foodEntity);
+                }
+            }
+
+            for (FoodEntity entity : entities) {
+                foodManager.add(entity);
+            }
+            dataProcessingFactory.saveChanges();
+
             return null;
         }
 
