@@ -23,13 +23,6 @@ public class FoodRepository extends BaseRepository<FoodEntity> implements IFoodR
 
     @Override
     public void add(FoodEntity entity) {
-        entity.setType(FoodEntity.USER_FOOD);
-        databaseHelper.add(entity);
-    }
-
-    @Override
-    public void addWithWeb(FoodEntity entity) {
-        entity.setType(FoodEntity.INTERNET_FOOD);
         databaseHelper.add(entity);
     }
 
@@ -42,6 +35,19 @@ public class FoodRepository extends BaseRepository<FoodEntity> implements IFoodR
             foodEntities.add((FoodEntity) entities.get(i));
 
         return foodEntities;
+    }
+
+    @Override
+    public ArrayList<FoodEntity> getEntitiesByType(int type) {
+        ArrayList<BaseEntity> entities = databaseHelper.list(FoodEntity.class,
+                SQLiteDatabaseHelper.FOOD_AREA_TYPE, String.valueOf(type));
+
+        ArrayList<FoodEntity> foodEntities = new ArrayList<>(entities.size());
+        for (int i = 0; i < entities.size(); i++)
+            foodEntities.add((FoodEntity) entities.get(i));
+
+        return foodEntities;
+
     }
 
     @Override

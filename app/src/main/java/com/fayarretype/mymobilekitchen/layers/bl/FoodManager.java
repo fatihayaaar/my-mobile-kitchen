@@ -49,6 +49,10 @@ public class FoodManager extends BaseManager<FoodEntity> implements IFoodManager
         return new ArrayList<>();
     }
 
+    public ArrayList<FoodEntity> getEntitiesByType(int type) {
+        return ((FoodRepository) unitOfWork.getRepository(FoodEntity.class)).getEntitiesByType(type);
+    }
+
     @Override
     public boolean add(FoodEntity entity) {
         foodID = entity.getID();

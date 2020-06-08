@@ -172,6 +172,7 @@ public class MainActivity extends AppCompatActivity {
                 foodEntity.setPreparationTime(preparationTimes.get(i));
                 foodEntity.setHowManyPerson(howManyPersons.get(i));
                 foodEntity.setCategoryID(33);
+                foodEntity.setType(FoodEntity.INTERNET_FOOD);
 
                 ImageEntity[] imageEntity = new ImageEntity[5];
                 foodEntity.setImage(imageEntity);

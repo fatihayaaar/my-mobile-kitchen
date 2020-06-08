@@ -362,6 +362,7 @@ public class AddFoodFragment extends Fragment {
         food.setPreparationTime(String.valueOf(foodPreparationTime));
         food.setHowManyPerson(String.valueOf(foodHowManyPerson));
         food.setCategoryID(categoryAddSpinner.getSelectedItemPosition() + 1);
+        food.setType(FoodEntity.USER_FOOD);
 
         ImageEntity[] imagesEntity = new ImageEntity[imagesCount];
         for (int i = 0; i < imagesEntity.length; i++) {

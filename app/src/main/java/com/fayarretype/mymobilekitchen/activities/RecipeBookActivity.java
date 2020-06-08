@@ -9,12 +9,12 @@ import android.widget.AdapterView;
 import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.fayarretype.mymobilekitchen.R;
 import com.fayarretype.mymobilekitchen.layers.bl.DataProcessingFactory;
+import com.fayarretype.mymobilekitchen.layers.bl.FoodManager;
 import com.fayarretype.mymobilekitchen.layers.bl.ManagerContainer;
 import com.fayarretype.mymobilekitchen.layers.bl.ManagerName;
 import com.fayarretype.mymobilekitchen.layers.bl.abstracts.IManager;
@@ -27,7 +27,6 @@ import java.util.ArrayList;
 public class RecipeBookActivity extends AppCompatActivity {
 
     private androidx.appcompat.widget.Toolbar toolbar;
-    private GridView gridView;
     private Context context;
 
     @Override
@@ -49,7 +48,9 @@ public class RecipeBookActivity extends AppCompatActivity {
         LinearLayout relativeLayout = findViewById(R.id.recipe_book_linear_layout);
         ImageView im = findViewById(R.id.recipe_book_activity_back);
         DataProcessingFactory dataProcessingFactory = DataProcessingFactory.getInstance(this);
-        final ArrayList<FoodEntity> foodEntities = dataProcessingFactory.getManager(ManagerName.FOOD_MANAGER).getEntities();
+        final ArrayList<FoodEntity> foodEntities = ((FoodManager) dataProcessingFactory
+                .getManager(ManagerName.FOOD_MANAGER))
+                .getEntitiesByType(FoodEntity.USER_FOOD);
         GridView foodGridView = findViewById(R.id.foodGridViewRecipes);
         if (foodEntities.isEmpty()) {
             relativeLayout.setBackgroundColor(Color.WHITE);

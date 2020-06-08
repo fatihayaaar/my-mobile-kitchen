@@ -2,6 +2,7 @@ package com.fayarretype.mymobilekitchen.activities;
 
 import android.annotation.SuppressLint;
 import android.graphics.Bitmap;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
@@ -33,6 +34,11 @@ public class FoodDetailActivity extends AppCompatActivity {
     private ImageView imageFourView;
     private LinearLayout imageLayout;
     private Bitmap[] images;
+
+    public static void setFood(FoodEntity food, CategoryEntity categoryEntity) {
+        mFood = food;
+        mCategoryEntity = categoryEntity;
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -81,7 +87,16 @@ public class FoodDetailActivity extends AppCompatActivity {
             }
             header.setText(mFood.getFoodName());
             category.setText(mCategoryEntity.getCategoryName());
-            yukleyen.setText("Kullanıcının Tarifi");
+
+            switch (mFood.getType()) {
+                case FoodEntity.INTERNET_FOOD:
+                    yukleyen.setBackgroundColor(Color.CYAN);
+                    yukleyen.setText("İnternet Tarifi");
+                    break;
+                case FoodEntity.USER_FOOD:
+                    yukleyen.setText("Kullanıcının Tarifi");
+            }
+
             cookingTime.setText("Pişme Süresi : " + mFood.getCookingTime() + " dakika");
             preparationTime.setText("Hazırlanma Süresi : " + mFood.getPreparationTime() + " dakika");
             howManyPerson.setText("Kaç Kişilik : " + mFood.getHowManyPerson());
@@ -113,10 +128,5 @@ public class FoodDetailActivity extends AppCompatActivity {
     public boolean onSupportNavigateUp() {
         onBackPressed();
         return true;
-    }
-
-    public static void setFood(FoodEntity food, CategoryEntity categoryEntity) {
-        mFood = food;
-        mCategoryEntity = categoryEntity;
     }
 }

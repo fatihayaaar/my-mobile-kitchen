@@ -2,8 +2,8 @@ package com.fayarretype.mymobilekitchen.layers.entitites;
 
 public class FoodEntity extends BaseEntity {
 
-    public static int INTERNET_FOOD = 0;
-    public static int USER_FOOD = 1;
+    public static final int INTERNET_FOOD = 0;
+    public static final int USER_FOOD = 1;
     private String foodName;
     private String preparationText;
     private String cookingTime;
@@ -27,7 +27,7 @@ public class FoodEntity extends BaseEntity {
     }
 
     public FoodEntity(String id, String foodName, String preparationText, String cookingTime,
-                      String preparationTime, String howManyPerson, int categoryID) {
+                      String preparationTime, String howManyPerson, int categoryID, int type) {
         this(id);
         this.setFoodName(foodName);
         this.setPreparationText(preparationText);
@@ -35,6 +35,7 @@ public class FoodEntity extends BaseEntity {
         this.setPreparationTime(preparationTime);
         this.setHowManyPerson(howManyPerson);
         this.setCategoryID(categoryID);
+        this.setType(type);
     }
 
     public String getFoodName() {
