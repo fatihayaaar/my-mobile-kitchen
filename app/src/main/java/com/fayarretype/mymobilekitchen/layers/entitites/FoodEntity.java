@@ -12,6 +12,7 @@ public class FoodEntity extends BaseEntity {
     private String howManyPerson;
     private int categoryID;
     private ImageEntity[] image;
+    private MaterialByFoodEntity[] materialByFoodEntities;
     private int type;
 
     public FoodEntity() {
@@ -101,5 +102,13 @@ public class FoodEntity extends BaseEntity {
 
     public void setType(int type) {
         this.type = type;
+    }
+
+    public MaterialByFoodEntity[] getMaterialByFoodEntities() {
+        return materialByFoodEntities;
+    }
+
+    public void setMaterialByFoodEntities(MaterialByFoodEntity[] materialByFoodEntities) {
+        this.materialByFoodEntities = materialByFoodEntities;
     }
 }

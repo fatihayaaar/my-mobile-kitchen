@@ -25,4 +25,6 @@ public interface IDatabaseHelper<T> {
     void foodSave();
 
     void imageSave();
+
+    void materialByFoodSave();
 }

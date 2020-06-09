@@ -44,7 +44,7 @@ public class StockActivity extends AppCompatActivity {
             relativeLayout.setBackgroundColor(Color.rgb(240, 240, 240));
             im.setVisibility(View.GONE);
 
-            MaterialCardAdapter materialCardViewAdapter = new MaterialCardAdapter(context, materialEntities);
+            MaterialCardAdapter materialCardViewAdapter = new MaterialCardAdapter(context, materialEntities, R.layout.items_layout);
             itemGridView.setAdapter(materialCardViewAdapter);
             itemGridView.setVisibility(View.VISIBLE);
         }

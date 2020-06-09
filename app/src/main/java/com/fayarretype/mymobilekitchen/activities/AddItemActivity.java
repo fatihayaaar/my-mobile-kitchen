@@ -68,7 +68,8 @@ public class AddItemActivity extends AppCompatActivity {
 
                 ArrayList<MaterialEntity> entities = materialManager.getEntities();
                 for (MaterialEntity entity : entities) {
-                    if (materialEntity.getMaterialName().trim().toLowerCase().equals(entity.getMaterialName().trim().toLowerCase())) {
+                    if (materialEntity.getMaterialName().trim().toLowerCase()
+                            .equals(entity.getMaterialName().trim().toLowerCase())) {
                         materialEntity.setID(entity.getID());
                         isAddItem = false;
                     }
@@ -78,7 +79,8 @@ public class AddItemActivity extends AppCompatActivity {
                     XMLPullParserHandler xmlPullParserHandler = XMLPullParserHandler.getInstance(this);
                     ArrayList<MaterialEntity> materialEntities = xmlPullParserHandler.getMaterialEntities();
                     for (MaterialEntity entity : materialEntities) {
-                        if (materialEntity.getMaterialName().trim().toLowerCase().equals(entity.getMaterialName().trim().toLowerCase())) {
+                        if (materialEntity.getMaterialName().trim().toLowerCase()
+                                .equals(entity.getMaterialName().trim().toLowerCase())) {
                             isNewAddItem = false;
                         }
                     }
@@ -92,8 +94,6 @@ public class AddItemActivity extends AppCompatActivity {
 
                                     @Override
                                     public void onClick(DialogInterface dialog, int which) {
-                                        XMLPullParserHandler xmlPullParserHandler = XMLPullParserHandler.getInstance(context);
-                                        xmlPullParserHandler.setMaterialEntityXMLData(materialEntity);
                                         finish();
                                     }
                                 });

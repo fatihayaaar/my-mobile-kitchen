@@ -11,6 +11,7 @@ import com.fayarretype.mymobilekitchen.layers.entitites.BaseEntity;
 import com.fayarretype.mymobilekitchen.layers.entitites.CategoryEntity;
 import com.fayarretype.mymobilekitchen.layers.entitites.FoodEntity;
 import com.fayarretype.mymobilekitchen.layers.entitites.ImageEntity;
+import com.fayarretype.mymobilekitchen.layers.entitites.MaterialByFoodEntity;
 import com.fayarretype.mymobilekitchen.layers.entitites.MaterialEntity;
 import com.fayarretype.mymobilekitchen.tools.utils.Convert;
 
@@ -38,6 +39,10 @@ public class SQLiteDatabaseHelper extends SQLiteOpenHelper implements IDatabaseH
     private static final String MATERIAL_AREA_NAME = "materialName";
     private static final String MATERIAL_AREA_COUNT = "materialCount";
     private static final String IMAGES_AREA_IMAGE_ID = "imageID";
+    private static final String MATERIAL_BY_FOOD_TABLE_NAME = "materialByFood";
+    public static final String MATERIAL_BY_FOOD_ID = "materialByFoodID";
+    private static final String MATERIAL_BY_FOOD_MATERIAL_ID = "materialByFoodMaterialID";
+    public static final String MATERIAL_BY_FOOD_FOOD_ID = "materialByFoodFoodID";
     private static SQLiteDatabaseHelper databaseHelper;
     private final int CONTENT_VALUES_INSERT = 0;
     private final int CONTENT_VALUES_UPDATE = 1;
@@ -45,13 +50,14 @@ public class SQLiteDatabaseHelper extends SQLiteOpenHelper implements IDatabaseH
     private final int CONTENT_VALUES_MATERIAL = 1;
     private final int CONTENT_VALUES_FOOD = 2;
     private final int CONTENT_VALUES_IMAGE = 3;
+    private final int CONTENT_VALUES_MATERIAL_BY_FOOD = 4;
     private ArrayList<ArrayList<ArrayList<ContentValues>>> contentValues;
     private ArrayList<ArrayList<String>> deleteIDList;
     private ArrayList<ArrayList<String>> updateIDList;
     private SQLiteDatabase database;
 
     private SQLiteDatabaseHelper(Context context) {
-        super(context, "my_mobile_kitchen.db", null, 22);
+        super(context, "my_mobile_kitchen.db", null, 23);
         init();
     }
 
@@ -65,25 +71,32 @@ public class SQLiteDatabaseHelper extends SQLiteOpenHelper implements IDatabaseH
         contentValues = new ArrayList<>();
         contentValues.add(CONTENT_VALUES_INSERT, new ArrayList<ArrayList<ContentValues>>());
         contentValues.add(CONTENT_VALUES_UPDATE, new ArrayList<ArrayList<ContentValues>>());
+
         contentValues.get(CONTENT_VALUES_INSERT).add(CONTENT_VALUES_CATEGORY, new ArrayList<ContentValues>());
         contentValues.get(CONTENT_VALUES_INSERT).add(CONTENT_VALUES_MATERIAL, new ArrayList<ContentValues>());
         contentValues.get(CONTENT_VALUES_INSERT).add(CONTENT_VALUES_FOOD, new ArrayList<ContentValues>());
         contentValues.get(CONTENT_VALUES_INSERT).add(CONTENT_VALUES_IMAGE, new ArrayList<ContentValues>());
+        contentValues.get(CONTENT_VALUES_INSERT).add(CONTENT_VALUES_MATERIAL_BY_FOOD, new ArrayList<ContentValues>());
+
         contentValues.get(CONTENT_VALUES_UPDATE).add(CONTENT_VALUES_CATEGORY, new ArrayList<ContentValues>());
         contentValues.get(CONTENT_VALUES_UPDATE).add(CONTENT_VALUES_MATERIAL, new ArrayList<ContentValues>());
         contentValues.get(CONTENT_VALUES_UPDATE).add(CONTENT_VALUES_FOOD, new ArrayList<ContentValues>());
         contentValues.get(CONTENT_VALUES_UPDATE).add(CONTENT_VALUES_IMAGE, new ArrayList<ContentValues>());
+        contentValues.get(CONTENT_VALUES_UPDATE).add(CONTENT_VALUES_MATERIAL_BY_FOOD, new ArrayList<ContentValues>());
 
         deleteIDList = new ArrayList<>();
         deleteIDList.add(CONTENT_VALUES_CATEGORY, new ArrayList<String>());
         deleteIDList.add(CONTENT_VALUES_MATERIAL, new ArrayList<String>());
         deleteIDList.add(CONTENT_VALUES_FOOD, new ArrayList<String>());
         deleteIDList.add(CONTENT_VALUES_IMAGE, new ArrayList<String>());
+        deleteIDList.add(CONTENT_VALUES_MATERIAL_BY_FOOD, new ArrayList<String>());
+
         updateIDList = new ArrayList<>();
         updateIDList.add(CONTENT_VALUES_CATEGORY, new ArrayList<String>());
         updateIDList.add(CONTENT_VALUES_MATERIAL, new ArrayList<String>());
         updateIDList.add(CONTENT_VALUES_FOOD, new ArrayList<String>());
         updateIDList.add(CONTENT_VALUES_IMAGE, new ArrayList<String>());
+        updateIDList.add(CONTENT_VALUES_MATERIAL_BY_FOOD, new ArrayList<String>());
     }
 
     public void finish() {
@@ -119,6 +132,12 @@ public class SQLiteDatabaseHelper extends SQLiteOpenHelper implements IDatabaseH
                 IMAGES_AREA_ID + " TEXT," +
                 IMAGES_AREA_FOOD_ID + " INTEGER NOT NULL," +
                 IMAGES_AREA_IMAGE_ID + " INTEGER NOT NULL);");
+
+        db.execSQL("CREATE TABLE " + MATERIAL_BY_FOOD_TABLE_NAME + " (" +
+                "id INTEGER PRIMARY KEY AUTOINCREMENT," +
+                MATERIAL_BY_FOOD_ID + " TEXT," +
+                MATERIAL_BY_FOOD_MATERIAL_ID + " TEXT NOT NULL," +
+                MATERIAL_BY_FOOD_FOOD_ID + " TEXT NOT NULL);");
 
         db.execSQL("INSERT INTO " + CATEGORY_TABLE_NAME + " VALUES(0, '1', 'meze')");
         db.execSQL("INSERT INTO " + CATEGORY_TABLE_NAME + " VALUES(1, '2', 'bebek maması')");
@@ -188,6 +207,11 @@ public class SQLiteDatabaseHelper extends SQLiteOpenHelper implements IDatabaseH
             contentValues.put(IMAGES_AREA_FOOD_ID, ((ImageEntity) entity).getFoodID());
             contentValues.put(IMAGES_AREA_IMAGE_ID, ((ImageEntity) entity).getImageID());
             this.contentValues.get(CONTENT_VALUES_INSERT).get(CONTENT_VALUES_IMAGE).add(contentValues);
+        } else if (entity.getClass() == EntityName.MATERIAL_BY_FOOD_CLASS) {
+            contentValues.put(MATERIAL_BY_FOOD_ID, entity.getID());
+            contentValues.put(MATERIAL_BY_FOOD_MATERIAL_ID, ((MaterialByFoodEntity) entity).getMaterialID());
+            contentValues.put(MATERIAL_BY_FOOD_FOOD_ID, ((MaterialByFoodEntity) entity).getFoodID());
+            this.contentValues.get(CONTENT_VALUES_INSERT).get(CONTENT_VALUES_MATERIAL_BY_FOOD).add(contentValues);
         }
     }
 
@@ -201,6 +225,8 @@ public class SQLiteDatabaseHelper extends SQLiteOpenHelper implements IDatabaseH
             deleteIDList.get(CONTENT_VALUES_FOOD).add(id);
         else if (entity.getName().equals(EntityName.IMAGE_ENTITY_CLASS.getName()))
             deleteIDList.get(CONTENT_VALUES_IMAGE).add(id);
+        else if (entity.getName().equals(EntityName.MATERIAL_BY_FOOD_CLASS.getName()))
+            deleteIDList.get(CONTENT_VALUES_MATERIAL_BY_FOOD).add(id);
     }
 
     @Override
@@ -234,6 +260,11 @@ public class SQLiteDatabaseHelper extends SQLiteOpenHelper implements IDatabaseH
             contentValues.put(IMAGES_AREA_IMAGE_ID, ((ImageEntity) entity).getImageID());
             this.contentValues.get(CONTENT_VALUES_UPDATE).get(CONTENT_VALUES_IMAGE).add(contentValues);
             updateIDList.get(CONTENT_VALUES_IMAGE).add(id);
+        } else if (entity.getClass() == EntityName.MATERIAL_BY_FOOD_CLASS) {
+            contentValues.put(MATERIAL_BY_FOOD_ID, entity.getID());
+            contentValues.put(MATERIAL_BY_FOOD_MATERIAL_ID, ((MaterialByFoodEntity) entity).getMaterialID());
+            contentValues.put(MATERIAL_BY_FOOD_FOOD_ID, ((MaterialByFoodEntity) entity).getFoodID());
+            this.contentValues.get(CONTENT_VALUES_UPDATE).get(CONTENT_VALUES_MATERIAL_BY_FOOD).add(contentValues);
         }
     }
 
@@ -324,6 +355,21 @@ public class SQLiteDatabaseHelper extends SQLiteOpenHelper implements IDatabaseH
                         new ImageEntity(cursor.getString(cursor.getColumnIndex(IMAGES_AREA_ID)),
                                 cursor.getString(cursor.getColumnIndex(IMAGES_AREA_FOOD_ID)),
                                 cursor.getString(cursor.getColumnIndex(IMAGES_AREA_IMAGE_ID))));
+            }
+
+        } else if (entity == EntityName.MATERIAL_BY_FOOD_CLASS) {
+            columns.add(MATERIAL_BY_FOOD_ID);
+            columns.add(MATERIAL_BY_FOOD_MATERIAL_ID);
+            columns.add(MATERIAL_BY_FOOD_FOOD_ID);
+
+            Cursor cursor = database.query(MATERIAL_BY_FOOD_TABLE_NAME, Convert.getStringArray(columns),
+                    selection, new String[]{}, groupBy, having, orderBy);
+
+            while (cursor.moveToNext()) {
+                records.add(cursor.getColumnIndex(MATERIAL_BY_FOOD_ID),
+                        new MaterialByFoodEntity(cursor.getString(cursor.getColumnIndex(MATERIAL_BY_FOOD_ID)),
+                                cursor.getString(cursor.getColumnIndex(MATERIAL_BY_FOOD_MATERIAL_ID)),
+                                cursor.getString(cursor.getColumnIndex(MATERIAL_BY_FOOD_FOOD_ID))));
             }
 
         } else records.add(-1, new CategoryEntity("-1"));
@@ -421,6 +467,27 @@ public class SQLiteDatabaseHelper extends SQLiteOpenHelper implements IDatabaseH
             for (int i = 0; i < deleteIDList.get(CONTENT_VALUES_IMAGE).size(); i++) {
                 database.delete(IMAGES_TABLE_NAME,
                         IMAGES_AREA_ID + " = " + deleteIDList.get(CONTENT_VALUES_IMAGE).get(i), null);
+            }
+        } finally {
+            disconnect();
+        }
+    }
+
+    @Override
+    public void materialByFoodSave() {
+        connect();
+        try {
+            for (int i = 0; i < contentValues.get(CONTENT_VALUES_INSERT).get(CONTENT_VALUES_MATERIAL_BY_FOOD).size(); i++) {
+                database.insert(MATERIAL_BY_FOOD_TABLE_NAME, null,
+                        contentValues.get(CONTENT_VALUES_INSERT).get(CONTENT_VALUES_MATERIAL_BY_FOOD).get(i));
+            }
+            for (int i = 0; i < contentValues.get(CONTENT_VALUES_UPDATE).get(CONTENT_VALUES_MATERIAL_BY_FOOD).size(); i++) {
+                database.update(MATERIAL_BY_FOOD_TABLE_NAME, contentValues.get(CONTENT_VALUES_UPDATE).get(CONTENT_VALUES_MATERIAL_BY_FOOD).get(i),
+                        MATERIAL_BY_FOOD_ID + " = " + updateIDList.get(CONTENT_VALUES_MATERIAL_BY_FOOD).get(i), null);
+            }
+            for (int i = 0; i < deleteIDList.get(CONTENT_VALUES_MATERIAL_BY_FOOD).size(); i++) {
+                database.delete(MATERIAL_BY_FOOD_TABLE_NAME,
+                        MATERIAL_BY_FOOD_ID + " = " + deleteIDList.get(CONTENT_VALUES_MATERIAL_BY_FOOD).get(i), null);
             }
         } finally {
             disconnect();
