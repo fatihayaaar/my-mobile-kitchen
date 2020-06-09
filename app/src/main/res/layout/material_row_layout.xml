@@ -14,6 +14,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@drawable/button_background"
+        android:textStyle="bold"
         android:textColor="#FFF"
+        android:layout_margin="10dp"
         android:padding="20dp"/>
 </LinearLayout>

@@ -26,6 +26,9 @@ public class SQLiteDatabaseHelper extends SQLiteOpenHelper implements IDatabaseH
     public static final String IMAGES_AREA_ID = "imagesID";
     public static final String IMAGES_AREA_FOOD_ID = "foodID";
     public static final String FOOD_AREA_TYPE = "foodType";
+    public static final String MATERIAL_AREA_NAME = "materialName";
+    public static final String MATERIAL_BY_FOOD_ID = "materialByFoodID";
+    public static final String MATERIAL_BY_FOOD_FOOD_ID = "materialByFoodFoodID";
     private static final String FOOD_TABLE_NAME = "Food";
     private static final String CATEGORY_TABLE_NAME = "Category";
     private static final String MATERIAL_TABLE_NAME = "Material";
@@ -36,13 +39,10 @@ public class SQLiteDatabaseHelper extends SQLiteOpenHelper implements IDatabaseH
     private static final String FOOD_AREA_PREPARATION_TIME = "preparationTime";
     private static final String FOOD_AREA_HOW_MANY_PERSON = "howManyPerson";
     private static final String CATEGORY_AREA_NAME = "categoryName";
-    public static final String MATERIAL_AREA_NAME = "materialName";
     private static final String MATERIAL_AREA_COUNT = "materialCount";
     private static final String IMAGES_AREA_IMAGE_ID = "imageID";
     private static final String MATERIAL_BY_FOOD_TABLE_NAME = "materialByFood";
-    public static final String MATERIAL_BY_FOOD_ID = "materialByFoodID";
     private static final String MATERIAL_BY_FOOD_MATERIAL_ID = "materialByFoodMaterialID";
-    public static final String MATERIAL_BY_FOOD_FOOD_ID = "materialByFoodFoodID";
     private static SQLiteDatabaseHelper databaseHelper;
     private final int CONTENT_VALUES_INSERT = 0;
     private final int CONTENT_VALUES_UPDATE = 1;
@@ -281,9 +281,12 @@ public class SQLiteDatabaseHelper extends SQLiteOpenHelper implements IDatabaseH
         ArrayList<String> columns = new ArrayList<>();
         String selection, groupBy, having, orderBy;
 
-        if (selectionValue != null || selectionValue2 != null)
+        if (selectionValue != null || selectionValue2 != null) {
             selection = selectionValue + " = " + selectionValue2;
-        else selection = "";
+            if (selectionValue.equals(MATERIAL_AREA_NAME)) {
+                selection = selectionValue + " = '" + selectionValue2 + "'";
+            }
+        } else selection = "";
 
         groupBy = "";
         having = "";

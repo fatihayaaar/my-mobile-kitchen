@@ -3,6 +3,7 @@ package com.fayarretype.mymobilekitchen.layers.pl;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -108,6 +109,8 @@ public class MaterialCardAdapter extends ArrayAdapter<MaterialEntity> {
         } else if (layout == R.layout.material_row_layout) {
             TextView textViewMaterialName = convertView.findViewById(R.id.material_name);
             textViewMaterialName.setText(materialEntity.getMaterialName());
+
+            Log.i("Material Name: ", "Girdi - " + materialEntity.getMaterialName());
         }
         return convertView;
     }

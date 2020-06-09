@@ -74,6 +74,7 @@ public class WizardFoodActivity extends AppCompatActivity {
     public void bindItemGridView() {
         MaterialCardAdapter materialCardViewAdapter = new MaterialCardAdapter(this, materialEntities, R.layout.material_row_layout);
         itemGridView.setAdapter(materialCardViewAdapter);
+        itemGridView.setVisibility(View.VISIBLE);
     }
 
     public void bindToMaterialsMultiAutoCompleteTextView() {
