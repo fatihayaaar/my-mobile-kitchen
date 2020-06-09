@@ -23,6 +23,12 @@ public class MaterialRepository extends BaseRepository<MaterialEntity> implement
     }
 
     @Override
+    public MaterialEntity getEntitiesByMaterialName(String materialName) {
+        ArrayList<BaseEntity> entities = databaseHelper.list(MaterialEntity.class, SQLiteDatabaseHelper.MATERIAL_AREA_NAME, materialName);
+        return (MaterialEntity) entities.get(0);
+    }
+
+    @Override
     public ArrayList<MaterialEntity> getEntities() {
         ArrayList<BaseEntity> entities = databaseHelper.list(MaterialEntity.class);
 

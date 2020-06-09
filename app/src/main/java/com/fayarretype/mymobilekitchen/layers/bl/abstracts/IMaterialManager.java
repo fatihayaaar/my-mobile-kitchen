@@ -5,4 +5,6 @@ import java.util.ArrayList;
 public interface IMaterialManager<TEntity> extends IManager<TEntity> {
 
     ArrayList<String> getNames();
+
+    TEntity getEntitiesByMaterialName(String materialName);
 }

@@ -36,7 +36,7 @@ public class SQLiteDatabaseHelper extends SQLiteOpenHelper implements IDatabaseH
     private static final String FOOD_AREA_PREPARATION_TIME = "preparationTime";
     private static final String FOOD_AREA_HOW_MANY_PERSON = "howManyPerson";
     private static final String CATEGORY_AREA_NAME = "categoryName";
-    private static final String MATERIAL_AREA_NAME = "materialName";
+    public static final String MATERIAL_AREA_NAME = "materialName";
     private static final String MATERIAL_AREA_COUNT = "materialCount";
     private static final String IMAGES_AREA_IMAGE_ID = "imageID";
     private static final String MATERIAL_BY_FOOD_TABLE_NAME = "materialByFood";

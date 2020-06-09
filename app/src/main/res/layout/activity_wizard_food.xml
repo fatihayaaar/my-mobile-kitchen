@@ -105,6 +105,7 @@
             android:layout_marginRight="10dp"
             android:layout_marginBottom="10dp"
             android:background="@drawable/button_background"
+            android:onClick="addItemBtnOnClick"
             android:textColor="#FFF"
             android:textStyle="bold"
             android:text="EKLE" />

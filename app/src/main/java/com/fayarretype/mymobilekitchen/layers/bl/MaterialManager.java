@@ -33,6 +33,11 @@ public class MaterialManager extends BaseManager<MaterialEntity> implements IMat
     }
 
     @Override
+    public MaterialEntity getEntitiesByMaterialName(String materialName) {
+        return ((MaterialRepository) unitOfWork.getRepository(MaterialEntity.class)).getEntitiesByMaterialName(materialName.trim().toLowerCase());
+    }
+
+    @Override
     public ArrayList<String> getNames() {
         return ((MaterialRepository) unitOfWork.getRepository(MaterialEntity.class)).getMaterialNames();
     }
