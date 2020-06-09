@@ -1,10 +1,14 @@
 package com.fayarretype.mymobilekitchen;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.ImageView;
@@ -32,6 +36,9 @@ import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
 import java.io.IOException;
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -49,8 +56,22 @@ public class MainActivity extends AppCompatActivity {
         imageView = findViewById(R.id.main_activity_screen_loading);
         scrollView = findViewById(R.id.main_activity_screen);
 
-        if (ServiceControl.networkConnection(this)) {
-            new GetData(this, getWindow().getDecorView()).execute();
+        DataProcessingFactory dataProcessingFactory = DataProcessingFactory.getInstance(this);
+        FoodManager foodManager = (FoodManager) dataProcessingFactory.getManager(ManagerName.FOOD_MANAGER);
+
+        Date now = new Date();
+
+        @SuppressLint("SimpleDateFormat") DateFormat dfH = new SimpleDateFormat("HH");
+        String nowHStr = dfH.format(now);
+
+        if (Integer.valueOf(nowHStr) % 3 == 0 || foodManager.getEntitiesByType(FoodEntity.INTERNET_FOOD).isEmpty()) {
+            if (ServiceControl.networkConnection(this)) {
+                new GetData(this, getWindow().getDecorView()).execute();
+            } else {
+                loadCardView();
+                imageView.setVisibility(View.GONE);
+                scrollView.setVisibility(View.VISIBLE);
+            }
         } else {
             loadCardView();
             imageView.setVisibility(View.GONE);
@@ -126,18 +147,17 @@ public class MainActivity extends AppCompatActivity {
         private final String URL = "https://www.nefisyemektarifleri.com";
         private Context context;
         private View view;
-        private ArrayList<FoodEntity> entities;
         private ArrayList<String> foodNames;
         private ArrayList<String> preparationTexts;
         private ArrayList<String> cookingTimes;
         private ArrayList<String> preparationTimes;
         private ArrayList<String> howManyPersons;
         private ArrayList<ArrayList<String>> imgURLs;
+        private ImageEntity[][] imageEntities;
 
         public GetData(Context context, View view) {
             this.context = context;
             this.view = view;
-            entities = new ArrayList<>();
             foodNames = new ArrayList<>();
             preparationTexts = new ArrayList<>();
             cookingTimes = new ArrayList<>();
@@ -175,6 +195,15 @@ public class MainActivity extends AppCompatActivity {
 
         @Override
         protected Void doInBackground(Void... voids) {
+
+            DataProcessingFactory dataProcessingFactory = DataProcessingFactory.getInstance(context);
+            FoodManager foodManager = (FoodManager) dataProcessingFactory.getManager(ManagerName.FOOD_MANAGER);
+            ArrayList<FoodEntity> deleteEntities = foodManager.getEntitiesByType(FoodEntity.INTERNET_FOOD);
+
+            for (FoodEntity entity : deleteEntities) {
+                foodManager.delete(entity.getID());
+            }
+
             try {
                 Document doc = Jsoup.connect(URL).timeout(30 * 1000).get();
                 Elements foodName = doc.select("a[rel=bookmark]");
@@ -189,7 +218,7 @@ public class MainActivity extends AppCompatActivity {
                     Elements cookingTime = docFoodDetail.select("strong");
                     Elements preparationTime = docFoodDetail.select("strong");
                     Elements howManyPerson = docFoodDetail.select("span[itemprop=recipeYield]");
-                    Elements imgURL = docFoodDetail.select("img[data-lazy-src][alt=" + foodName.get(i) + "]");
+                    Elements imgURL = docFoodDetail.select("img[data-lazy-src][class=size-medium][alt]");
 
                     StringBuilder preparationTextStr = new StringBuilder();
                     preparationTextStr.append("- ");
@@ -234,49 +263,81 @@ public class MainActivity extends AppCompatActivity {
                     }
 
                     ArrayList<String> urls = new ArrayList<>();
-                    if (!urls.isEmpty()) {
-                        for (int j = 0; j < 5; j++) {
-                            if (!(imgURL.get(i).text().equals("") || imgURL.get(i) == null)) {
-                                urls.add(imgURL.get(i).text());
+                    for (int j = 0; j < imgURL.size(); j++) {
+                        String imgSrc = imgURL.get(j).attr("data-lazy-src");
+                        if (!(imgSrc.equals(""))) {
+                            if (urls.size() < ImageEntity.MAX_IMAGE) {
+                                urls.add(imgSrc);
                             }
                         }
-                        imgURLs.add(urls);
                     }
+                    imgURLs.add(urls);
+
+                    imageEntities = new ImageEntity[imgURLs.size()][];
+                    for (int x = 0; x < imageEntities.length; x++) {
+                        imageEntities[x] = new ImageEntity[imgURLs.get(x).size()];
+                        for (int j = 0; j < imageEntities[x].length; j++) {
+                            imageEntities[x][j] = new ImageEntity();
+                            java.net.URL url = null;
+                            try {
+                                url = new URL(imgURLs.get(x).get(j));
+                            } catch (MalformedURLException e) {
+                                e.printStackTrace();
+                            }
+
+                            Log.i("Image URL : ", url.toString());
+
+                            Bitmap foodImageBitmap = null;
+                            try {
+                                foodImageBitmap = BitmapFactory.decodeStream(url.openConnection().getInputStream());
+                            } catch (IOException e) {
+                                e.printStackTrace();
+                            }
+
+                            @SuppressLint("SimpleDateFormat")
+                            String key = new SimpleDateFormat("yyddHHmmss").format(new Date());
+
+                            imageEntities[x][j].setImageID("web" + key + x + j);
+                            imageEntities[x][j].setImage(foodImageBitmap);
+                        }
+
+                    }
+                    for (int y = 0; y < foodNames.size(); y++) {
+                        if (!(preparationTexts.get(y).trim().length() <= 20)) {
+                            FoodEntity foodEntity = new FoodEntity();
+
+                            @SuppressLint("SimpleDateFormat")
+                            String key = "web" + new SimpleDateFormat("yyddHHmmss").format(new Date()) + i;
+
+                            foodEntity.setID(key);
+                            foodEntity.setFoodName(foodNames.get(y));
+                            foodEntity.setPreparationText(preparationTexts.get(y));
+                            foodEntity.setCookingTime(cookingTimes.get(y));
+                            foodEntity.setPreparationTime(preparationTimes.get(y));
+                            foodEntity.setHowManyPerson(howManyPersons.get(y));
+                            foodEntity.setCategoryID(33);
+                            foodEntity.setType(FoodEntity.INTERNET_FOOD);
+
+                            for (int j = 0; j < imageEntities[y].length; j++) {
+                                imageEntities[y][j].setFoodID(key);
+                            }
+                            foodEntity.setImage(imageEntities[y]);
+
+                            foodManager.add(foodEntity);
+                        }
+                    }
+                    foodNames = new ArrayList<>();
+                    preparationTexts = new ArrayList<>();
+                    cookingTimes = new ArrayList<>();
+                    preparationTimes = new ArrayList<>();
+                    howManyPersons = new ArrayList<>();
+                    imgURLs = new ArrayList<>();
+                    System.gc();
                 }
             } catch (IOException e) {
                 e.printStackTrace();
             }
 
-            DataProcessingFactory dataProcessingFactory = DataProcessingFactory.getInstance(context);
-            FoodManager foodManager = (FoodManager) dataProcessingFactory.getManager(ManagerName.FOOD_MANAGER);
-            ArrayList<FoodEntity> deleteEntities = foodManager.getEntitiesByType(FoodEntity.INTERNET_FOOD);
-            for (FoodEntity entity : deleteEntities) {
-                foodManager.delete(entity.getID());
-            }
-
-            for (int i = 0; i < foodNames.size(); i++) {
-                if (!(preparationTexts.get(i).trim().length() <= 20)) {
-                    FoodEntity foodEntity = new FoodEntity();
-                    String key = new SimpleDateFormat("yyddHHmmss").format(new Date());
-                    foodEntity.setID("web" + key + i);
-                    foodEntity.setFoodName(foodNames.get(i));
-                    foodEntity.setPreparationText(preparationTexts.get(i));
-                    foodEntity.setCookingTime(cookingTimes.get(i));
-                    foodEntity.setPreparationTime(preparationTimes.get(i));
-                    foodEntity.setHowManyPerson(howManyPersons.get(i));
-                    foodEntity.setCategoryID(33);
-                    foodEntity.setType(FoodEntity.INTERNET_FOOD);
-
-                    ImageEntity[] imageEntity = new ImageEntity[5];
-                    foodEntity.setImage(imageEntity);
-
-                    entities.add(foodEntity);
-                }
-            }
-
-            for (FoodEntity entity : entities) {
-                foodManager.add(entity);
-            }
             dataProcessingFactory.saveChanges();
 
             return null;

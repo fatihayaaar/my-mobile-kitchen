@@ -5,6 +5,7 @@ import android.util.Log;
 
 public class ImageEntity extends BaseEntity {
 
+    public static final int MAX_IMAGE = 5;
     private String foodID;
     private String ImageID;
     private Bitmap image;
