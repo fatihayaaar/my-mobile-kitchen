@@ -1,5 +1,6 @@
 package com.fayarretype.mymobilekitchen.fragments;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
@@ -34,6 +35,8 @@ import com.fayarretype.mymobilekitchen.layers.bl.abstracts.IManager;
 import com.fayarretype.mymobilekitchen.layers.entitites.CategoryEntity;
 import com.fayarretype.mymobilekitchen.layers.entitites.FoodEntity;
 import com.fayarretype.mymobilekitchen.layers.entitites.ImageEntity;
+import com.fayarretype.mymobilekitchen.layers.entitites.MaterialByFoodEntity;
+import com.fayarretype.mymobilekitchen.layers.entitites.MaterialEntity;
 import com.fayarretype.mymobilekitchen.layers.pl.CategoryAdapter;
 import com.fayarretype.mymobilekitchen.tools.dialogbox.DialogBox;
 import com.fayarretype.mymobilekitchen.tools.dialogbox.DialogBoxContainer;
@@ -44,6 +47,7 @@ import com.fayarretype.mymobilekitchen.tools.utils.validations.TextValidate;
 
 import java.io.IOException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 
 public class AddFoodFragment extends Fragment {
@@ -64,6 +68,7 @@ public class AddFoodFragment extends Fragment {
     private EditText foodCookingTimeEditText;
     private EditText foodPreparationTimeEditText;
     private EditText foodHowManyPersonEditText;
+    private MultiAutoCompleteTextView multiAutoCompleteTextView;
     private Button saveButton;
     private Spinner categoryAddSpinner;
     private FoodEntity food;
@@ -135,6 +140,7 @@ public class AddFoodFragment extends Fragment {
         foodHowManyPersonEditText = view.findViewById(R.id.howManyPersonEditText);
         categoryAddSpinner = view.findViewById(R.id.category_add_spinner);
         saveButton = view.findViewById(R.id.saveButton);
+        multiAutoCompleteTextView = view.findViewById(R.id.materialsFoodAddMultiAutoCompleteTextView);
 
         initImageViewList();
     }
@@ -363,6 +369,41 @@ public class AddFoodFragment extends Fragment {
         food.setHowManyPerson(String.valueOf(foodHowManyPerson));
         food.setCategoryID(categoryAddSpinner.getSelectedItemPosition() + 1);
         food.setType(FoodEntity.USER_FOOD);
+
+        ArrayList<MaterialEntity> entities = new ArrayList<>();
+        ArrayList<String> entitiesNames = new ArrayList<>();
+        String entitiesNamesStr = multiAutoCompleteTextView.getText().toString();
+        String entityNameStr = "";
+        for (int i = 0; i < entitiesNamesStr.length(); i++) {
+            if (entitiesNamesStr.substring(i, i + 1).equals(",")) {
+                entitiesNames.add(entityNameStr);
+                entityNameStr = "";
+            } else {
+                entityNameStr += entitiesNamesStr.substring(i, i + 1);
+            }
+        }
+        for (String nameEntity : entitiesNames) {
+            DataProcessingFactory dataProcessingFactory = DataProcessingFactory.getInstance(context);
+            entities.add(((MaterialManager) dataProcessingFactory.getManager(ManagerName.MATERIAL_MANAGER)).getEntitiesByMaterialName(nameEntity));
+        }
+
+        ArrayList<MaterialByFoodEntity> materialByFoodEntities = new ArrayList<>();
+        for (MaterialEntity entity : entities) {
+            MaterialByFoodEntity materialByFoodEntity = new MaterialByFoodEntity();
+            materialByFoodEntity.setMaterialID(entity.getID());
+            materialByFoodEntity.setFoodID(key);
+            @SuppressLint("SimpleDateFormat")
+            String keyE = new SimpleDateFormat("yyddHHmmss").format(new Date());
+            materialByFoodEntity.setID(keyE);
+            materialByFoodEntities.add(materialByFoodEntity);
+        }
+
+        MaterialByFoodEntity[] materialByFoodEntities1 = new MaterialByFoodEntity[materialByFoodEntities.size()];
+        for (int i = 0; i < materialByFoodEntities1.length; i++) {
+            materialByFoodEntities1[i] = materialByFoodEntities.get(i);
+        }
+
+        food.setMaterialByFoodEntities(materialByFoodEntities1);
 
         ImageEntity[] imagesEntity = new ImageEntity[imagesCount];
         for (int i = 0; i < imagesEntity.length; i++) {

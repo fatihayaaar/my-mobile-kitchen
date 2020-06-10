@@ -3,7 +3,6 @@ package com.fayarretype.mymobilekitchen.layers.pl;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.DialogInterface;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,6 +18,7 @@ import androidx.appcompat.app.AlertDialog;
 
 import com.fayarretype.mymobilekitchen.R;
 import com.fayarretype.mymobilekitchen.activities.StockActivity;
+import com.fayarretype.mymobilekitchen.activities.WizardFoodActivity;
 import com.fayarretype.mymobilekitchen.layers.bl.DataProcessingFactory;
 import com.fayarretype.mymobilekitchen.layers.bl.ManagerName;
 import com.fayarretype.mymobilekitchen.layers.bl.MaterialManager;
@@ -111,10 +111,23 @@ public class MaterialCardAdapter extends ArrayAdapter<MaterialEntity> {
                 }
             }
         } else if (layout == R.layout.material_row_layout) {
-            TextView textViewMaterialName = convertView.findViewById(R.id.material_name);
+            Button btnMaterialDelete = convertView.findViewById(R.id.delete_material_btn);
+            final TextView textViewMaterialName = convertView.findViewById(R.id.material_name);
             textViewMaterialName.setText(materialEntity.getMaterialName());
 
-            Log.i("Material Name: ", "Girdi - " + materialEntity.getMaterialName());
+            btnMaterialDelete.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    ArrayList<MaterialEntity> entities = new ArrayList<>();
+                    for (MaterialEntity materialEntity : WizardFoodActivity.materialEntities) {
+                        if (!materialEntity.getMaterialName().equals(textViewMaterialName.getText().toString())) {
+                            entities.add(materialEntity);
+                        }
+                    }
+                    WizardFoodActivity.materialEntities = entities;
+                    WizardFoodActivity.bindItemGridView();
+                }
+            });
         }
         return convertView;
     }

@@ -29,12 +29,18 @@ import java.util.ArrayList;
 
 public class WizardFoodActivity extends AppCompatActivity {
 
-    private Context context;
+    public static ArrayList<MaterialEntity> materialEntities;
+    private static Context context;
+    private static GridView itemGridView;
     private androidx.appcompat.widget.Toolbar toolbar;
-    private GridView itemGridView;
     private GridView foodGridView;
-    private ArrayList<MaterialEntity> materialEntities;
     private AutoCompleteTextView autoCompleteTextViewMaterial;
+
+    public static void bindItemGridView() {
+        MaterialCardAdapter materialCardViewAdapter = new MaterialCardAdapter(context, materialEntities, R.layout.material_row_layout);
+        itemGridView.setAdapter(materialCardViewAdapter);
+        itemGridView.setVisibility(View.VISIBLE);
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -94,20 +100,22 @@ public class WizardFoodActivity extends AppCompatActivity {
     }
 
     public void addItemBtnOnClick(View view) {
+        boolean isMaterial = false;
         DataProcessingFactory dataProcessingFactory = DataProcessingFactory.getInstance(this);
         MaterialManager materialManager = (MaterialManager) dataProcessingFactory.getManager(ManagerName.MATERIAL_MANAGER);
         try {
-            materialEntities.add(materialManager.getEntitiesByMaterialName(autoCompleteTextViewMaterial.getText().toString()));
+            for (MaterialEntity entity : materialEntities) {
+                if (entity.getMaterialName().equals(autoCompleteTextViewMaterial.getText().toString().trim().toLowerCase())) {
+                    isMaterial = true;
+                }
+            }
+            if (!isMaterial) {
+                materialEntities.add(materialManager.getEntitiesByMaterialName(autoCompleteTextViewMaterial.getText().toString()));
+            }
         } catch (Exception e) {
             e.getStackTrace();
         }
         bindItemGridView();
-    }
-
-    public void bindItemGridView() {
-        MaterialCardAdapter materialCardViewAdapter = new MaterialCardAdapter(this, materialEntities, R.layout.material_row_layout);
-        itemGridView.setAdapter(materialCardViewAdapter);
-        itemGridView.setVisibility(View.VISIBLE);
     }
 
     public void bindToMaterialsMultiAutoCompleteTextView() {
