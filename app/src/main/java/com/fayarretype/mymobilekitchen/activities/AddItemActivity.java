@@ -17,12 +17,10 @@ import com.fayarretype.mymobilekitchen.R;
 import com.fayarretype.mymobilekitchen.layers.bl.DataProcessingFactory;
 import com.fayarretype.mymobilekitchen.layers.bl.ManagerName;
 import com.fayarretype.mymobilekitchen.layers.bl.MaterialManager;
-import com.fayarretype.mymobilekitchen.layers.dal.XMLPullParserHandler;
 import com.fayarretype.mymobilekitchen.layers.entitites.MaterialEntity;
 import com.fayarretype.mymobilekitchen.tools.utils.Convert;
 
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Date;
 
 public class AddItemActivity extends AppCompatActivity {
@@ -53,64 +51,58 @@ public class AddItemActivity extends AppCompatActivity {
     }
 
     public void addButtonOnClick(View view) {
+        final boolean[] isAdd = {false};
         try {
-            Boolean isAddItem = true;
-            Boolean isNewAddItem = true;
             if (validateControl()) {
-                materialEntity = new MaterialEntity();
-                String key = new SimpleDateFormat("yyddHHmmss").format(new Date());
-                materialEntity.setID(key);
-                materialEntity.setMaterialName(autoCompleteTextView.getText().toString().trim().toLowerCase());
-                materialEntity.setMaterialCount("1");
+                final DataProcessingFactory dataProcessingFactory = DataProcessingFactory.getInstance(this);
+                final MaterialManager materialManager = (MaterialManager) dataProcessingFactory.getManager(ManagerName.MATERIAL_MANAGER);
 
-                DataProcessingFactory dataProcessingFactory = DataProcessingFactory.getInstance(this);
-                MaterialManager materialManager = (MaterialManager) dataProcessingFactory.getManager(ManagerName.MATERIAL_MANAGER);
-
-                ArrayList<MaterialEntity> entities = materialManager.getEntities();
-                for (MaterialEntity entity : entities) {
-                    if (materialEntity.getMaterialName().trim().toLowerCase()
-                            .equals(entity.getMaterialName().trim().toLowerCase())) {
-                        materialEntity.setID(entity.getID());
-                        isAddItem = false;
-                    }
+                try {
+                    materialEntity = materialManager.getEntitiesByMaterialName(autoCompleteTextView.getText().toString().trim().toLowerCase());
+                } catch (Exception e) {
+                    materialEntity = null;
                 }
-                if (isAddItem) {
-                    materialManager.add(materialEntity);
-                    XMLPullParserHandler xmlPullParserHandler = XMLPullParserHandler.getInstance(this);
-                    ArrayList<MaterialEntity> materialEntities = xmlPullParserHandler.getMaterialEntities();
-                    for (MaterialEntity entity : materialEntities) {
-                        if (materialEntity.getMaterialName().trim().toLowerCase()
-                                .equals(entity.getMaterialName().trim().toLowerCase())) {
-                            isNewAddItem = false;
-                        }
-                    }
-                    if (isNewAddItem) {
-                        AlertDialog.Builder dlgAlert = new AlertDialog.Builder(context);
-                        dlgAlert.setMessage("Yeni bir malzeme oluşturmak ister misin?");
-                        dlgAlert.setTitle("Bu malzeme yok!");
-                        dlgAlert.setNeutralButton("İPTAL", null);
-                        dlgAlert.setNegativeButton("OLUŞTUR",
-                                new DialogInterface.OnClickListener() {
 
-                                    @Override
-                                    public void onClick(DialogInterface dialog, int which) {
-                                        finish();
-                                    }
-                                });
-                        dlgAlert.setCancelable(true);
-                        dlgAlert.create().show();
-                        dataProcessingFactory.saveChanges();
-                    }
+                if (materialEntity == null) {
+                    AlertDialog.Builder dlgAlert = new AlertDialog.Builder(context);
+                    dlgAlert.setMessage("Yeni bir malzeme oluşturmak ister misin?");
+                    dlgAlert.setTitle("Bu malzeme yok!");
+                    dlgAlert.setNeutralButton("İPTAL", null);
+                    dlgAlert.setNegativeButton("OLUŞTUR",
+                            new DialogInterface.OnClickListener() {
 
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+                                    MaterialEntity materialEntity = new MaterialEntity();
+                                    materialEntity.setMaterialName(autoCompleteTextView.getText().toString().toLowerCase());
+                                    materialEntity.setIsItInStock(String.valueOf(MaterialEntity.MATERIAL_YES_STOCK));
+                                    materialEntity.setMaterialCount("1");
+                                    String key = "" + new SimpleDateFormat("yyddHHmmss").format(new Date());
+                                    materialEntity.setID(key);
+                                    materialManager.add(materialEntity);
+                                    dataProcessingFactory.saveChanges();
+                                    isAdd[0] = true;
+                                    finish();
+                                }
+                            });
+                    dlgAlert.setCancelable(true);
+                    dlgAlert.create().show();
                 } else {
-                    materialManager.increaseCount(materialEntity.getID());
-                    dataProcessingFactory.saveChanges();
-                    Toast.makeText(getApplicationContext(), "Başarılı", Toast.LENGTH_LONG).show();
-                    finish();
+                    if (materialEntity.getMaterialCount().equals("0")) {
+                        materialEntity.setIsItInStock(String.valueOf(MaterialEntity.MATERIAL_YES_STOCK));
+                        materialEntity.setMaterialCount("1");
+                        materialManager.update(materialEntity, materialEntity.getID());
+                        isAdd[0] = true;
+                    } else if (Integer.valueOf(materialEntity.getMaterialCount()) > 0) {
+                        materialEntity.setIsItInStock(String.valueOf(MaterialEntity.MATERIAL_YES_STOCK));
+                        materialManager.update(materialEntity, materialEntity.getID());
+                        materialManager.increaseCount(materialEntity.getID());
+                        isAdd[0] = true;
+                    }
                 }
-                if (!isNewAddItem) {
+
+                if (isAdd[0]) {
                     dataProcessingFactory.saveChanges();
-                    Toast.makeText(getApplicationContext(), "Başarılı", Toast.LENGTH_LONG).show();
                     finish();
                 }
             }

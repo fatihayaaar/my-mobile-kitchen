@@ -23,6 +23,7 @@ public class SQLiteDatabaseHelper extends SQLiteOpenHelper implements IDatabaseH
     public static final String FOOD_AREA_CATEGORY_ID = "categoryID";
     public static final String CATEGORY_AREA_ID = "categoryID";
     public static final String MATERIAL_AREA_ID = "materialID";
+    public static final String MATERIAL_AREA_IS_STOCK = "isStock";
     public static final String IMAGES_AREA_ID = "imagesID";
     public static final String IMAGES_AREA_FOOD_ID = "foodID";
     public static final String FOOD_AREA_TYPE = "foodType";
@@ -57,7 +58,7 @@ public class SQLiteDatabaseHelper extends SQLiteOpenHelper implements IDatabaseH
     private SQLiteDatabase database;
 
     private SQLiteDatabaseHelper(Context context) {
-        super(context, "my_mobile_kitchen.db", null, 23);
+        super(context, "my_mobile_kitchen.db", null, 27);
         init();
     }
 
@@ -114,7 +115,8 @@ public class SQLiteDatabaseHelper extends SQLiteOpenHelper implements IDatabaseH
                 "id INTEGER PRIMARY KEY AUTOINCREMENT," +
                 MATERIAL_AREA_ID + " TEXT," +
                 MATERIAL_AREA_NAME + " TEXT NOT NULL," +
-                MATERIAL_AREA_COUNT + " TEXT NOT NULL);");
+                MATERIAL_AREA_COUNT + " TEXT," +
+                MATERIAL_AREA_IS_STOCK + " TEXT);");
 
         db.execSQL("CREATE TABLE " + FOOD_TABLE_NAME + " ( " +
                 "id INTEGER PRIMARY KEY AUTOINCREMENT," +
@@ -191,6 +193,7 @@ public class SQLiteDatabaseHelper extends SQLiteOpenHelper implements IDatabaseH
             contentValues.put(MATERIAL_AREA_ID, entity.getID());
             contentValues.put(MATERIAL_AREA_NAME, ((MaterialEntity) entity).getMaterialName());
             contentValues.put(MATERIAL_AREA_COUNT, ((MaterialEntity) entity).getMaterialCount());
+            contentValues.put(MATERIAL_AREA_IS_STOCK, ((MaterialEntity) entity).getIsItInStock());
             this.contentValues.get(CONTENT_VALUES_INSERT).get(CONTENT_VALUES_MATERIAL).add(contentValues);
         } else if (entity.getClass() == FoodEntity.class) {
             contentValues.put(FOOD_AREA_ID, entity.getID());
@@ -242,6 +245,7 @@ public class SQLiteDatabaseHelper extends SQLiteOpenHelper implements IDatabaseH
             contentValues.put(MATERIAL_AREA_ID, entity.getID());
             contentValues.put(MATERIAL_AREA_NAME, ((MaterialEntity) entity).getMaterialName());
             contentValues.put(MATERIAL_AREA_COUNT, ((MaterialEntity) entity).getMaterialCount());
+            contentValues.put(MATERIAL_AREA_IS_STOCK, ((MaterialEntity) entity).getIsItInStock());
             this.contentValues.get(CONTENT_VALUES_UPDATE).get(CONTENT_VALUES_MATERIAL).add(contentValues);
             updateIDList.get(CONTENT_VALUES_MATERIAL).add(id);
         } else if (entity.getClass() == FoodEntity.class) {
@@ -283,7 +287,7 @@ public class SQLiteDatabaseHelper extends SQLiteOpenHelper implements IDatabaseH
 
         if (selectionValue != null || selectionValue2 != null) {
             selection = selectionValue + " = " + selectionValue2;
-            if (selectionValue.equals(MATERIAL_AREA_NAME)) {
+            if (selectionValue.equals(MATERIAL_AREA_NAME) || selectionValue.equals(MATERIAL_AREA_IS_STOCK)) {
                 selection = selectionValue + " = '" + selectionValue2 + "'";
             }
         } else selection = "";
@@ -334,6 +338,7 @@ public class SQLiteDatabaseHelper extends SQLiteOpenHelper implements IDatabaseH
             columns.add(MATERIAL_AREA_ID);
             columns.add(MATERIAL_AREA_NAME);
             columns.add(MATERIAL_AREA_COUNT);
+            columns.add(MATERIAL_AREA_IS_STOCK);
 
             Cursor cursor = database.query(MATERIAL_TABLE_NAME, Convert.getStringArray(columns),
                     selection, new String[]{}, groupBy, having, orderBy);
@@ -342,7 +347,8 @@ public class SQLiteDatabaseHelper extends SQLiteOpenHelper implements IDatabaseH
                 records.add(cursor.getColumnIndex(MATERIAL_AREA_ID),
                         new MaterialEntity(cursor.getString(cursor.getColumnIndex(MATERIAL_AREA_ID)),
                                 cursor.getString(cursor.getColumnIndex(MATERIAL_AREA_NAME)),
-                                cursor.getString(cursor.getColumnIndex(MATERIAL_AREA_COUNT))));
+                                cursor.getString(cursor.getColumnIndex(MATERIAL_AREA_COUNT)),
+                                cursor.getString(cursor.getColumnIndex(MATERIAL_AREA_IS_STOCK))));
             }
 
         } else if (entity == EntityName.IMAGE_ENTITY_CLASS) {

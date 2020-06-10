@@ -27,29 +27,23 @@
 
         <GridView
             android:id="@+id/food_grid_view_food_wizard"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_width="10dp"
+            android:layout_height="10dp"
             android:layout_gravity="center_horizontal"
             android:clipToPadding="true"
             android:fitsSystemWindows="true"
             android:gravity="center_horizontal"
-            android:numColumns="2"
+            android:numColumns="1"
             android:stretchMode="columnWidth" />
 
     </LinearLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_below="@+id/food_wizard_linear_layout"
-        android:layout_margin="20dp"
-        android:layout_marginStart="20dp"
-        android:layout_marginLeft="20dp"
-        android:layout_marginTop="20dp"
-        android:layout_marginEnd="20dp"
-        android:layout_marginRight="20dp"
-        android:layout_marginBottom="20dp"
-        android:gravity="center_horizontal">
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:background="#FFF"
+        android:orientation="vertical">
 
         <GridView
             android:id="@+id/item_grid_view_food_wizard"
@@ -61,14 +55,6 @@
             android:gravity="center_horizontal"
             android:numColumns="3"
             android:stretchMode="columnWidth" />
-
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:orientation="vertical">
 
         <AutoCompleteTextView
             android:id="@+id/materialsAddAutoCompleteTextView"

@@ -104,7 +104,11 @@ public class MaterialCardAdapter extends ArrayAdapter<MaterialEntity> {
 
             if (materialEntity != null) {
                 textViewItemName.setText(materialEntity.getMaterialName().toUpperCase());
-                buttonItemCount.setText(materialEntity.getMaterialCount().toUpperCase() + "X");
+                try {
+                    buttonItemCount.setText(materialEntity.getMaterialCount().toUpperCase() + "X");
+                } catch (Exception e) {
+                    buttonItemCount.setText("0X");
+                }
             }
         } else if (layout == R.layout.material_row_layout) {
             TextView textViewMaterialName = convertView.findViewById(R.id.material_name);

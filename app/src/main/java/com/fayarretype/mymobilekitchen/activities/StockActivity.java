@@ -15,6 +15,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.fayarretype.mymobilekitchen.R;
 import com.fayarretype.mymobilekitchen.layers.bl.DataProcessingFactory;
 import com.fayarretype.mymobilekitchen.layers.bl.ManagerName;
+import com.fayarretype.mymobilekitchen.layers.bl.MaterialManager;
+import com.fayarretype.mymobilekitchen.layers.entitites.MaterialEntity;
 import com.fayarretype.mymobilekitchen.layers.pl.MaterialCardAdapter;
 
 import java.util.ArrayList;
@@ -34,7 +36,9 @@ public class StockActivity extends AppCompatActivity {
         ImageView im = view.findViewById(R.id.stock_activity_back);
         GridView itemGridView = view.findViewById(R.id.item_grid_view);
         DataProcessingFactory dataProcessingFactory = DataProcessingFactory.getInstance(context);
-        ArrayList materialEntities = dataProcessingFactory.getManager(ManagerName.MATERIAL_MANAGER).getEntities();
+        ArrayList materialEntities = ((MaterialManager) dataProcessingFactory
+                .getManager(ManagerName.MATERIAL_MANAGER))
+                .getEntitiesMaterialByStock(MaterialEntity.MATERIAL_YES_STOCK);
         if (materialEntities.isEmpty()) {
             relativeLayout.setBackgroundColor(Color.WHITE);
             im.setVisibility(View.VISIBLE);

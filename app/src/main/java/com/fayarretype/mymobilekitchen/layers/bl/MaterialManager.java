@@ -42,6 +42,15 @@ public class MaterialManager extends BaseManager<MaterialEntity> implements IMat
         return ((MaterialRepository) unitOfWork.getRepository(MaterialEntity.class)).getMaterialNames();
     }
 
+    public void deleteMaterialByNoStock() {
+        ((MaterialRepository) unitOfWork.getRepository(MaterialEntity.class)).deleteMaterialByNoStock();
+    }
+
+    public ArrayList<MaterialEntity> getEntitiesMaterialByStock(int materialStockState) {
+        return ((MaterialRepository) unitOfWork.getRepository(MaterialEntity.class))
+                .getEntitiesMaterialByStock(materialStockState);
+    }
+
     public void increaseCount(String id) {
         MaterialEntity materialEntity = (MaterialEntity) unitOfWork.getRepository(MaterialEntity.class).getEntity(id);
         materialEntity.setMaterialCount(String.valueOf(Integer.valueOf(materialEntity.getMaterialCount()) + 1));

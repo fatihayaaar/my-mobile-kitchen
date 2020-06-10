@@ -26,8 +26,11 @@ import com.fayarretype.mymobilekitchen.activities.WizardFoodActivity;
 import com.fayarretype.mymobilekitchen.layers.bl.DataProcessingFactory;
 import com.fayarretype.mymobilekitchen.layers.bl.FoodManager;
 import com.fayarretype.mymobilekitchen.layers.bl.ManagerName;
+import com.fayarretype.mymobilekitchen.layers.bl.MaterialManager;
+import com.fayarretype.mymobilekitchen.layers.dal.XMLPullParserHandler;
 import com.fayarretype.mymobilekitchen.layers.entitites.FoodEntity;
 import com.fayarretype.mymobilekitchen.layers.entitites.ImageEntity;
+import com.fayarretype.mymobilekitchen.layers.entitites.MaterialEntity;
 import com.fayarretype.mymobilekitchen.tools.utils.ServiceControl;
 
 import org.jsoup.Jsoup;
@@ -77,6 +80,21 @@ public class MainActivity extends AppCompatActivity {
             imageView.setVisibility(View.GONE);
             scrollView.setVisibility(View.VISIBLE);
         }
+
+        XMLPullParserHandler xmlPullParserHandler = XMLPullParserHandler.getInstance(this);
+        ((MaterialManager)dataProcessingFactory.getManager(ManagerName.MATERIAL_MANAGER)).deleteMaterialByNoStock();
+
+        int sayac = 0;
+        for (MaterialEntity materialEntity : xmlPullParserHandler.getMaterialEntities()) {
+            String key = "" + new SimpleDateFormat("yyddHHmmss").format(new Date()) + sayac;
+            materialEntity.setID(key);
+            materialEntity.setIsItInStock(String.valueOf(MaterialEntity.MATERIAL_NO_STOCK));
+            materialEntity.setMaterialCount("0");
+            dataProcessingFactory.getManager(ManagerName.MATERIAL_MANAGER).add(materialEntity);
+            sayac++;
+        }
+
+        dataProcessingFactory.saveChanges();
     }
 
     private void loadCardView() {

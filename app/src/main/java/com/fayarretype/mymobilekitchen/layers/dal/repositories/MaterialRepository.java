@@ -39,6 +39,24 @@ public class MaterialRepository extends BaseRepository<MaterialEntity> implement
         return materialEntities;
     }
 
+    public void deleteMaterialByNoStock() {
+        ArrayList<MaterialEntity> materialEntities = getEntitiesMaterialByStock(MaterialEntity.MATERIAL_NO_STOCK);
+        for (MaterialEntity entity : materialEntities) {
+            databaseHelper.delete(entity.getID(), MaterialEntity.class);
+        }
+    }
+
+    public ArrayList<MaterialEntity> getEntitiesMaterialByStock(int materialStockState) {
+        ArrayList<BaseEntity> entities = databaseHelper.list(MaterialEntity.class,
+                SQLiteDatabaseHelper.MATERIAL_AREA_IS_STOCK, String.valueOf(materialStockState));
+
+        ArrayList<MaterialEntity> materialEntities = new ArrayList<>(entities.size());
+        for (int i = 0; i < entities.size(); i++)
+            materialEntities.add((MaterialEntity) entities.get(i));
+
+        return materialEntities;
+    }
+
     @Override
     public ArrayList<String> getMaterialNames() {
         ArrayList<MaterialEntity> entities = XMLPullParserHandler.getInstance(context).getMaterialEntities();
