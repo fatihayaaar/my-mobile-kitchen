@@ -84,9 +84,8 @@ public class FoodDetailActivity extends AppCompatActivity {
         if (mFood != null) {
             for (int i = 0; i < images.length; i++) {
                 try {
-                    if (mFood.getImage()[i].getImage() != null) {
                         images[i] = imStream.getImageJPG(mFood.getImage()[i].getImageID());
-                    }
+
                 } catch (Exception e) {
                     images[i] = null;
                 }

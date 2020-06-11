@@ -10,7 +10,8 @@ import com.fayarretype.mymobilekitchen.layers.entitites.MaterialEntity;
 
 import java.util.ArrayList;
 
-public class MaterialRepository extends BaseRepository<MaterialEntity> implements IMaterialRepository<MaterialEntity> {
+public class MaterialRepository extends BaseRepository<MaterialEntity>
+        implements IMaterialRepository<MaterialEntity> {
 
     public MaterialRepository(Context context) {
         super(context);
@@ -24,7 +25,8 @@ public class MaterialRepository extends BaseRepository<MaterialEntity> implement
 
     @Override
     public MaterialEntity getEntitiesByMaterialName(String materialName) {
-        ArrayList<BaseEntity> entities = databaseHelper.list(MaterialEntity.class, SQLiteDatabaseHelper.MATERIAL_AREA_NAME, materialName);
+        ArrayList<BaseEntity> entities = databaseHelper.list(MaterialEntity.class,
+                SQLiteDatabaseHelper.MATERIAL_AREA_NAME, materialName);
         return (MaterialEntity) entities.get(0);
     }
 
@@ -40,7 +42,8 @@ public class MaterialRepository extends BaseRepository<MaterialEntity> implement
     }
 
     public void deleteMaterialByNoStock() {
-        ArrayList<MaterialEntity> materialEntities = getEntitiesMaterialByStock(MaterialEntity.MATERIAL_NO_STOCK);
+        ArrayList<MaterialEntity> materialEntities =
+                getEntitiesMaterialByStock(MaterialEntity.MATERIAL_NO_STOCK);
         for (MaterialEntity entity : materialEntities) {
             databaseHelper.delete(entity.getID(), MaterialEntity.class);
         }
@@ -59,7 +62,8 @@ public class MaterialRepository extends BaseRepository<MaterialEntity> implement
 
     @Override
     public ArrayList<String> getMaterialNames() {
-        ArrayList<MaterialEntity> entities = XMLPullParserHandler.getInstance(context).getMaterialEntities();
+        ArrayList<MaterialEntity> entities = XMLPullParserHandler.getInstance(context)
+                .getMaterialEntities();
 
         ArrayList<String> materialNames = new ArrayList<>(entities.size());
         for (int i = 0; i < entities.size(); i++)

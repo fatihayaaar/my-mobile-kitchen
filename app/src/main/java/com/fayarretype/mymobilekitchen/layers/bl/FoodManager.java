@@ -43,11 +43,15 @@ public class FoodManager extends BaseManager<FoodEntity> implements IFoodManager
 
     @Override
     public ArrayList<FoodEntity> getEntities() {
-        ImageStream imgStream = new ImageStream(context);
         ArrayList<FoodEntity> foodEntities = ((FoodRepository) unitOfWork
                 .getRepository(FoodEntity.class))
                 .getEntities();
 
+        return getFoodEntities(foodEntities);
+    }
+
+    private ArrayList<FoodEntity> getFoodEntities(ArrayList<FoodEntity> foodEntities) {
+        ImageStream imgStream = new ImageStream(context);
         ArrayList<FoodEntity> entities = new ArrayList<>();
         for (FoodEntity entity : foodEntities) {
             try {
@@ -62,7 +66,6 @@ public class FoodManager extends BaseManager<FoodEntity> implements IFoodManager
                 imageEntities[0] = entity1;
                 Bitmap image = imgStream.getImageJPG(imageEntities[0].getImageID());
                 imageEntities[0].setImage(getResizedBitmap(image, 100, 100));
-
                 try {
                     for (int i = 1; i < imageEntities.length; i++) {
                         ImageEntity entityLoc = ((ImageRepository) unitOfWork
@@ -73,7 +76,6 @@ public class FoodManager extends BaseManager<FoodEntity> implements IFoodManager
                 } catch (Exception e) {
                     e.getStackTrace();
                 }
-
                 entity.setImage(imageEntities);
             } catch (Exception e) {
                 e.getStackTrace();
@@ -98,16 +100,21 @@ public class FoodManager extends BaseManager<FoodEntity> implements IFoodManager
     }
 
     @Override
-    public ArrayList<BaseEntity> getFoodByCategoryID(int categoryID) {
+    public ArrayList<FoodEntity> getFoodByCategoryID(int categoryID) {
         ArrayList<BaseEntity> foodEntity = ((FoodRepository) unitOfWork.getRepository(FoodEntity.class))
                 .getFoodByCategoryID(categoryID);
+
+        ArrayList<FoodEntity> entities = new ArrayList<>();
+        for (BaseEntity entity : foodEntity) {
+            entities.add((FoodEntity) entity);
+        }
         if (foodEntity != null)
-            return foodEntity;
+            return getFoodEntities(entities);
         return new ArrayList<>();
     }
 
     public ArrayList<FoodEntity> getEntitiesByType(int type) {
-        return ((FoodRepository) unitOfWork.getRepository(FoodEntity.class)).getEntitiesByType(type);
+        return getFoodEntities(((FoodRepository) unitOfWork.getRepository(FoodEntity.class)).getEntitiesByType(type));
     }
 
     @Override
@@ -124,7 +131,8 @@ public class FoodManager extends BaseManager<FoodEntity> implements IFoodManager
             ImageStream imageStream = new ImageStream(context);
             imageStream.setPictureBitmap(entity[i].getImage());
             imageStream.saveImage();
-            entity[i].setID("i" + new SimpleDateFormat("yyddHHmmss").format(new Date()));
+            int rnd = (int) (Math.random() * 999);
+            entity[i].setID("i" + new SimpleDateFormat("yyddHHmmss").format(new Date()) + rnd);
             entity[i].setFoodID(foodID);
             entity[i].setImageID(imageStream.getKey());
             ((ImageRepository) unitOfWork.getRepository(ImageEntity.class)).adds(entity[i]);

@@ -383,8 +383,6 @@ public class SQLiteDatabaseHelper extends SQLiteOpenHelper implements IDatabaseH
 
         } else records.add(-1, new CategoryEntity("-1"));
 
-        disconnect();
-
         return records;
     }
 
@@ -415,6 +413,7 @@ public class SQLiteDatabaseHelper extends SQLiteOpenHelper implements IDatabaseH
                         CATEGORY_AREA_ID + " = " + deleteIDList.get(CONTENT_VALUES_CATEGORY).get(i), null);
             }
         } finally {
+            disconnect();
         }
     }
 
@@ -435,6 +434,7 @@ public class SQLiteDatabaseHelper extends SQLiteOpenHelper implements IDatabaseH
                         MATERIAL_AREA_ID + " = " + deleteIDList.get(CONTENT_VALUES_MATERIAL).get(i), null);
             }
         } finally {
+            disconnect();
         }
     }
 
@@ -455,6 +455,7 @@ public class SQLiteDatabaseHelper extends SQLiteOpenHelper implements IDatabaseH
                         FOOD_AREA_ID + " = '" + deleteIDList.get(CONTENT_VALUES_FOOD).get(i) + "'", null);
             }
         } finally {
+            disconnect();
         }
     }
 

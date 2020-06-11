@@ -8,7 +8,6 @@ import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -422,7 +421,7 @@ public class AddFoodFragment extends Fragment {
         createFood();
 
         DataProcessingFactory dataProcessingFactory = DataProcessingFactory.getInstance(context);
-        ((FoodManager) dataProcessingFactory.getManager(ManagerName.FOOD_MANAGER)).add(food);
+        dataProcessingFactory.getManager(ManagerName.FOOD_MANAGER).add(food);
         dataProcessingFactory.saveChanges();
     }
 

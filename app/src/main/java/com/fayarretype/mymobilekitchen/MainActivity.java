@@ -314,8 +314,9 @@ public class MainActivity extends AppCompatActivity {
 
                             @SuppressLint("SimpleDateFormat")
                             String key = new SimpleDateFormat("yyddHHmmss").format(new Date());
+                            int rnd = (int)(Math.random()* 999);
 
-                            imageEntities[x][j].setImageID("web" + key + x + j);
+                            imageEntities[x][j].setImageID("web" + key + x + j + rnd);
                             imageEntities[x][j].setImage(foodImageBitmap);
                         }
 

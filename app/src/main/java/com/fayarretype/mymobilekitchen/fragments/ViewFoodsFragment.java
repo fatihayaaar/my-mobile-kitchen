@@ -22,7 +22,6 @@ import com.fayarretype.mymobilekitchen.layers.bl.FoodManager;
 import com.fayarretype.mymobilekitchen.layers.bl.ManagerContainer;
 import com.fayarretype.mymobilekitchen.layers.bl.ManagerName;
 import com.fayarretype.mymobilekitchen.layers.bl.abstracts.IManager;
-import com.fayarretype.mymobilekitchen.layers.entitites.BaseEntity;
 import com.fayarretype.mymobilekitchen.layers.entitites.CategoryEntity;
 import com.fayarretype.mymobilekitchen.layers.entitites.FoodEntity;
 import com.fayarretype.mymobilekitchen.layers.pl.CategoryAdapter;
@@ -71,13 +70,8 @@ public class ViewFoodsFragment extends Fragment {
 
     public void loadValuesFoodRowLayoutByCategory(int categoryID) {
         DataProcessingFactory dataProcessingFactory = DataProcessingFactory.getInstance(getContext());
-        final ArrayList<BaseEntity> foodEntities = ((FoodManager) dataProcessingFactory.getManager(ManagerName.FOOD_MANAGER)).getFoodByCategoryID(categoryID);
+        ArrayList<FoodEntity> foods = ((FoodManager) dataProcessingFactory.getManager(ManagerName.FOOD_MANAGER)).getFoodByCategoryID(categoryID);
         GridView foodGridView = view.findViewById(R.id.foodGridView);
-
-        ArrayList<FoodEntity> foods = new ArrayList<>();
-        for (BaseEntity food : foodEntities) {
-            foods.add((FoodEntity) food);
-        }
 
         FoodAdapter foodAdapter = new FoodAdapter(context, foods);
         foodGridView.setAdapter(foodAdapter);
