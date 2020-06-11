@@ -28,6 +28,7 @@ import com.fayarretype.mymobilekitchen.layers.bl.FoodManager;
 import com.fayarretype.mymobilekitchen.layers.bl.ManagerName;
 import com.fayarretype.mymobilekitchen.layers.bl.MaterialManager;
 import com.fayarretype.mymobilekitchen.layers.dal.XMLPullParserHandler;
+import com.fayarretype.mymobilekitchen.layers.dal.databasehelper.SQLiteDatabaseHelper;
 import com.fayarretype.mymobilekitchen.layers.entitites.FoodEntity;
 import com.fayarretype.mymobilekitchen.layers.entitites.ImageEntity;
 import com.fayarretype.mymobilekitchen.layers.entitites.MaterialEntity;
@@ -53,6 +54,11 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        try {
+            SQLiteDatabaseHelper.getInstance(this).disconnect();
+        } catch (Exception e) {
+            e.getStackTrace();
+        }
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
@@ -82,7 +88,7 @@ public class MainActivity extends AppCompatActivity {
         }
 
         XMLPullParserHandler xmlPullParserHandler = XMLPullParserHandler.getInstance(this);
-        ((MaterialManager)dataProcessingFactory.getManager(ManagerName.MATERIAL_MANAGER)).deleteMaterialByNoStock();
+        ((MaterialManager) dataProcessingFactory.getManager(ManagerName.MATERIAL_MANAGER)).deleteMaterialByNoStock();
 
         int sayac = 0;
         for (MaterialEntity materialEntity : xmlPullParserHandler.getMaterialEntities()) {
@@ -314,7 +320,7 @@ public class MainActivity extends AppCompatActivity {
 
                             @SuppressLint("SimpleDateFormat")
                             String key = new SimpleDateFormat("yyddHHmmss").format(new Date());
-                            int rnd = (int)(Math.random()* 999);
+                            int rnd = (int) (Math.random() * 999);
 
                             imageEntities[x][j].setImageID("web" + key + x + j + rnd);
                             imageEntities[x][j].setImage(foodImageBitmap);

@@ -427,11 +427,11 @@ public class SQLiteDatabaseHelper extends SQLiteOpenHelper implements IDatabaseH
             }
             for (int i = 0; i < contentValues.get(CONTENT_VALUES_UPDATE).get(CONTENT_VALUES_MATERIAL).size(); i++) {
                 database.update(MATERIAL_TABLE_NAME, contentValues.get(CONTENT_VALUES_UPDATE).get(CONTENT_VALUES_MATERIAL).get(i),
-                        MATERIAL_AREA_ID + " = " + updateIDList.get(CONTENT_VALUES_MATERIAL).get(i), null);
+                        MATERIAL_AREA_ID + " = '" + updateIDList.get(CONTENT_VALUES_MATERIAL).get(i) + "'", null);
             }
             for (int i = 0; i < deleteIDList.get(CONTENT_VALUES_MATERIAL).size(); i++) {
                 database.delete(MATERIAL_TABLE_NAME,
-                        MATERIAL_AREA_ID + " = " + deleteIDList.get(CONTENT_VALUES_MATERIAL).get(i), null);
+                        MATERIAL_AREA_ID + " = '" + deleteIDList.get(CONTENT_VALUES_MATERIAL).get(i) + "'", null);
             }
         } finally {
             disconnect();
@@ -448,7 +448,7 @@ public class SQLiteDatabaseHelper extends SQLiteOpenHelper implements IDatabaseH
             }
             for (int i = 0; i < contentValues.get(CONTENT_VALUES_UPDATE).get(CONTENT_VALUES_FOOD).size(); i++) {
                 database.update(FOOD_TABLE_NAME, contentValues.get(CONTENT_VALUES_UPDATE).get(CONTENT_VALUES_FOOD).get(i),
-                        FOOD_AREA_ID + " = " + updateIDList.get(CONTENT_VALUES_FOOD).get(i), null);
+                        FOOD_AREA_ID + " = '" + updateIDList.get(CONTENT_VALUES_FOOD).get(i) + "'", null);
             }
             for (int i = 0; i < deleteIDList.get(CONTENT_VALUES_FOOD).size(); i++) {
                 database.delete(FOOD_TABLE_NAME,
@@ -469,11 +469,11 @@ public class SQLiteDatabaseHelper extends SQLiteOpenHelper implements IDatabaseH
             }
             for (int i = 0; i < contentValues.get(CONTENT_VALUES_UPDATE).get(CONTENT_VALUES_IMAGE).size(); i++) {
                 database.update(IMAGES_TABLE_NAME, contentValues.get(CONTENT_VALUES_UPDATE).get(CONTENT_VALUES_IMAGE).get(i),
-                        IMAGES_AREA_ID + " = " + updateIDList.get(CONTENT_VALUES_IMAGE).get(i), null);
+                        IMAGES_AREA_ID + " = '" + updateIDList.get(CONTENT_VALUES_IMAGE).get(i) + "'", null);
             }
             for (int i = 0; i < deleteIDList.get(CONTENT_VALUES_IMAGE).size(); i++) {
                 database.delete(IMAGES_TABLE_NAME,
-                        IMAGES_AREA_ID + " = " + deleteIDList.get(CONTENT_VALUES_IMAGE).get(i), null);
+                        IMAGES_AREA_ID + " = '" + deleteIDList.get(CONTENT_VALUES_IMAGE).get(i) + "'", null);
             }
         } finally {
             disconnect();
@@ -490,11 +490,11 @@ public class SQLiteDatabaseHelper extends SQLiteOpenHelper implements IDatabaseH
             }
             for (int i = 0; i < contentValues.get(CONTENT_VALUES_UPDATE).get(CONTENT_VALUES_MATERIAL_BY_FOOD).size(); i++) {
                 database.update(MATERIAL_BY_FOOD_TABLE_NAME, contentValues.get(CONTENT_VALUES_UPDATE).get(CONTENT_VALUES_MATERIAL_BY_FOOD).get(i),
-                        MATERIAL_BY_FOOD_ID + " = " + updateIDList.get(CONTENT_VALUES_MATERIAL_BY_FOOD).get(i), null);
+                        MATERIAL_BY_FOOD_ID + " = '" + updateIDList.get(CONTENT_VALUES_MATERIAL_BY_FOOD).get(i) + "'", null);
             }
             for (int i = 0; i < deleteIDList.get(CONTENT_VALUES_MATERIAL_BY_FOOD).size(); i++) {
                 database.delete(MATERIAL_BY_FOOD_TABLE_NAME,
-                        MATERIAL_BY_FOOD_ID + " = " + deleteIDList.get(CONTENT_VALUES_MATERIAL_BY_FOOD).get(i), null);
+                        MATERIAL_BY_FOOD_ID + " = '" + deleteIDList.get(CONTENT_VALUES_MATERIAL_BY_FOOD).get(i) + "'", null);
             }
         } finally {
             disconnect();
