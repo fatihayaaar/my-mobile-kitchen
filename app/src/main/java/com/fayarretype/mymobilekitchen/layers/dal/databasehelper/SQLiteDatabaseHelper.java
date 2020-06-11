@@ -30,6 +30,7 @@ public class SQLiteDatabaseHelper extends SQLiteOpenHelper implements IDatabaseH
     public static final String MATERIAL_AREA_NAME = "materialName";
     public static final String MATERIAL_BY_FOOD_ID = "materialByFoodID";
     public static final String MATERIAL_BY_FOOD_FOOD_ID = "materialByFoodFoodID";
+    public static final String IMAGES_AREA_IMAGE_ID = "imageID";
     private static final String FOOD_TABLE_NAME = "Food";
     private static final String CATEGORY_TABLE_NAME = "Category";
     private static final String MATERIAL_TABLE_NAME = "Material";
@@ -41,7 +42,6 @@ public class SQLiteDatabaseHelper extends SQLiteOpenHelper implements IDatabaseH
     private static final String FOOD_AREA_HOW_MANY_PERSON = "howManyPerson";
     private static final String CATEGORY_AREA_NAME = "categoryName";
     private static final String MATERIAL_AREA_COUNT = "materialCount";
-    public static final String IMAGES_AREA_IMAGE_ID = "imageID";
     private static final String MATERIAL_BY_FOOD_TABLE_NAME = "materialByFood";
     private static final String MATERIAL_BY_FOOD_MATERIAL_ID = "materialByFoodMaterialID";
     private static SQLiteDatabaseHelper databaseHelper;
@@ -58,7 +58,7 @@ public class SQLiteDatabaseHelper extends SQLiteOpenHelper implements IDatabaseH
     private SQLiteDatabase database;
 
     private SQLiteDatabaseHelper(Context context) {
-        super(context, "my_mobile_kitchen.db", null, 27);
+        super(context, "my_mobile_kitchen.db", null, 29);
         init();
     }
 
@@ -286,10 +286,10 @@ public class SQLiteDatabaseHelper extends SQLiteOpenHelper implements IDatabaseH
         String selection, groupBy, having, orderBy;
 
         if (selectionValue != null || selectionValue2 != null) {
-            selection = selectionValue + " = " + selectionValue2;
-            if (selectionValue.equals(MATERIAL_AREA_NAME) || selectionValue.equals(MATERIAL_AREA_IS_STOCK)) {
-                selection = selectionValue + " = '" + selectionValue2 + "'";
-            }
+            //selection = selectionValue + " = " + selectionValue2;
+            //if (selectionValue.equals(MATERIAL_AREA_NAME) || selectionValue.equals(MATERIAL_AREA_IS_STOCK)) {
+            selection = selectionValue + " = '" + selectionValue2 + "'";
+            //}
         } else selection = "";
 
         groupBy = "";
@@ -415,7 +415,6 @@ public class SQLiteDatabaseHelper extends SQLiteOpenHelper implements IDatabaseH
                         CATEGORY_AREA_ID + " = " + deleteIDList.get(CONTENT_VALUES_CATEGORY).get(i), null);
             }
         } finally {
-            disconnect();
         }
     }
 
@@ -436,7 +435,6 @@ public class SQLiteDatabaseHelper extends SQLiteOpenHelper implements IDatabaseH
                         MATERIAL_AREA_ID + " = " + deleteIDList.get(CONTENT_VALUES_MATERIAL).get(i), null);
             }
         } finally {
-            disconnect();
         }
     }
 
@@ -457,7 +455,6 @@ public class SQLiteDatabaseHelper extends SQLiteOpenHelper implements IDatabaseH
                         FOOD_AREA_ID + " = '" + deleteIDList.get(CONTENT_VALUES_FOOD).get(i) + "'", null);
             }
         } finally {
-            disconnect();
         }
     }
 

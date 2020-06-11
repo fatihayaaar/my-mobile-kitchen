@@ -1,6 +1,8 @@
 package com.fayarretype.mymobilekitchen.layers.bl;
 
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.Matrix;
 
 import com.fayarretype.mymobilekitchen.layers.bl.abstracts.IFoodManager;
 import com.fayarretype.mymobilekitchen.layers.dal.repositories.FoodRepository;
@@ -41,6 +43,7 @@ public class FoodManager extends BaseManager<FoodEntity> implements IFoodManager
 
     @Override
     public ArrayList<FoodEntity> getEntities() {
+        ImageStream imgStream = new ImageStream(context);
         ArrayList<FoodEntity> foodEntities = ((FoodRepository) unitOfWork
                 .getRepository(FoodEntity.class))
                 .getEntities();
@@ -48,22 +51,50 @@ public class FoodManager extends BaseManager<FoodEntity> implements IFoodManager
         ArrayList<FoodEntity> entities = new ArrayList<>();
         for (FoodEntity entity : foodEntities) {
             try {
+                ImageEntity[] imageEntities;
                 ArrayList<String> imageIds = ((ImageRepository) unitOfWork
                         .getRepository(ImageEntity.class))
                         .getFoodByImageIDs(entity.getID());
                 ImageEntity entity1 = ((ImageRepository) unitOfWork
                         .getRepository(ImageEntity.class))
                         .getEntity(imageIds.get(0));
-
-                ImageEntity[] imageEntities = new ImageEntity[1];
+                imageEntities = new ImageEntity[5];
                 imageEntities[0] = entity1;
+                Bitmap image = imgStream.getImageJPG(imageEntities[0].getImageID());
+                imageEntities[0].setImage(getResizedBitmap(image, 100, 100));
+
+                try {
+                    for (int i = 1; i < imageEntities.length; i++) {
+                        ImageEntity entityLoc = ((ImageRepository) unitOfWork
+                                .getRepository(ImageEntity.class))
+                                .getEntity(imageIds.get(i));
+                        imageEntities[i] = entityLoc;
+                    }
+                } catch (Exception e) {
+                    e.getStackTrace();
+                }
+
                 entity.setImage(imageEntities);
-                entities.add(entity);
             } catch (Exception e) {
                 e.getStackTrace();
+            } finally {
+                entities.add(entity);
             }
         }
         return entities;
+    }
+
+    private Bitmap getResizedBitmap(Bitmap bm, int newWidth, int newHeight) {
+        int width = bm.getWidth();
+        int height = bm.getHeight();
+        float scaleWidth = ((float) newWidth) / width;
+        float scaleHeight = ((float) newHeight) / height;
+
+        Matrix matrix = new Matrix();
+        matrix.postScale(scaleWidth, scaleHeight);
+
+        Bitmap resizedBitmap = Bitmap.createBitmap(bm, 0, 0, width, height, matrix, false);
+        return resizedBitmap;
     }
 
     @Override

@@ -1,6 +1,7 @@
 package com.fayarretype.mymobilekitchen.layers.dal.repositories;
 
 import android.content.Context;
+import android.util.Log;
 
 import com.fayarretype.mymobilekitchen.layers.dal.databasehelper.SQLiteDatabaseHelper;
 import com.fayarretype.mymobilekitchen.layers.dal.repositories.abstracts.IImageRepository;
@@ -20,7 +21,8 @@ public class ImageRepository extends BaseRepository<ImageEntity> implements IIma
     public ImageEntity getEntity(String id) {
         try {
             return (ImageEntity) databaseHelper.list(ImageEntity.class, SQLiteDatabaseHelper.IMAGES_AREA_ID, id).get(0);
-        } finally {
+        } catch (Exception e){
+            Log.i("Hata oluştu :", e.getMessage());
             return null;
         }
     }

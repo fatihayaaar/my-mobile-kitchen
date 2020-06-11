@@ -6,7 +6,7 @@ import com.fayarretype.mymobilekitchen.layers.dal.databasehelper.SQLiteDatabaseH
 import com.fayarretype.mymobilekitchen.layers.dal.repositories.abstracts.IFoodRepository;
 import com.fayarretype.mymobilekitchen.layers.entitites.BaseEntity;
 import com.fayarretype.mymobilekitchen.layers.entitites.FoodEntity;
-import com.fayarretype.mymobilekitchen.tools.utils.ImageStream;
+import com.fayarretype.mymobilekitchen.layers.entitites.ImageEntity;
 
 import java.util.ArrayList;
 
@@ -25,6 +25,23 @@ public class FoodRepository extends BaseRepository<FoodEntity> implements IFoodR
     @Override
     public void add(FoodEntity entity) {
         databaseHelper.add(entity);
+    }
+
+    @Override
+    public void delete(String id, Class entity) {
+        try {
+            ArrayList<BaseEntity> foodEntities = databaseHelper.list(FoodEntity.class,
+                    SQLiteDatabaseHelper.FOOD_AREA_ID, id);
+            for (BaseEntity baseEntity : foodEntities) {
+                ImageEntity entity1 = (ImageEntity) databaseHelper.list(ImageEntity.class,
+                        SQLiteDatabaseHelper.IMAGES_AREA_FOOD_ID,
+                        baseEntity.getID()).get(0);
+                databaseHelper.delete(entity1.getID(), ImageEntity.class);
+            }
+        } catch (Exception e) {
+            e.getStackTrace();
+        }
+        databaseHelper.delete(id, entity);
     }
 
     @Override

@@ -17,10 +17,6 @@ import com.fayarretype.mymobilekitchen.R;
 import com.fayarretype.mymobilekitchen.layers.bl.ManagerContainer;
 import com.fayarretype.mymobilekitchen.layers.bl.ManagerName;
 import com.fayarretype.mymobilekitchen.layers.bl.abstracts.IManager;
-import com.fayarretype.mymobilekitchen.layers.dal.repositories.ImageRepository;
-import com.fayarretype.mymobilekitchen.layers.dal.repositories.RepositoryContainer;
-import com.fayarretype.mymobilekitchen.layers.dal.repositories.RepositoryName;
-import com.fayarretype.mymobilekitchen.layers.dal.repositories.abstracts.IRepository;
 import com.fayarretype.mymobilekitchen.layers.entitites.CategoryEntity;
 import com.fayarretype.mymobilekitchen.layers.entitites.FoodEntity;
 
@@ -57,8 +53,6 @@ public class FoodAdapter extends ArrayAdapter<FoodEntity> {
         IManager categoryManager = ManagerContainer.getInstance(context).getManager(ManagerName.CATEGORY_MANAGER);
         CategoryEntity categoryEntity = (CategoryEntity) categoryManager.getEntity(String.valueOf(foodEntity.getCategoryID()));
 
-        IRepository repository = RepositoryContainer.getInstance(context).getRepository(RepositoryName.IMAGE);
-
         ImageView imageViewIcon = convertView.findViewById(R.id.foodImageView);
         TextView textViewName = convertView.findViewById(R.id.foodNameTextView);
         TextView textViewCategory = convertView.findViewById(R.id.foodCategoryTextView);
@@ -70,7 +64,7 @@ public class FoodAdapter extends ArrayAdapter<FoodEntity> {
         Bitmap bitmap;
         if (foodEntity != null) {
             try {
-                bitmap = ((ImageRepository) repository).getEntityByImage(String.valueOf(foodEntity.getID()))[0].getImage();
+                bitmap = foodEntity.getImage()[0].getImage();
                 if (bitmap == null) imageViewIcon.setImageResource(R.drawable.food_no_images_mini);
                 else imageViewIcon.setImageBitmap(bitmap);
             } catch (Exception e) {

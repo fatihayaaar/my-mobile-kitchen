@@ -14,6 +14,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.fayarretype.mymobilekitchen.R;
 import com.fayarretype.mymobilekitchen.layers.entitites.CategoryEntity;
 import com.fayarretype.mymobilekitchen.layers.entitites.FoodEntity;
+import com.fayarretype.mymobilekitchen.tools.utils.ImageStream;
 
 public class FoodDetailActivity extends AppCompatActivity {
 
@@ -79,7 +80,18 @@ public class FoodDetailActivity extends AppCompatActivity {
 
     @SuppressLint("SetTextI18n")
     private void loadValues() {
+        ImageStream imStream = new ImageStream(this);
         if (mFood != null) {
+            for (int i = 0; i < images.length; i++) {
+                try {
+                    if (mFood.getImage()[i].getImage() != null) {
+                        images[i] = imStream.getImageJPG(mFood.getImage()[i].getImageID());
+                    }
+                } catch (Exception e) {
+                    images[i] = null;
+                }
+            }
+
             if (images[0] == null) {
                 imageHeaderView.setImageResource(R.drawable.food_no_images);
             } else {
