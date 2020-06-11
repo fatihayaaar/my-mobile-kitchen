@@ -6,6 +6,7 @@ import com.fayarretype.mymobilekitchen.layers.dal.databasehelper.SQLiteDatabaseH
 import com.fayarretype.mymobilekitchen.layers.dal.repositories.abstracts.IFoodRepository;
 import com.fayarretype.mymobilekitchen.layers.entitites.BaseEntity;
 import com.fayarretype.mymobilekitchen.layers.entitites.FoodEntity;
+import com.fayarretype.mymobilekitchen.tools.utils.ImageStream;
 
 import java.util.ArrayList;
 
@@ -31,8 +32,9 @@ public class FoodRepository extends BaseRepository<FoodEntity> implements IFoodR
         ArrayList<BaseEntity> entities = databaseHelper.list(FoodEntity.class);
 
         ArrayList<FoodEntity> foodEntities = new ArrayList<>(entities.size());
-        for (int i = 0; i < entities.size(); i++)
+        for (int i = 0; i < entities.size(); i++) {
             foodEntities.add((FoodEntity) entities.get(i));
+        }
 
         return foodEntities;
     }

@@ -88,7 +88,9 @@ public class ViewFoodsFragment extends Fragment {
         ImageView im = view.findViewById(R.id.view_foods_back);
         GridView foodGridView = view.findViewById(R.id.foodGridView);
         DataProcessingFactory dataProcessingFactory = DataProcessingFactory.getInstance(getContext());
-        final ArrayList<FoodEntity> foodEntities = dataProcessingFactory.getManager(ManagerName.FOOD_MANAGER).getEntities();
+        final ArrayList<FoodEntity> foodEntities = ((FoodManager) dataProcessingFactory
+                .getManager(ManagerName.FOOD_MANAGER))
+                .getEntities();
         if (foodEntities.isEmpty()) {
             relativeLayout.setBackgroundColor(Color.WHITE);
             im.setVisibility(View.VISIBLE);

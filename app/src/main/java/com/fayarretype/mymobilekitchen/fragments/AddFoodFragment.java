@@ -8,6 +8,7 @@ import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -28,6 +29,7 @@ import com.fayarretype.mymobilekitchen.R;
 import com.fayarretype.mymobilekitchen.activities.FoodsActivity;
 import com.fayarretype.mymobilekitchen.activities.RecipeBookFoodDetailActivity;
 import com.fayarretype.mymobilekitchen.layers.bl.DataProcessingFactory;
+import com.fayarretype.mymobilekitchen.layers.bl.FoodManager;
 import com.fayarretype.mymobilekitchen.layers.bl.ManagerContainer;
 import com.fayarretype.mymobilekitchen.layers.bl.ManagerName;
 import com.fayarretype.mymobilekitchen.layers.bl.MaterialManager;
@@ -356,6 +358,7 @@ public class AddFoodFragment extends Fragment {
         foodAddScrollView.pageScroll(View.FOCUS_UP);
     }
 
+    @SuppressLint("SimpleDateFormat")
     private void createFood() {
         food = new FoodEntity();
         String key;
@@ -373,18 +376,20 @@ public class AddFoodFragment extends Fragment {
         ArrayList<MaterialEntity> entities = new ArrayList<>();
         ArrayList<String> entitiesNames = new ArrayList<>();
         String entitiesNamesStr = multiAutoCompleteTextView.getText().toString();
-        String entityNameStr = "";
+        StringBuilder entityNameStr = new StringBuilder();
         for (int i = 0; i < entitiesNamesStr.length(); i++) {
             if (entitiesNamesStr.substring(i, i + 1).equals(",")) {
-                entitiesNames.add(entityNameStr);
-                entityNameStr = "";
+                entitiesNames.add(entityNameStr.toString());
+                entityNameStr = new StringBuilder();
             } else {
-                entityNameStr += entitiesNamesStr.substring(i, i + 1);
+                entityNameStr.append(entitiesNamesStr.substring(i, i + 1));
             }
         }
         for (String nameEntity : entitiesNames) {
             DataProcessingFactory dataProcessingFactory = DataProcessingFactory.getInstance(context);
-            entities.add(((MaterialManager) dataProcessingFactory.getManager(ManagerName.MATERIAL_MANAGER)).getEntitiesByMaterialName(nameEntity));
+            entities.add(((MaterialManager) dataProcessingFactory
+                    .getManager(ManagerName.MATERIAL_MANAGER))
+                    .getEntitiesByMaterialName(nameEntity));
         }
 
         ArrayList<MaterialByFoodEntity> materialByFoodEntities = new ArrayList<>();
@@ -392,7 +397,6 @@ public class AddFoodFragment extends Fragment {
             MaterialByFoodEntity materialByFoodEntity = new MaterialByFoodEntity();
             materialByFoodEntity.setMaterialID(entity.getID());
             materialByFoodEntity.setFoodID(key);
-            @SuppressLint("SimpleDateFormat")
             String keyE = new SimpleDateFormat("yyddHHmmss").format(new Date());
             materialByFoodEntity.setID(keyE);
             materialByFoodEntities.add(materialByFoodEntity);
@@ -418,7 +422,7 @@ public class AddFoodFragment extends Fragment {
         createFood();
 
         DataProcessingFactory dataProcessingFactory = DataProcessingFactory.getInstance(context);
-        dataProcessingFactory.getManager(ManagerName.FOOD_MANAGER).add(food);
+        ((FoodManager) dataProcessingFactory.getManager(ManagerName.FOOD_MANAGER)).add(food);
         dataProcessingFactory.saveChanges();
     }
 

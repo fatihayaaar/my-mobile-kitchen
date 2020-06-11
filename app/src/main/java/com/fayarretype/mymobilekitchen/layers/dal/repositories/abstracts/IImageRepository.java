@@ -6,5 +6,5 @@ import java.util.ArrayList;
 
 public interface IImageRepository<TEntity extends BaseEntity> extends IRepository<TEntity> {
 
-    ArrayList<String> getFoodByImageIDs(int foodID);
+    ArrayList<String> getFoodByImageIDs(String foodID);
 }

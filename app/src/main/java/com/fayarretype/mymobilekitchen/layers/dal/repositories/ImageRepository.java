@@ -1,13 +1,10 @@
 package com.fayarretype.mymobilekitchen.layers.dal.repositories;
 
 import android.content.Context;
-import android.util.Log;
 
 import com.fayarretype.mymobilekitchen.layers.dal.databasehelper.SQLiteDatabaseHelper;
 import com.fayarretype.mymobilekitchen.layers.dal.repositories.abstracts.IImageRepository;
-
 import com.fayarretype.mymobilekitchen.layers.entitites.BaseEntity;
-import com.fayarretype.mymobilekitchen.layers.entitites.FoodEntity;
 import com.fayarretype.mymobilekitchen.layers.entitites.ImageEntity;
 import com.fayarretype.mymobilekitchen.tools.utils.ImageStream;
 
@@ -21,12 +18,21 @@ public class ImageRepository extends BaseRepository<ImageEntity> implements IIma
 
     @Override
     public ImageEntity getEntity(String id) {
-        return null;
+        try {
+            return (ImageEntity) databaseHelper.list(ImageEntity.class, SQLiteDatabaseHelper.IMAGES_AREA_ID, id).get(0);
+        } finally {
+            return null;
+        }
     }
 
     @Override
-    public ArrayList<String> getFoodByImageIDs(int foodID) {
-        return null;
+    public ArrayList<String> getFoodByImageIDs(String foodID) {
+        ArrayList<BaseEntity> entities = databaseHelper.list(ImageEntity.class, SQLiteDatabaseHelper.IMAGES_AREA_FOOD_ID, foodID);
+        ArrayList<String> imageIds = new ArrayList<>();
+        for (BaseEntity entity : entities) {
+            imageIds.add(entity.getID());
+        }
+        return imageIds;
     }
 
     public ImageEntity[] getEntityByImage(String id) {

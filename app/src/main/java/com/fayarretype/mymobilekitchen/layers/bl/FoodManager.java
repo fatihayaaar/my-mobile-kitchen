@@ -12,7 +12,9 @@ import com.fayarretype.mymobilekitchen.layers.entitites.ImageEntity;
 import com.fayarretype.mymobilekitchen.layers.entitites.MaterialByFoodEntity;
 import com.fayarretype.mymobilekitchen.tools.utils.ImageStream;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 
 public class FoodManager extends BaseManager<FoodEntity> implements IFoodManager<FoodEntity> {
 
@@ -39,7 +41,29 @@ public class FoodManager extends BaseManager<FoodEntity> implements IFoodManager
 
     @Override
     public ArrayList<FoodEntity> getEntities() {
-        return unitOfWork.getRepository(FoodEntity.class).getEntities();
+        ArrayList<FoodEntity> foodEntities = ((FoodRepository) unitOfWork
+                .getRepository(FoodEntity.class))
+                .getEntities();
+
+        ArrayList<FoodEntity> entities = new ArrayList<>();
+        for (FoodEntity entity : foodEntities) {
+            try {
+                ArrayList<String> imageIds = ((ImageRepository) unitOfWork
+                        .getRepository(ImageEntity.class))
+                        .getFoodByImageIDs(entity.getID());
+                ImageEntity entity1 = ((ImageRepository) unitOfWork
+                        .getRepository(ImageEntity.class))
+                        .getEntity(imageIds.get(0));
+
+                ImageEntity[] imageEntities = new ImageEntity[1];
+                imageEntities[0] = entity1;
+                entity.setImage(imageEntities);
+                entities.add(entity);
+            } catch (Exception e) {
+                e.getStackTrace();
+            }
+        }
+        return entities;
     }
 
     @Override
@@ -67,9 +91,9 @@ public class FoodManager extends BaseManager<FoodEntity> implements IFoodManager
     private void uploadImages(ImageEntity[] entity) {
         for (int i = 0; i < entity.length; i++) {
             ImageStream imageStream = new ImageStream(context);
-            entity[i] = new ImageEntity();
             imageStream.setPictureBitmap(entity[i].getImage());
             imageStream.saveImage();
+            entity[i].setID("i" + new SimpleDateFormat("yyddHHmmss").format(new Date()));
             entity[i].setFoodID(foodID);
             entity[i].setImageID(imageStream.getKey());
             ((ImageRepository) unitOfWork.getRepository(ImageEntity.class)).adds(entity[i]);

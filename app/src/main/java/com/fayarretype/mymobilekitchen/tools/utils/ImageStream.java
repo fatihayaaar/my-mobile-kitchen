@@ -1,12 +1,18 @@
 package com.fayarretype.mymobilekitchen.tools.utils;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.os.Environment;
 import android.util.Log;
 
+import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
-import java.io.OutputStream;
+import java.io.InputStreamReader;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
@@ -21,16 +27,37 @@ public class ImageStream {
     }
 
     public void saveImage() {
-        key = new SimpleDateFormat("yyddHHmmss").format(new Date());
-        String fileName = "food_image" + key + ".jpg";
+        this.key = new SimpleDateFormat("yyddHHmmss").format(new Date());
+        String root = Environment.getExternalStorageDirectory().toString();
+        File myDir = new File(root + "/imageMb");
+        myDir.mkdirs();
+        String fileName = "image-" + key + ".jpg";
+        File file = new File(myDir, fileName);
+        if (file.exists())
+            file.delete();
         try {
-            FileOutputStream fos = context.openFileOutput(fileName, Context.MODE_PRIVATE);
-            pictureBitmap.compress(Bitmap.CompressFormat.PNG, 100, fos);
-            fos.flush();
-            fos.close();
+            FileOutputStream out = new FileOutputStream(file);
+            Log.i("AA: ", pictureBitmap.getWidth() + "");
+            pictureBitmap.compress(Bitmap.CompressFormat.JPEG, 90, out);
+            out.flush();
+            out.close();
         } catch (Exception e) {
-            Log.e("saveToInternalStorage()", e.getMessage());
+            e.printStackTrace();
         }
+    }
+
+    public Bitmap getImageJPG(String key) {
+        String root = Environment.getExternalStorageDirectory().toString() + "/imageMb";
+        String fileName = root + "/image-" + key + ".jpg";
+        File file = new File(fileName);
+        try {
+            FileInputStream in = new FileInputStream(file);
+            Bitmap bitmap = BitmapFactory.decodeStream(in);
+            return bitmap;
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+        return null;
     }
 
     public Bitmap getBitmap(String key) {
