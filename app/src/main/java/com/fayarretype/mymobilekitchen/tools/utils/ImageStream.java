@@ -4,7 +4,6 @@ import android.annotation.SuppressLint;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.util.Log;
 
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
@@ -21,17 +20,16 @@ public class ImageStream {
     }
 
     @SuppressLint("SimpleDateFormat")
-    public void saveImage(Bitmap b) {
+    public void saveImage(Bitmap bitmap) {
         int rnd = (int) (Math.random() * 999);
         this.key = new SimpleDateFormat("yyddHHmmss").format(new Date()) + rnd;
         String fileName = "image-" + key + ".jpg";
         FileOutputStream foStream;
         try {
             foStream = context.openFileOutput(fileName, Context.MODE_PRIVATE);
-            b.compress(Bitmap.CompressFormat.PNG, 100, foStream);
+            bitmap.compress(Bitmap.CompressFormat.JPEG, 100, foStream);
             foStream.close();
         } catch (Exception e) {
-            Log.d("saveImage", "Exception 2, Something went wrong!");
             e.printStackTrace();
         }
     }
@@ -45,7 +43,6 @@ public class ImageStream {
             bitmap = BitmapFactory.decodeStream(fiStream);
             fiStream.close();
         } catch (Exception e) {
-            Log.d("saveImage", "Exception 3, Something went wrong!");
             e.printStackTrace();
         }
         return bitmap;
