@@ -20,6 +20,7 @@ import com.fayarretype.mymobilekitchen.layers.bl.FoodManager;
 import com.fayarretype.mymobilekitchen.layers.bl.ManagerName;
 import com.fayarretype.mymobilekitchen.layers.entitites.CategoryEntity;
 import com.fayarretype.mymobilekitchen.layers.entitites.FoodEntity;
+import com.fayarretype.mymobilekitchen.tools.utils.ImageStream;
 
 public class RecipeBookFoodDetailActivity extends AppCompatActivity {
 
@@ -85,7 +86,16 @@ public class RecipeBookFoodDetailActivity extends AppCompatActivity {
 
     @SuppressLint("SetTextI18n")
     private void loadValues() {
+        ImageStream imStream = new ImageStream(this);
         if (mFood != null) {
+            for (int i = 0; i < images.length; i++) {
+                try {
+                    images[i] = imStream.getImageJPG(mFood.getImage()[i].getImageID());
+                } catch (Exception e) {
+                    images[i] = null;
+                }
+            }
+
             if (images[0] == null) {
                 imageHeaderView.setImageResource(R.drawable.food_no_images);
             } else {
@@ -101,21 +111,21 @@ public class RecipeBookFoodDetailActivity extends AppCompatActivity {
             if (images[1] != null) {
                 imageLayout.setVisibility(View.VISIBLE);
                 imageOneView.setVisibility(View.VISIBLE);
-                imageHeaderView.setImageBitmap(images[1]);
+                imageOneView.setImageBitmap(images[1]);
             }
             if (images[2] != null) {
                 imageLayout.setVisibility(View.VISIBLE);
                 imageTwoView.setVisibility(View.VISIBLE);
-                imageHeaderView.setImageBitmap(images[2]);
+                imageTwoView.setImageBitmap(images[2]);
             }
             if (images[3] != null) {
                 imageLayout.setVisibility(View.VISIBLE);
                 imageThreeView.setVisibility(View.VISIBLE);
-                imageHeaderView.setImageBitmap(images[3]);
+                imageThreeView.setImageBitmap(images[3]);
             }
             if (images[4] != null) {
                 imageFourView.setVisibility(View.VISIBLE);
-                imageHeaderView.setImageBitmap(images[4]);
+                imageFourView.setImageBitmap(images[4]);
             }
         }
     }

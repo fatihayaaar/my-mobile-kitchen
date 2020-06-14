@@ -27,7 +27,8 @@ public class ImageStream {
     }
 
     public void saveImage() {
-        this.key = new SimpleDateFormat("yyddHHmmss").format(new Date());
+        int rnd = (int) (Math.random() * 999);
+        this.key = new SimpleDateFormat("yyddHHmmss").format(new Date()) + rnd;
         String root = Environment.getExternalStorageDirectory().toString();
         File myDir = new File(root + "/imageMb");
         myDir.mkdirs();
@@ -37,7 +38,6 @@ public class ImageStream {
             file.delete();
         try {
             FileOutputStream out = new FileOutputStream(file);
-            Log.i("AA: ", pictureBitmap.getWidth() + "");
             pictureBitmap.compress(Bitmap.CompressFormat.JPEG, 90, out);
             out.flush();
             out.close();

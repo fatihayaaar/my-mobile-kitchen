@@ -1,5 +1,6 @@
 package com.fayarretype.mymobilekitchen.layers.bl;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.Matrix;
@@ -120,21 +121,21 @@ public class FoodManager extends BaseManager<FoodEntity> implements IFoodManager
     @Override
     public boolean add(FoodEntity entity) {
         foodID = entity.getID();
+        uploadImages(entity.getImage());
         unitOfWork.getRepository(entity.getClass()).add(entity);
         addMaterials(entity.getMaterialByFoodEntities());
-        uploadImages(entity.getImage());
         return true;
     }
 
+    @SuppressLint("SimpleDateFormat")
     private void uploadImages(ImageEntity[] entity) {
         for (int i = 0; i < entity.length; i++) {
             ImageStream imageStream = new ImageStream(context);
             imageStream.setPictureBitmap(entity[i].getImage());
             imageStream.saveImage();
-            int rnd = (int) (Math.random() * 999);
-            entity[i].setID("i" + new SimpleDateFormat("yyddHHmmss").format(new Date()) + rnd);
-            entity[i].setFoodID(foodID);
             entity[i].setImageID(imageStream.getKey());
+            entity[i].setID("i" + new SimpleDateFormat("yyddHHmmss").format(new Date()) + (int) (Math.random() * 999));
+            entity[i].setFoodID(foodID);
             ((ImageRepository) unitOfWork.getRepository(ImageEntity.class)).adds(entity[i]);
         }
     }

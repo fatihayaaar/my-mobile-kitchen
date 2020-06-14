@@ -4,6 +4,7 @@ import android.annotation.SuppressLint;
 import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -84,8 +85,7 @@ public class FoodDetailActivity extends AppCompatActivity {
         if (mFood != null) {
             for (int i = 0; i < images.length; i++) {
                 try {
-                        images[i] = imStream.getImageJPG(mFood.getImage()[i].getImageID());
-
+                    images[i] = imStream.getImageJPG(mFood.getImage()[i].getImageID());
                 } catch (Exception e) {
                     images[i] = null;
                 }
@@ -125,21 +125,21 @@ public class FoodDetailActivity extends AppCompatActivity {
             if (images[1] != null) {
                 imageLayout.setVisibility(View.VISIBLE);
                 imageOneView.setVisibility(View.VISIBLE);
-                imageHeaderView.setImageBitmap(images[1]);
+                imageOneView.setImageBitmap(images[1]);
             }
             if (images[2] != null) {
                 imageLayout.setVisibility(View.VISIBLE);
                 imageTwoView.setVisibility(View.VISIBLE);
-                imageHeaderView.setImageBitmap(images[2]);
+                imageTwoView.setImageBitmap(images[2]);
             }
             if (images[3] != null) {
                 imageLayout.setVisibility(View.VISIBLE);
                 imageThreeView.setVisibility(View.VISIBLE);
-                imageHeaderView.setImageBitmap(images[3]);
+                imageThreeView.setImageBitmap(images[3]);
             }
             if (images[4] != null) {
                 imageFourView.setVisibility(View.VISIBLE);
-                imageHeaderView.setImageBitmap(images[4]);
+                imageFourView.setImageBitmap(images[4]);
             }
         }
     }

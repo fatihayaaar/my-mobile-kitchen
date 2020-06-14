@@ -105,7 +105,7 @@ public class FoodAdapter extends ArrayAdapter<FoodEntity> {
             StringBuilder preparationTimeStr = new StringBuilder();
             preparationTimeStr.append("HAZIRLANMASI: ");
             if (foodEntity.getPreparationTime().equals(FoodEntity.NULL)) {
-                textViewPreparationTime.setVisibility(View.INVISIBLE);
+                textViewPreparationTime.setText("");
             } else {
                 preparationTimeStr.append(foodEntity.getPreparationTime().toUpperCase());
                 textViewPreparationTime.setText(preparationTimeStr);

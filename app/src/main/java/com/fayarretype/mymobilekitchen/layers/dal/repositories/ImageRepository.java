@@ -21,7 +21,7 @@ public class ImageRepository extends BaseRepository<ImageEntity> implements IIma
     public ImageEntity getEntity(String id) {
         try {
             return (ImageEntity) databaseHelper.list(ImageEntity.class, SQLiteDatabaseHelper.IMAGES_AREA_ID, id).get(0);
-        } catch (Exception e){
+        } catch (Exception e) {
             Log.i("Hata oluştu :", e.getMessage());
             return null;
         }

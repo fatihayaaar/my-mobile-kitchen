@@ -313,16 +313,18 @@ public class MainActivity extends AppCompatActivity {
 
                             Bitmap foodImageBitmap = null;
                             try {
-                                foodImageBitmap = BitmapFactory.decodeStream(url.openConnection().getInputStream());
+                                foodImageBitmap = BitmapFactory
+                                        .decodeStream(url.openConnection().getInputStream());
                             } catch (IOException e) {
                                 e.printStackTrace();
                             }
 
-                            @SuppressLint("SimpleDateFormat")
-                            String key = new SimpleDateFormat("yyddHHmmss").format(new Date());
+                          /*  @SuppressLint("SimpleDateFormat")
+                            String key = new SimpleDateFormat("yyddHHmmss")
+                                    .format(new Date());
                             int rnd = (int) (Math.random() * 999);
 
-                            imageEntities[x][j].setImageID("web" + key + x + j + rnd);
+                            imageEntities[x][j].setImageID("web" + key + x + j + rnd);*/
                             imageEntities[x][j].setImage(foodImageBitmap);
                         }
 
@@ -331,8 +333,10 @@ public class MainActivity extends AppCompatActivity {
                         if (!(preparationTexts.get(y).trim().length() <= 20)) {
                             FoodEntity foodEntity = new FoodEntity();
 
+                            int rnd = (int) (Math.random() * 999);
                             @SuppressLint("SimpleDateFormat")
-                            String key = "web" + new SimpleDateFormat("yyddHHmmss").format(new Date()) + i;
+                            String key = "web" + new SimpleDateFormat("yyddHHmmss")
+                                    .format(new Date()) + rnd;
 
                             foodEntity.setID(key);
                             foodEntity.setFoodName(foodNames.get(y));
