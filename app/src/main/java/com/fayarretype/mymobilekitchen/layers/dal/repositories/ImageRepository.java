@@ -37,18 +37,6 @@ public class ImageRepository extends BaseRepository<ImageEntity> implements IIma
         return imageIds;
     }
 
-    public ImageEntity[] getEntityByImage(String id) {
-        ArrayList<BaseEntity> entities = databaseHelper.list(EntityName.IMAGE_ENTITY_CLASS,
-                SQLiteDatabaseHelper.IMAGES_AREA_FOOD_ID, id);
-        ImageEntity[] imageEntity = new ImageEntity[entities.size()];
-        for (int i = 0; i < entities.size(); i++) {
-            imageEntity[i] = (ImageEntity) entities.get(i);
-            ImageStream imgStream = new ImageStream(context);
-            imageEntity[i].setImage(imgStream.getBitmap(((ImageEntity) entities.get(i)).getImageID()));
-        }
-        return imageEntity;
-    }
-
     @Override
     public ArrayList<ImageEntity> getEntities() {
         ArrayList<BaseEntity> entities = databaseHelper.list(EntityName.IMAGE_ENTITY_CLASS);

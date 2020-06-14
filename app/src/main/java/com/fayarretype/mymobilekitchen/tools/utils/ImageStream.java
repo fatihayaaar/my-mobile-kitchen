@@ -4,64 +4,51 @@ import android.annotation.SuppressLint;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.os.Environment;
 import android.util.Log;
 
-import java.io.BufferedReader;
-import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
-import java.io.InputStreamReader;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
 public class ImageStream {
-
     private Context context;
-    private Bitmap pictureBitmap;
     private String key;
 
+    @SuppressLint("SdCardPath")
     public ImageStream(Context context) {
         setContext(context);
     }
 
-    public void saveImage() {
+    @SuppressLint("SimpleDateFormat")
+    public void saveImage(Bitmap b) {
         int rnd = (int) (Math.random() * 999);
         this.key = new SimpleDateFormat("yyddHHmmss").format(new Date()) + rnd;
-        String root = Environment.getExternalStorageDirectory().toString();
-        File myDir = new File(root + "/imageMb");
-        myDir.mkdirs();
         String fileName = "image-" + key + ".jpg";
-        File file = new File(myDir, fileName);
-        if (file.exists())
-            file.delete();
+        FileOutputStream foStream;
         try {
-            FileOutputStream out = new FileOutputStream(file);
-            pictureBitmap.compress(Bitmap.CompressFormat.JPEG, 90, out);
-            out.flush();
-            out.close();
+            foStream = context.openFileOutput(fileName, Context.MODE_PRIVATE);
+            b.compress(Bitmap.CompressFormat.PNG, 100, foStream);
+            foStream.close();
         } catch (Exception e) {
+            Log.d("saveImage", "Exception 2, Something went wrong!");
             e.printStackTrace();
         }
     }
 
     public Bitmap getImageJPG(String key) {
-        String root = Environment.getExternalStorageDirectory().toString() + "/imageMb";
-        String fileName = root + "/image-" + key + ".jpg";
-        File file = new File(fileName);
+        Bitmap bitmap = null;
+        String fileName = "image-" + key + ".jpg";
+        FileInputStream fiStream;
         try {
-            FileInputStream in = new FileInputStream(file);
-            Bitmap bitmap = BitmapFactory.decodeStream(in);
-            return bitmap;
-        } catch (FileNotFoundException e) {
+            fiStream = context.openFileInput(fileName);
+            bitmap = BitmapFactory.decodeStream(fiStream);
+            fiStream.close();
+        } catch (Exception e) {
+            Log.d("saveImage", "Exception 3, Something went wrong!");
             e.printStackTrace();
         }
-        return null;
-    }
-
-    public Bitmap getBitmap(String key) {
-        return pictureBitmap;
+        return bitmap;
     }
 
     public Context getContext() {
@@ -72,14 +59,6 @@ public class ImageStream {
         this.context = context;
     }
 
-    public Bitmap getPictureBitmap() {
-        return pictureBitmap;
-    }
-
-    public void setPictureBitmap(Bitmap pictureBitmap) {
-        this.pictureBitmap = pictureBitmap;
-    }
-
     public String getKey() {
         return key;
     }
@@ -87,5 +66,4 @@ public class ImageStream {
     public void setKey(String key) {
         this.key = key;
     }
-
 }

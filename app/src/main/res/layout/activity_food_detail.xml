@@ -150,6 +150,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_margin="1dp"
+                android:scaleType="centerCrop"
                 android:layout_weight="1" />
 
             <ImageView
@@ -157,12 +158,14 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_margin="1dp"
+                android:scaleType="centerCrop"
                 android:layout_weight="1" />
 
             <ImageView
                 android:id="@+id/imageThreeView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:scaleType="centerCrop"
                 android:layout_margin="1dp"
                 android:layout_weight="1" />
         </LinearLayout>
@@ -172,6 +175,7 @@
             android:layout_width="wrap_content"
             android:layout_height="260dp"
             android:layout_marginLeft="25dp"
+            android:scaleType="centerCrop"
             android:layout_marginRight="25dp"
             android:layout_marginBottom="25dp" />
 

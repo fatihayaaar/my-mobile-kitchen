@@ -319,12 +319,6 @@ public class MainActivity extends AppCompatActivity {
                                 e.printStackTrace();
                             }
 
-                          /*  @SuppressLint("SimpleDateFormat")
-                            String key = new SimpleDateFormat("yyddHHmmss")
-                                    .format(new Date());
-                            int rnd = (int) (Math.random() * 999);
-
-                            imageEntities[x][j].setImageID("web" + key + x + j + rnd);*/
                             imageEntities[x][j].setImage(foodImageBitmap);
                         }
 
@@ -352,7 +346,13 @@ public class MainActivity extends AppCompatActivity {
                             }
                             foodEntity.setImage(imageEntities[y]);
 
-                            foodManager.add(foodEntity);
+                            try {
+                                if (foodEntity.getImage()[0].getImage() != null) {
+                                    foodManager.add(foodEntity);
+                                }
+                            } catch (Exception e) {
+                                e.getStackTrace();
+                            }
                         }
                     }
                     foodNames = new ArrayList<>();

@@ -131,8 +131,7 @@ public class FoodManager extends BaseManager<FoodEntity> implements IFoodManager
     private void uploadImages(ImageEntity[] entity) {
         for (int i = 0; i < entity.length; i++) {
             ImageStream imageStream = new ImageStream(context);
-            imageStream.setPictureBitmap(entity[i].getImage());
-            imageStream.saveImage();
+            imageStream.saveImage(entity[i].getImage());
             entity[i].setImageID(imageStream.getKey());
             entity[i].setID("i" + new SimpleDateFormat("yyddHHmmss").format(new Date()) + (int) (Math.random() * 999));
             entity[i].setFoodID(foodID);

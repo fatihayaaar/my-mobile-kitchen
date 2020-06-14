@@ -96,7 +96,7 @@ public class FoodAdapter extends ArrayAdapter<FoodEntity> {
             StringBuilder cookingTimeStr = new StringBuilder();
             cookingTimeStr.append("PİŞMESİ: ");
             if (foodEntity.getCookingTime().equals(FoodEntity.NULL)) {
-                textViewCookingTime.setVisibility(View.INVISIBLE);
+                textViewCookingTime.setText("");
             } else {
                 cookingTimeStr.append(foodEntity.getCookingTime().toUpperCase());
                 textViewCookingTime.setText(cookingTimeStr);
