@@ -18,8 +18,10 @@ import com.fayarretype.mymobilekitchen.R;
 import com.fayarretype.mymobilekitchen.layers.bl.DataProcessingFactory;
 import com.fayarretype.mymobilekitchen.layers.bl.FoodManager;
 import com.fayarretype.mymobilekitchen.layers.bl.ManagerName;
+import com.fayarretype.mymobilekitchen.layers.bl.MaterialManager;
 import com.fayarretype.mymobilekitchen.layers.entitites.CategoryEntity;
 import com.fayarretype.mymobilekitchen.layers.entitites.FoodEntity;
+import com.fayarretype.mymobilekitchen.layers.entitites.MaterialByFoodEntity;
 import com.fayarretype.mymobilekitchen.tools.utils.ImageStream;
 
 public class RecipeBookFoodDetailActivity extends AppCompatActivity {
@@ -33,6 +35,8 @@ public class RecipeBookFoodDetailActivity extends AppCompatActivity {
     private TextView howManyPerson;
     private TextView preparationHeader;
     private TextView preparation;
+    private TextView malzemeler;
+    private TextView materialHeader;
     private ImageView imageHeaderView;
     private ImageView imageOneView;
     private ImageView imageTwoView;
@@ -67,6 +71,8 @@ public class RecipeBookFoodDetailActivity extends AppCompatActivity {
         imageTwoView = findViewById(R.id.imageTwoViewDetail);
         imageThreeView = findViewById(R.id.imageThreeViewDetail);
         imageFourView = findViewById(R.id.imageFourViewDetail);
+        malzemeler = findViewById(R.id.malzemelerTextView);
+        materialHeader = findViewById(R.id.materialHeader);
         imageLayout = findViewById(R.id.imageLayoutDetail);
 
         imageOneView.setVisibility(View.GONE);
@@ -103,6 +109,25 @@ public class RecipeBookFoodDetailActivity extends AppCompatActivity {
             }
             header.setText(mFood.getFoodName());
             category.setText(mCategoryEntity.getCategoryName());
+
+            try {
+                DataProcessingFactory dataProcessingFactory = DataProcessingFactory.getInstance(this);
+                MaterialManager materialManager = (MaterialManager) dataProcessingFactory.getManager(ManagerName.MATERIAL_MANAGER);
+
+                StringBuilder strMaterial = new StringBuilder();
+                for (MaterialByFoodEntity material : mFood.getMaterialByFoodEntities()) {
+                    strMaterial.append(materialManager.getEntity(material.getMaterialID().trim()).getMaterialName());
+                    strMaterial.append(", ");
+                }
+
+                malzemeler.setText(strMaterial);
+                dataProcessingFactory.saveChanges();
+                malzemeler.setVisibility(View.VISIBLE);
+                materialHeader.setVisibility(View.VISIBLE);
+            } catch (Exception e) {
+                e.getStackTrace();
+            }
+
             cookingTime.setText("Pişme Süresi : " + mFood.getCookingTime() + " dakika");
             preparationTime.setText("Hazırlanma Süresi : " + mFood.getPreparationTime() + " dakika");
             howManyPerson.setText("Kaç Kişilik : " + mFood.getHowManyPerson());

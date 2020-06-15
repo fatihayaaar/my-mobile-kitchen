@@ -35,6 +35,18 @@ public class MaterialByFoodRepository extends BaseRepository<MaterialByFoodEntit
         return materialByFoodEntities;
     }
 
+    public ArrayList<MaterialByFoodEntity> getEntitiesByMaterial(String ID) {
+        ArrayList<BaseEntity> entities = databaseHelper.list(EntityName.MATERIAL_BY_FOOD_CLASS, SQLiteDatabaseHelper.MATERIAL_BY_FOOD_MATERIAL_ID, ID);
+
+        ArrayList<MaterialByFoodEntity> materialByFoodEntities = new ArrayList<>(entities.size());
+
+        for (int i = 0; i < entities.size(); i++) {
+            materialByFoodEntities.add((MaterialByFoodEntity) entities.get(i));
+        }
+
+        return materialByFoodEntities;
+    }
+
     @Override
     public ArrayList<MaterialByFoodEntity> getEntities() {
         ArrayList<BaseEntity> entities = databaseHelper.list(EntityName.MATERIAL_BY_FOOD_CLASS);

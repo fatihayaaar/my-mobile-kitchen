@@ -4,7 +4,6 @@ import android.annotation.SuppressLint;
 import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -136,9 +135,10 @@ public class FoodDetailActivity extends AppCompatActivity {
 
                     StringBuilder strMaterial = new StringBuilder();
                     for (MaterialByFoodEntity material : mFood.getMaterialByFoodEntities()) {
-                        Log.i("TAG DS", material.getMaterialID());
                         strMaterial.append(materialManager.getEntity(material.getMaterialID().trim()).getMaterialName());
+                        strMaterial.append(", ");
                     }
+
                     malzemeler.setText(strMaterial);
                     dataProcessingFactory.saveChanges();
                     malzemeler.setVisibility(View.VISIBLE);

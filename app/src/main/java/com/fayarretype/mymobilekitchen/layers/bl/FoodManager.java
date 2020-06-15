@@ -14,6 +14,7 @@ import com.fayarretype.mymobilekitchen.layers.entitites.BaseEntity;
 import com.fayarretype.mymobilekitchen.layers.entitites.FoodEntity;
 import com.fayarretype.mymobilekitchen.layers.entitites.ImageEntity;
 import com.fayarretype.mymobilekitchen.layers.entitites.MaterialByFoodEntity;
+import com.fayarretype.mymobilekitchen.layers.entitites.MaterialEntity;
 import com.fayarretype.mymobilekitchen.tools.utils.ImageStream;
 
 import java.text.SimpleDateFormat;
@@ -39,8 +40,55 @@ public class FoodManager extends BaseManager<FoodEntity> implements IFoodManager
     public FoodEntity getEntity(String ID) {
         FoodEntity entity = (FoodEntity) unitOfWork.getRepository(FoodEntity.class).getEntity(ID);
         if (entity != null)
-            return entity;
+            return getFoodEntity(entity);
         return new FoodEntity("-1");
+    }
+
+    private FoodEntity getFoodEntity(FoodEntity entity) {
+        ImageStream imgStream = new ImageStream(context);
+        try {
+            try {
+                ImageEntity[] imageEntities;
+                ArrayList<String> imageIds = ((ImageRepository) unitOfWork
+                        .getRepository(ImageEntity.class))
+                        .getFoodByImageIDs(entity.getID());
+                ImageEntity entity1 = ((ImageRepository) unitOfWork
+                        .getRepository(ImageEntity.class))
+                        .getEntity(imageIds.get(0));
+                imageEntities = new ImageEntity[5];
+                imageEntities[0] = entity1;
+                Bitmap image = imgStream.getImageJPG(imageEntities[0].getImageID());
+                imageEntities[0].setImage(getResizedBitmap(image, 100, 100));
+                try {
+                    for (int i = 1; i < imageEntities.length; i++) {
+                        ImageEntity entityLoc = ((ImageRepository) unitOfWork
+                                .getRepository(ImageEntity.class))
+                                .getEntity(imageIds.get(i));
+                        imageEntities[i] = entityLoc;
+                    }
+                } catch (Exception e) {
+                    e.getStackTrace();
+                }
+                entity.setImage(imageEntities);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+
+            ArrayList<MaterialByFoodEntity> materialByFoodEntities;
+            materialByFoodEntities = ((MaterialByFoodRepository) unitOfWork
+                    .getRepository(MaterialByFoodEntity.class))
+                    .getEntitiesByFood(entity.getID());
+
+            MaterialByFoodEntity[] entities1 = new MaterialByFoodEntity[materialByFoodEntities.size()];
+            for (int i = 0; i < entities1.length; i++) {
+                entities1[i] = materialByFoodEntities.get(i);
+            }
+
+            entity.setMaterialByFoodEntities(entities1);
+        } catch (Exception e) {
+            e.getStackTrace();
+        }
+        return entity;
     }
 
     @Override
@@ -142,6 +190,40 @@ public class FoodManager extends BaseManager<FoodEntity> implements IFoodManager
         addMaterials(entity.getMaterialByFoodEntities());
         unitOfWork.getRepository(entity.getClass()).add(entity);
         return true;
+    }
+
+    public ArrayList<FoodEntity> getEntitiesByStock(MaterialEntity[] materialEntities) {
+        ArrayList<FoodEntity> foodEntities = new ArrayList<>();
+        boolean isFood = false;
+            DataProcessingFactory dataProcessingFactory = DataProcessingFactory.getInstance(context);
+            FoodManager foodManager = (FoodManager) dataProcessingFactory.getManager(ManagerName.FOOD_MANAGER);
+            ArrayList<MaterialByFoodEntity> materialByFoodEntities;
+            for (MaterialEntity entity : materialEntities) {
+                Log.i("TAG MMM", entity.getID());
+                try {
+                    materialByFoodEntities = ((MaterialByFoodRepository) unitOfWork
+                            .getRepository(MaterialByFoodEntity.class))
+                            .getEntitiesByMaterial(entity.getID());
+                    for (MaterialByFoodEntity entity1 : materialByFoodEntities) {
+                        FoodEntity foodEntity = foodManager.getEntity(entity1.getFoodID());
+                        for (MaterialByFoodEntity entity2 : foodEntity.getMaterialByFoodEntities()) {
+                            for (MaterialEntity entity3 : materialEntities) {
+                                isFood = true;
+                                if (!entity2.getMaterialID().equals(entity3.getID())) {
+                                    isFood = false;
+                                    break;
+                                }
+                            }
+                        }
+                        if (isFood) {
+                            foodEntities.add(foodEntity);
+                        }
+                    }
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        return foodEntities;
     }
 
     @SuppressLint("SimpleDateFormat")
