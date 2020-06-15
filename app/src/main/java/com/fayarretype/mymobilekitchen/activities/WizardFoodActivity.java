@@ -14,6 +14,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.fayarretype.mymobilekitchen.R;
 import com.fayarretype.mymobilekitchen.layers.bl.DataProcessingFactory;
+import com.fayarretype.mymobilekitchen.layers.bl.FoodManager;
 import com.fayarretype.mymobilekitchen.layers.bl.ManagerContainer;
 import com.fayarretype.mymobilekitchen.layers.bl.ManagerName;
 import com.fayarretype.mymobilekitchen.layers.bl.MaterialManager;
@@ -64,7 +65,13 @@ public class WizardFoodActivity extends AppCompatActivity {
 
     public void loadValuesFoodRowLayout() {
         DataProcessingFactory dataProcessingFactory = DataProcessingFactory.getInstance(this);
-        final ArrayList<FoodEntity> foodEntities = dataProcessingFactory.getManager(ManagerName.FOOD_MANAGER).getEntities();
+        MaterialManager materialManager = (MaterialManager) dataProcessingFactory.getManager(ManagerName.MATERIAL_MANAGER);
+        ArrayList<MaterialEntity> materialEntities = materialManager.getEntitiesMaterialByStock(MaterialEntity.MATERIAL_YES_STOCK);
+        MaterialEntity[] entities = new MaterialEntity[materialEntities.size()];
+        for (int i = 0; i < entities.length; i++) {
+            entities[i] = materialEntities.get(i);
+        }
+        final ArrayList<FoodEntity> foodEntities = ((FoodManager) dataProcessingFactory.getManager(ManagerName.FOOD_MANAGER)).getEntitiesByStock(entities);
         FoodAdapter foodAdapter = new FoodAdapter(context, foodEntities);
         foodGridView.setAdapter(foodAdapter);
 
