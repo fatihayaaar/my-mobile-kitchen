@@ -44,7 +44,7 @@ public class SQLiteDatabaseHelper extends SQLiteOpenHelper implements IDatabaseH
     private static final String CATEGORY_AREA_NAME = "categoryName";
     private static final String MATERIAL_AREA_COUNT = "materialCount";
     private static final String MATERIAL_BY_FOOD_TABLE_NAME = "materialByFood";
-    private static final String MATERIAL_BY_FOOD_MATERIAL_ID = "materialByFoodMaterialID";
+    public static final String MATERIAL_BY_FOOD_MATERIAL_ID = "materialByFoodMaterialID";
     private static SQLiteDatabaseHelper databaseHelper;
     private final int CONTENT_VALUES_INSERT = 0;
     private final int CONTENT_VALUES_UPDATE = 1;
@@ -60,7 +60,7 @@ public class SQLiteDatabaseHelper extends SQLiteOpenHelper implements IDatabaseH
     private Context context;
 
     private SQLiteDatabaseHelper(Context context) {
-        super(context, "my_mobile_kitchen.db", null, 35);
+        super(context, "my_mobile_kitchen.db", null, 37);
         this.context = context;
         init();
     }
