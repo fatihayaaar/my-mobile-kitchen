@@ -85,6 +85,7 @@ public class ViewFoodsFragment extends Fragment {
         final ArrayList<FoodEntity> foodEntities = ((FoodManager) dataProcessingFactory
                 .getManager(ManagerName.FOOD_MANAGER))
                 .getEntities();
+
         if (foodEntities.isEmpty()) {
             relativeLayout.setBackgroundColor(Color.WHITE);
             im.setVisibility(View.VISIBLE);

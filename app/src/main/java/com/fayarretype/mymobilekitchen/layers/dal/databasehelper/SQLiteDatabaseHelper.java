@@ -6,6 +6,7 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
+import com.fayarretype.mymobilekitchen.layers.dal.XMLPullParserHandler;
 import com.fayarretype.mymobilekitchen.layers.dal.repositories.EntityName;
 import com.fayarretype.mymobilekitchen.layers.entitites.BaseEntity;
 import com.fayarretype.mymobilekitchen.layers.entitites.CategoryEntity;
@@ -56,9 +57,11 @@ public class SQLiteDatabaseHelper extends SQLiteOpenHelper implements IDatabaseH
     private ArrayList<ArrayList<String>> deleteIDList;
     private ArrayList<ArrayList<String>> updateIDList;
     private SQLiteDatabase database;
+    private Context context;
 
     private SQLiteDatabaseHelper(Context context) {
-        super(context, "my_mobile_kitchen.db", null, 31);
+        super(context, "my_mobile_kitchen.db", null, 35);
+        this.context = context;
         init();
     }
 
@@ -174,6 +177,14 @@ public class SQLiteDatabaseHelper extends SQLiteOpenHelper implements IDatabaseH
         db.execSQL("INSERT INTO " + CATEGORY_TABLE_NAME + " VALUES(30, '31', 'vejeteryan')");
         db.execSQL("INSERT INTO " + CATEGORY_TABLE_NAME + " VALUES(31, '32', 'dünya sofrası')");
         db.execSQL("INSERT INTO " + CATEGORY_TABLE_NAME + " VALUES(32, '33', 'diğer')");
+
+        XMLPullParserHandler xmlPullParserHandler = XMLPullParserHandler.getInstance(context);
+
+        int key = 0;
+        for (MaterialEntity materialEntity : xmlPullParserHandler.getMaterialEntities()) {
+            db.execSQL("INSERT INTO " + MATERIAL_TABLE_NAME + " VALUES(" + key + ", '" + key + "', '" + materialEntity.getMaterialName() + "', 0, 0)");
+            key++;
+        }
     }
 
     @Override
@@ -286,10 +297,7 @@ public class SQLiteDatabaseHelper extends SQLiteOpenHelper implements IDatabaseH
         String selection, groupBy, having, orderBy;
 
         if (selectionValue != null || selectionValue2 != null) {
-            //selection = selectionValue + " = " + selectionValue2;
-            //if (selectionValue.equals(MATERIAL_AREA_NAME) || selectionValue.equals(MATERIAL_AREA_IS_STOCK)) {
             selection = selectionValue + " = '" + selectionValue2 + "'";
-            //}
         } else selection = "";
 
         groupBy = "";

@@ -5,22 +5,22 @@ import android.content.Context;
 import com.fayarretype.mymobilekitchen.layers.dal.repositories.abstracts.IRepository;
 
 public class RepositoryContainer {
-    
+
     private static RepositoryContainer repositoryContainer;
     private Context context;
+
+    private RepositoryContainer(Context context) {
+        this.context = context;
+    }
 
     public static RepositoryContainer getInstance(Context context) {
         if (repositoryContainer == null)
             repositoryContainer = new RepositoryContainer(context);
         return repositoryContainer;
     }
-    
-    private RepositoryContainer(Context context) {
-        this.context = context;
-    }
-    
+
     public IRepository getRepository(RepositoryName repositoryName) {
-        switch(repositoryName) {
+        switch (repositoryName) {
             case CATEGORY:
                 return new CategoryRepository(context);
             case MATERIAL:
@@ -29,6 +29,8 @@ public class RepositoryContainer {
                 return new FoodRepository(context);
             case IMAGE:
                 return new ImageRepository(context);
+            case MATERIAL_BY_FOOD:
+                return new MaterialByFoodRepository(context);
             default:
                 return null;
         }

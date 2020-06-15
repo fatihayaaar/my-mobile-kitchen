@@ -1,11 +1,11 @@
 package com.fayarretype.mymobilekitchen.layers.dal.repositories;
 
 import android.content.Context;
+import android.util.Log;
 
 import com.fayarretype.mymobilekitchen.layers.dal.databasehelper.SQLiteDatabaseHelper;
 import com.fayarretype.mymobilekitchen.layers.dal.repositories.abstracts.IMaterialByFoodRepository;
 import com.fayarretype.mymobilekitchen.layers.entitites.BaseEntity;
-import com.fayarretype.mymobilekitchen.layers.entitites.ImageEntity;
 import com.fayarretype.mymobilekitchen.layers.entitites.MaterialByFoodEntity;
 
 import java.util.ArrayList;
@@ -28,8 +28,9 @@ public class MaterialByFoodRepository extends BaseRepository<MaterialByFoodEntit
 
         ArrayList<MaterialByFoodEntity> materialByFoodEntities = new ArrayList<>(entities.size());
 
-        for (int i = 0; i < entities.size(); i++)
+        for (int i = 0; i < entities.size(); i++) {
             materialByFoodEntities.add((MaterialByFoodEntity) entities.get(i));
+        }
 
         return materialByFoodEntities;
     }
@@ -52,6 +53,6 @@ public class MaterialByFoodRepository extends BaseRepository<MaterialByFoodEntit
 
     @Override
     public void save() {
-        databaseHelper.imageSave();
+        databaseHelper.materialByFoodSave();
     }
 }

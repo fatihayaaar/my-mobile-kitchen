@@ -29,7 +29,6 @@ import com.fayarretype.mymobilekitchen.R;
 import com.fayarretype.mymobilekitchen.activities.FoodsActivity;
 import com.fayarretype.mymobilekitchen.activities.RecipeBookFoodDetailActivity;
 import com.fayarretype.mymobilekitchen.layers.bl.DataProcessingFactory;
-import com.fayarretype.mymobilekitchen.layers.bl.FoodManager;
 import com.fayarretype.mymobilekitchen.layers.bl.ManagerContainer;
 import com.fayarretype.mymobilekitchen.layers.bl.ManagerName;
 import com.fayarretype.mymobilekitchen.layers.bl.MaterialManager;
@@ -389,16 +388,15 @@ public class AddFoodFragment extends Fragment {
             DataProcessingFactory dataProcessingFactory = DataProcessingFactory.getInstance(context);
             entities.add(((MaterialManager) dataProcessingFactory
                     .getManager(ManagerName.MATERIAL_MANAGER))
-                    .getEntitiesByMaterialName(nameEntity));
+                    .getEntitiesByMaterialName(nameEntity.trim().toLowerCase()));
         }
 
         ArrayList<MaterialByFoodEntity> materialByFoodEntities = new ArrayList<>();
         for (MaterialEntity entity : entities) {
             MaterialByFoodEntity materialByFoodEntity = new MaterialByFoodEntity();
             materialByFoodEntity.setMaterialID(entity.getID());
+            Log.i("TAG", entity.getID());
             materialByFoodEntity.setFoodID(key);
-            String keyE = new SimpleDateFormat("yyddHHmmss").format(new Date());
-            materialByFoodEntity.setID(keyE);
             materialByFoodEntities.add(materialByFoodEntity);
         }
 

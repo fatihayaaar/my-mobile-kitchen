@@ -87,20 +87,6 @@ public class MainActivity extends AppCompatActivity {
             scrollView.setVisibility(View.VISIBLE);
         }
 
-        XMLPullParserHandler xmlPullParserHandler = XMLPullParserHandler.getInstance(this);
-        ((MaterialManager) dataProcessingFactory.getManager(ManagerName.MATERIAL_MANAGER)).deleteMaterialByNoStock();
-
-        int sayac = 0;
-        for (MaterialEntity materialEntity : xmlPullParserHandler.getMaterialEntities()) {
-            String key = "" + new SimpleDateFormat("yyddHHmmss").format(new Date()) + sayac;
-            materialEntity.setID(key);
-            materialEntity.setIsItInStock(String.valueOf(MaterialEntity.MATERIAL_NO_STOCK));
-            materialEntity.setMaterialCount("0");
-            dataProcessingFactory.getManager(ManagerName.MATERIAL_MANAGER).add(materialEntity);
-            sayac++;
-        }
-
-        dataProcessingFactory.saveChanges();
     }
 
     private void loadCardView() {

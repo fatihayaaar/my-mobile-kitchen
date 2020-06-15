@@ -4,6 +4,7 @@ import android.annotation.SuppressLint;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.Matrix;
+import android.util.Log;
 
 import com.fayarretype.mymobilekitchen.layers.bl.abstracts.IFoodManager;
 import com.fayarretype.mymobilekitchen.layers.dal.repositories.FoodRepository;
@@ -56,28 +57,44 @@ public class FoodManager extends BaseManager<FoodEntity> implements IFoodManager
         ArrayList<FoodEntity> entities = new ArrayList<>();
         for (FoodEntity entity : foodEntities) {
             try {
-                ImageEntity[] imageEntities;
-                ArrayList<String> imageIds = ((ImageRepository) unitOfWork
-                        .getRepository(ImageEntity.class))
-                        .getFoodByImageIDs(entity.getID());
-                ImageEntity entity1 = ((ImageRepository) unitOfWork
-                        .getRepository(ImageEntity.class))
-                        .getEntity(imageIds.get(0));
-                imageEntities = new ImageEntity[5];
-                imageEntities[0] = entity1;
-                Bitmap image = imgStream.getImageJPG(imageEntities[0].getImageID());
-                imageEntities[0].setImage(getResizedBitmap(image, 100, 100));
                 try {
-                    for (int i = 1; i < imageEntities.length; i++) {
-                        ImageEntity entityLoc = ((ImageRepository) unitOfWork
-                                .getRepository(ImageEntity.class))
-                                .getEntity(imageIds.get(i));
-                        imageEntities[i] = entityLoc;
+                    ImageEntity[] imageEntities;
+                    ArrayList<String> imageIds = ((ImageRepository) unitOfWork
+                            .getRepository(ImageEntity.class))
+                            .getFoodByImageIDs(entity.getID());
+                    ImageEntity entity1 = ((ImageRepository) unitOfWork
+                            .getRepository(ImageEntity.class))
+                            .getEntity(imageIds.get(0));
+                    imageEntities = new ImageEntity[5];
+                    imageEntities[0] = entity1;
+                    Bitmap image = imgStream.getImageJPG(imageEntities[0].getImageID());
+                    imageEntities[0].setImage(getResizedBitmap(image, 100, 100));
+                    try {
+                        for (int i = 1; i < imageEntities.length; i++) {
+                            ImageEntity entityLoc = ((ImageRepository) unitOfWork
+                                    .getRepository(ImageEntity.class))
+                                    .getEntity(imageIds.get(i));
+                            imageEntities[i] = entityLoc;
+                        }
+                    } catch (Exception e) {
+                        e.getStackTrace();
                     }
+                    entity.setImage(imageEntities);
                 } catch (Exception e) {
-                    e.getStackTrace();
+                    e.printStackTrace();
                 }
-                entity.setImage(imageEntities);
+
+                ArrayList<MaterialByFoodEntity> materialByFoodEntities;
+                materialByFoodEntities = ((MaterialByFoodRepository) unitOfWork
+                        .getRepository(MaterialByFoodEntity.class))
+                        .getEntitiesByFood(entity.getID());
+
+                MaterialByFoodEntity[] entities1 = new MaterialByFoodEntity[materialByFoodEntities.size()];
+                for (int i = 0; i < entities1.length; i++) {
+                    entities1[i] = materialByFoodEntities.get(i);
+                }
+
+                entity.setMaterialByFoodEntities(entities1);
             } catch (Exception e) {
                 e.getStackTrace();
             } finally {
@@ -122,8 +139,8 @@ public class FoodManager extends BaseManager<FoodEntity> implements IFoodManager
     public boolean add(FoodEntity entity) {
         foodID = entity.getID();
         uploadImages(entity.getImage());
-        unitOfWork.getRepository(entity.getClass()).add(entity);
         addMaterials(entity.getMaterialByFoodEntities());
+        unitOfWork.getRepository(entity.getClass()).add(entity);
         return true;
     }
 
@@ -139,11 +156,12 @@ public class FoodManager extends BaseManager<FoodEntity> implements IFoodManager
         }
     }
 
+    @SuppressLint("SimpleDateFormat")
     private void addMaterials(MaterialByFoodEntity[] materialByFoodEntities) {
         try {
             for (int i = 0; i < materialByFoodEntities.length; i++) {
-                materialByFoodEntities[i] = new MaterialByFoodEntity();
                 materialByFoodEntities[i].setFoodID(foodID);
+                materialByFoodEntities[i].setID("i" + new SimpleDateFormat("yyddHHmmss").format(new Date()) + (int) (Math.random() * 999));
                 ((MaterialByFoodRepository) unitOfWork.getRepository(MaterialByFoodEntity.class))
                         .adds(materialByFoodEntities[i]);
             }

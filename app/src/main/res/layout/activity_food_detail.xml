@@ -113,6 +113,31 @@
             tools:text="Kaç Kişilik :" />
 
         <TextView
+            android:id="@+id/materialHeader"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:layout_marginBottom="2dp"
+            android:text="Malzemeler"
+            android:textAllCaps="true"
+            android:textColor="#666"
+            android:textSize="7pt"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/malzemelerTextView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:layout_marginBottom="10dp"
+            android:maxLines="100"
+            android:textColor="#888"
+            android:textSize="7pt"
+            android:textStyle="normal" />
+
+        <TextView
             android:id="@+id/aciklamasiBaslik"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -132,10 +157,10 @@
             android:layout_marginLeft="20dp"
             android:layout_marginRight="20dp"
             android:layout_marginBottom="10dp"
+            android:maxLines="100"
             android:textColor="#888"
             android:textSize="7pt"
             android:textStyle="normal"
-            android:maxLines="100"
             tools:text="Kategori" />
 
         <LinearLayout
@@ -150,24 +175,24 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_margin="1dp"
-                android:scaleType="centerCrop"
-                android:layout_weight="1" />
+                android:layout_weight="1"
+                android:scaleType="centerCrop" />
 
             <ImageView
                 android:id="@+id/imageTwoView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_margin="1dp"
-                android:scaleType="centerCrop"
-                android:layout_weight="1" />
+                android:layout_weight="1"
+                android:scaleType="centerCrop" />
 
             <ImageView
                 android:id="@+id/imageThreeView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:scaleType="centerCrop"
                 android:layout_margin="1dp"
-                android:layout_weight="1" />
+                android:layout_weight="1"
+                android:scaleType="centerCrop" />
         </LinearLayout>
 
         <ImageView
@@ -175,9 +200,9 @@
             android:layout_width="wrap_content"
             android:layout_height="260dp"
             android:layout_marginLeft="25dp"
-            android:scaleType="centerCrop"
             android:layout_marginRight="25dp"
-            android:layout_marginBottom="25dp" />
+            android:layout_marginBottom="25dp"
+            android:scaleType="centerCrop" />
 
     </LinearLayout>
 </ScrollView>

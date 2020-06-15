@@ -13,8 +13,12 @@ import android.widget.TextView;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.fayarretype.mymobilekitchen.R;
+import com.fayarretype.mymobilekitchen.layers.bl.DataProcessingFactory;
+import com.fayarretype.mymobilekitchen.layers.bl.ManagerName;
+import com.fayarretype.mymobilekitchen.layers.bl.MaterialManager;
 import com.fayarretype.mymobilekitchen.layers.entitites.CategoryEntity;
 import com.fayarretype.mymobilekitchen.layers.entitites.FoodEntity;
+import com.fayarretype.mymobilekitchen.layers.entitites.MaterialByFoodEntity;
 import com.fayarretype.mymobilekitchen.tools.utils.ImageStream;
 
 public class FoodDetailActivity extends AppCompatActivity {
@@ -29,6 +33,8 @@ public class FoodDetailActivity extends AppCompatActivity {
     private TextView preparationHeader;
     private TextView preparation;
     private TextView yukleyen;
+    private TextView malzemeler;
+    private TextView materialHeader;
     private ImageView imageHeaderView;
     private ImageView imageOneView;
     private ImageView imageTwoView;
@@ -62,6 +68,8 @@ public class FoodDetailActivity extends AppCompatActivity {
         imageThreeView = findViewById(R.id.imageThreeView);
         imageFourView = findViewById(R.id.imageFourView);
         imageLayout = findViewById(R.id.imageLayout);
+        malzemeler = findViewById(R.id.malzemelerTextView);
+        materialHeader = findViewById(R.id.materialHeader);
         yukleyen = findViewById(R.id.yukleyen);
 
         imageOneView.setVisibility(View.GONE);
@@ -120,6 +128,29 @@ public class FoodDetailActivity extends AppCompatActivity {
                 preparationTime.setText("Hazırlanma Süresi : " + mFood.getPreparationTime());
             }
             howManyPerson.setText("Kaç Kişilik : " + mFood.getHowManyPerson());
+
+            if (mFood.getType() == FoodEntity.USER_FOOD) {
+                try {
+                    DataProcessingFactory dataProcessingFactory = DataProcessingFactory.getInstance(this);
+                    MaterialManager materialManager = (MaterialManager) dataProcessingFactory.getManager(ManagerName.MATERIAL_MANAGER);
+
+                    StringBuilder strMaterial = new StringBuilder();
+                    for (MaterialByFoodEntity material : mFood.getMaterialByFoodEntities()) {
+                        Log.i("TAG DS", material.getMaterialID());
+                        strMaterial.append(materialManager.getEntity(material.getMaterialID().trim()).getMaterialName());
+                    }
+                    malzemeler.setText(strMaterial);
+                    dataProcessingFactory.saveChanges();
+                    malzemeler.setVisibility(View.VISIBLE);
+                    materialHeader.setVisibility(View.VISIBLE);
+                } catch (Exception e) {
+                    e.getStackTrace();
+                }
+            } else {
+                malzemeler.setVisibility(View.GONE);
+                materialHeader.setVisibility(View.GONE);
+            }
+
             preparationHeader.setText("HAZIRLANIŞI");
             preparation.setText(mFood.getPreparationText());
             if (images[1] != null) {
