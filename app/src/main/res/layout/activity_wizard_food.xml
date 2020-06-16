@@ -48,7 +48,7 @@
         <GridView
             android:id="@+id/item_grid_view_food_wizard"
             android:layout_width="match_parent"
-            android:layout_height="120dp"
+            android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
             android:clipToPadding="true"
             android:fitsSystemWindows="true"

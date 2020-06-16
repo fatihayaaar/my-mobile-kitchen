@@ -4,7 +4,6 @@ import android.annotation.SuppressLint;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.Matrix;
-import android.util.Log;
 
 import com.fayarretype.mymobilekitchen.layers.bl.abstracts.IFoodManager;
 import com.fayarretype.mymobilekitchen.layers.dal.repositories.FoodRepository;
@@ -194,35 +193,45 @@ public class FoodManager extends BaseManager<FoodEntity> implements IFoodManager
 
     public ArrayList<FoodEntity> getEntitiesByStock(MaterialEntity[] materialEntities) {
         ArrayList<FoodEntity> foodEntities = new ArrayList<>();
-        boolean isFood = false;
-            DataProcessingFactory dataProcessingFactory = DataProcessingFactory.getInstance(context);
-            FoodManager foodManager = (FoodManager) dataProcessingFactory.getManager(ManagerName.FOOD_MANAGER);
-            ArrayList<MaterialByFoodEntity> materialByFoodEntities;
-            for (MaterialEntity entity : materialEntities) {
-                Log.i("TAG MMM", entity.getID());
-                try {
-                    materialByFoodEntities = ((MaterialByFoodRepository) unitOfWork
-                            .getRepository(MaterialByFoodEntity.class))
-                            .getEntitiesByMaterial(entity.getID());
-                    for (MaterialByFoodEntity entity1 : materialByFoodEntities) {
-                        FoodEntity foodEntity = foodManager.getEntity(entity1.getFoodID());
-                        for (MaterialByFoodEntity entity2 : foodEntity.getMaterialByFoodEntities()) {
-                            for (MaterialEntity entity3 : materialEntities) {
+        boolean isFood;
+        DataProcessingFactory dataProcessingFactory = DataProcessingFactory.getInstance(context);
+        FoodManager foodManager = (FoodManager) dataProcessingFactory.getManager(ManagerName.FOOD_MANAGER);
+        ArrayList<MaterialByFoodEntity> materialByFoodEntities;
+        for (MaterialEntity entity : materialEntities) {
+            try {
+                materialByFoodEntities = ((MaterialByFoodRepository) unitOfWork
+                        .getRepository(MaterialByFoodEntity.class))
+                        .getEntitiesByMaterial(entity.getID());
+
+                for (MaterialByFoodEntity entity1 : materialByFoodEntities) {
+                    FoodEntity foodEntity = foodManager.getEntity(entity1.getFoodID());
+
+                    for (MaterialByFoodEntity entity2 : foodEntity.getMaterialByFoodEntities()) {
+
+                        isFood = false;
+                        for (MaterialEntity entity3 : materialEntities) {
+
+                            if (entity2.getMaterialID().equals(entity3.getID())) {
                                 isFood = true;
-                                if (!entity2.getMaterialID().equals(entity3.getID())) {
-                                    isFood = false;
-                                    break;
-                                }
+                                break;
                             }
                         }
                         if (isFood) {
-                            foodEntities.add(foodEntity);
+                            for (FoodEntity e : foodEntities) {
+                                if (e.getID().equals(foodEntity.getID())) {
+                                    isFood = false;
+                                }
+                            }
+                            if (isFood) {
+                                foodEntities.add(foodEntity);
+                            }
                         }
                     }
-                } catch (Exception e) {
-                    e.printStackTrace();
                 }
+            } catch (Exception e) {
+                e.printStackTrace();
             }
+        }
         return foodEntities;
     }
 

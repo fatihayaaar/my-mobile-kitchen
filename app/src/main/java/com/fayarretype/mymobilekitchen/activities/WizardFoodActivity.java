@@ -34,7 +34,7 @@ public class WizardFoodActivity extends AppCompatActivity {
     private static Context context;
     private static GridView itemGridView;
     private androidx.appcompat.widget.Toolbar toolbar;
-    private GridView foodGridView;
+    private static GridView foodGridView;
     private AutoCompleteTextView autoCompleteTextViewMaterial;
 
     public static void bindItemGridView() {
@@ -63,10 +63,13 @@ public class WizardFoodActivity extends AppCompatActivity {
         new LoadValuesFood().start();
     }
 
-    public void loadValuesFoodRowLayout() {
-        DataProcessingFactory dataProcessingFactory = DataProcessingFactory.getInstance(this);
+    public static void loadValuesFoodRowLayout() {
+        DataProcessingFactory dataProcessingFactory = DataProcessingFactory.getInstance(context);
         MaterialManager materialManager = (MaterialManager) dataProcessingFactory.getManager(ManagerName.MATERIAL_MANAGER);
         ArrayList<MaterialEntity> materialEntities = materialManager.getEntitiesMaterialByStock(MaterialEntity.MATERIAL_YES_STOCK);
+        if (!WizardFoodActivity.materialEntities.isEmpty()) {
+            materialEntities = WizardFoodActivity.materialEntities;
+        }
         MaterialEntity[] entities = new MaterialEntity[materialEntities.size()];
         for (int i = 0; i < entities.length; i++) {
             entities[i] = materialEntities.get(i);
@@ -80,12 +83,13 @@ public class WizardFoodActivity extends AppCompatActivity {
                 IManager categoryManager = ManagerContainer.getInstance(context).getManager(ManagerName.CATEGORY_MANAGER);
                 CategoryEntity categoryEntity = (CategoryEntity) categoryManager.getEntity(String.valueOf(foodEntities.get(position).getCategoryID()));
                 FoodDetailActivity.setFood(foodEntities.get(position), categoryEntity);
-                Intent intent = new Intent(getBaseContext(), FoodDetailActivity.class);
-                startActivity(intent);
+                Intent intent = new Intent(context, FoodDetailActivity.class);
+                context.startActivity(intent);
             }
         });
 
         foodGridView.setVisibility(View.VISIBLE);
+        dataProcessingFactory.saveChanges();
     }
 
     public void init() {
@@ -123,6 +127,7 @@ public class WizardFoodActivity extends AppCompatActivity {
             e.getStackTrace();
         }
         bindItemGridView();
+        new LoadValuesFood().start();
     }
 
     public void bindToMaterialsMultiAutoCompleteTextView() {
@@ -135,7 +140,7 @@ public class WizardFoodActivity extends AppCompatActivity {
         multiAutoCompleteTextView.setAdapter(adapter);
     }
 
-    private class LoadValuesFood implements Runnable {
+    public class LoadValuesFood implements Runnable {
 
         Thread thread;
 

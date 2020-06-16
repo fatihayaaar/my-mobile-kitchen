@@ -88,7 +88,9 @@ public class MaterialCardAdapter extends ArrayAdapter<MaterialEntity> {
                                         DataProcessingFactory dataProcessingFactory = DataProcessingFactory.getInstance(context);
                                         MaterialManager materialManager = (MaterialManager)
                                                 dataProcessingFactory.getManager(ManagerName.MATERIAL_MANAGER);
-                                        materialManager.delete(materialEntity.getID());
+                                        materialEntity.setMaterialCount("0");
+                                        materialEntity.setIsItInStock(String.valueOf(MaterialEntity.MATERIAL_NO_STOCK));
+                                        materialManager.update(materialEntity, materialEntity.getID());
                                         dataProcessingFactory.saveChanges();
                                         Toast.makeText(context, "Malzeme Kaldırıldı", Toast.LENGTH_LONG).show();
                                         StockActivity.loadValues();
@@ -126,6 +128,7 @@ public class MaterialCardAdapter extends ArrayAdapter<MaterialEntity> {
                     }
                     WizardFoodActivity.materialEntities = entities;
                     WizardFoodActivity.bindItemGridView();
+                    WizardFoodActivity.loadValuesFoodRowLayout();
                 }
             });
         }

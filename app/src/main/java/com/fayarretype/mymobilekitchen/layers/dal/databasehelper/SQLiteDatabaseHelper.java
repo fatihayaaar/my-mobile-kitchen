@@ -60,7 +60,7 @@ public class SQLiteDatabaseHelper extends SQLiteOpenHelper implements IDatabaseH
     private Context context;
 
     private SQLiteDatabaseHelper(Context context) {
-        super(context, "my_mobile_kitchen.db", null, 37);
+        super(context, "my_mobile_kitchen.db", null, 39);
         this.context = context;
         init();
     }
