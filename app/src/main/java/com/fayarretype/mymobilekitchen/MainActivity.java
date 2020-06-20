@@ -320,7 +320,7 @@ public class MainActivity extends AppCompatActivity {
 
                             foodEntity.setID(key);
                             foodEntity.setFoodName(foodNames.get(y));
-                            foodEntity.setPreparationText(preparationTexts.get(y));
+                            foodEntity.setPreparationText(preparationTexts.get(y) + "\nKaynak: " + URL);
                             foodEntity.setCookingTime(cookingTimes.get(y));
                             foodEntity.setPreparationTime(preparationTimes.get(y));
                             foodEntity.setHowManyPerson(howManyPersons.get(y));

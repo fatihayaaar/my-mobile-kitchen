@@ -241,7 +241,8 @@ public class FoodManager extends BaseManager<FoodEntity> implements IFoodManager
             ImageStream imageStream = new ImageStream(context);
             imageStream.saveImage(entity[i].getImage());
             entity[i].setImageID(imageStream.getKey());
-            entity[i].setID("i" + new SimpleDateFormat("yyddHHmmss").format(new Date()) + (int) (Math.random() * 999));
+            entity[i].setID("i" + new SimpleDateFormat("yyddHHmmss")
+                    .format(new Date()) + (int) (Math.random() * 999));
             entity[i].setFoodID(foodID);
             ((ImageRepository) unitOfWork.getRepository(ImageEntity.class)).adds(entity[i]);
         }
@@ -252,7 +253,8 @@ public class FoodManager extends BaseManager<FoodEntity> implements IFoodManager
         try {
             for (int i = 0; i < materialByFoodEntities.length; i++) {
                 materialByFoodEntities[i].setFoodID(foodID);
-                materialByFoodEntities[i].setID("i" + new SimpleDateFormat("yyddHHmmss").format(new Date()) + (int) (Math.random() * 999));
+                materialByFoodEntities[i].setID("i" + new SimpleDateFormat("yyddHHmmss")
+                        .format(new Date()) + (int) (Math.random() * 999));
                 ((MaterialByFoodRepository) unitOfWork.getRepository(MaterialByFoodEntity.class))
                         .adds(materialByFoodEntities[i]);
             }

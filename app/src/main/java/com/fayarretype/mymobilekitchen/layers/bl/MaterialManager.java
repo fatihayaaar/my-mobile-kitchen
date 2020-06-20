@@ -34,7 +34,8 @@ public class MaterialManager extends BaseManager<MaterialEntity> implements IMat
 
     @Override
     public MaterialEntity getEntitiesByMaterialName(String materialName) {
-        return ((MaterialRepository) unitOfWork.getRepository(MaterialEntity.class)).getEntitiesByMaterialName(materialName.trim().toLowerCase());
+        return ((MaterialRepository) unitOfWork.getRepository(MaterialEntity.class))
+                .getEntitiesByMaterialName(materialName.trim().toLowerCase());
     }
 
     @Override
@@ -58,7 +59,8 @@ public class MaterialManager extends BaseManager<MaterialEntity> implements IMat
     }
 
     public void decreaseCount(String id) {
-        MaterialEntity materialEntity = (MaterialEntity) unitOfWork.getRepository(MaterialEntity.class).getEntity(id);
+        MaterialEntity materialEntity = (MaterialEntity) unitOfWork
+                .getRepository(MaterialEntity.class).getEntity(id);
         if (Integer.valueOf(materialEntity.getMaterialCount()) <= 1) {
             materialEntity.setIsItInStock(String.valueOf(MaterialEntity.MATERIAL_NO_STOCK));
             materialEntity.setMaterialCount("0");
